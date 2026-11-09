@@ -20,7 +20,7 @@ class CreateNewUser implements CreatesNewUsers
     }
 
     /**
-     * Validate and create a newly registered user.
+     * Validate and create a newly registered user. return
      *
      * @param  array<string, string>  $input
      */
@@ -33,14 +33,17 @@ class CreateNewUser implements CreatesNewUsers
 
         return DB::transaction(function () use ($input) {
             $user = User::create([
-                'name' => $input['name'],
-                'email' => $input['email'],
-                'password' => $input['password'],
-            ]);
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => $input['password'],
+        ]);
 
-            $this->createTeam->handle($user, $user->name."'s Team", isPersonal: true);
+        \App\Models\Household::create([
+            'user_id' => $user->id,
+            'address' => 'Not set yet',
+        ]);
 
-            return $user;
+        return $user;
         });
     }
 }

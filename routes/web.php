@@ -1,16 +1,71 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Middleware\EnsureTeamMembership;
+use App\Models\EnergyTip;
+use App\Models\ServiceRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::inertia('/', 'welcome')->name('home');
 
+// ROLE PAGES FIRST, so /admin/dashboard is not mistaken for /{current_team}/dashboard
+
+// ADMIN
+Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('dashboard', function () {
+        return Inertia::render('admin/dashboard', [
+            'stats' => [
+                'users'    => User::count(),
+                'tips'     => EnergyTip::count(),
+                'requests' => ServiceRequest::count(),
+            ],
+        ]);
+    })->name('dashboard');
+});
+
+// HOUSEHOLD
+Route::middleware(['auth', 'verified', 'role:household'])->prefix('household')->name('household.')->group(function () {
+    Route::get('dashboard', function () {
+        $household = Auth::user()->household;
+
+        return Inertia::render('household/dashboard', [
+            'stats' => [
+                'meters'     => $household?->meters()->count() ?? 0,
+                'appliances' => $household?->appliances()->count() ?? 0,
+                'plans'      => $household?->energyPlans()->count() ?? 0,
+            ],
+        ]);
+    })->name('dashboard');
+});
+
+// ELECTRICIAN
+Route::middleware(['auth', 'verified', 'role:electrician'])->prefix('electrician')->name('electrician.')->group(function () {
+    Route::get('dashboard', function () {
+        $electrician = Auth::user()->electrician;
+
+        return Inertia::render('electrician/dashboard', [
+            'stats' => [
+                'assigned' => $electrician?->serviceRequests()->where('status', 'assigned')->count() ?? 0,
+                'resolved' => $electrician?->serviceRequests()->where('status', 'resolved')->count() ?? 0,
+            ],
+        ]);
+    })->name('dashboard');
+});
+
+// The starter kit's team dashboard, now redirecting each role to its own page
 Route::prefix('{current_team}')
     ->middleware(['auth', 'verified', EnsureTeamMembership::class])
     ->group(function () {
-        Route::get('dashboard', DashboardController::class)->name('dashboard');
+        Route::get('dashboard', function () {
+            return redirect()->route(match (Auth::user()->role) {
+                'admin'       => 'admin.dashboard',
+                'electrician' => 'electrician.dashboard',
+                default       => 'household.dashboard',
+            });
+        })->name('dashboard');
     });
 
 Route::middleware(['auth'])->group(function () {
