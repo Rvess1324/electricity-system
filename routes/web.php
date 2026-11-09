@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Household\MeterController;
+use App\Http\Controllers\Household\UsageRecordController;
 use App\Http\Controllers\Household\ApplianceController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Middleware\EnsureTeamMembership;
@@ -41,6 +43,8 @@ Route::middleware(['auth', 'verified', 'role:household'])->prefix('household')->
         ]);
     })->name('dashboard');
     Route::resource('appliances', ApplianceController::class)->except(['show']);
+    Route::resource('meters', MeterController::class)->except(['show']);
+    Route::resource('meters.usage', UsageRecordController::class)->except(['show']);
 });
 
 // ELECTRICIAN

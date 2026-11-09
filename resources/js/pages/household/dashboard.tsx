@@ -10,7 +10,10 @@ export default function HouseholdDashboard({ stats }: Props) {
             <div className="p-6">
                 <h1 className="mb-4 text-2xl font-bold">Household Dashboard</h1>
                 <div className="grid gap-4 md:grid-cols-3">
-                    <div className="rounded-lg border p-4">Meters: <b>{stats.meters}</b></div>
+
+                    <Link href="/household/meters" className="rounded-lg border p-4 hover:bg-gray-50">
+                        Meters: <b>{stats.meters}</b> (manage)
+                    </Link>
                     
                     <Link href="/household/appliances" className="rounded-lg border p-4 hover:bg-gray-50">
                         Appliances: <b>{stats.appliances}</b> (manage)
