@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Household\ApplianceController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Middleware\EnsureTeamMembership;
 use App\Models\EnergyTip;
@@ -11,7 +12,7 @@ use Inertia\Inertia;
 
 Route::inertia('/', 'welcome')->name('home');
 
-// ROLE PAGES FIRST, so /admin/dashboard is not mistaken for /{current_team}/dashboard
+// ROLE PAGES FIRST, so /admin/dashboard is not mistaken for /{current_team}/dashboard 
 
 // ADMIN
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -39,6 +40,7 @@ Route::middleware(['auth', 'verified', 'role:household'])->prefix('household')->
             ],
         ]);
     })->name('dashboard');
+    Route::resource('appliances', ApplianceController::class)->except(['show']);
 });
 
 // ELECTRICIAN
