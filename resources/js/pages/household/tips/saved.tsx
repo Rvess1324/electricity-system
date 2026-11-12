@@ -12,7 +12,10 @@ type Tip = {
 export default function Saved({ tips }: { tips: Tip[] }) {
     function unsave(t: Tip) {
         if (confirm(`Remove "${t.title}" from your saved tips?`)) {
-            router.delete(`/household/tips/${t.id}/save`, { preserveScroll: true });
+            router.delete(`/household/tips/${t.id}/save`, {
+                preserveScroll: true,
+                onSuccess: () => router.flushAll(),
+            });
         }
     }
 

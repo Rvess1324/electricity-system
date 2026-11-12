@@ -18,11 +18,17 @@ export default function Index({ tips, categories, selected }: Props) {
     }
 
     function save(t: Tip) {
-        router.post(`/household/tips/${t.id}/save`, {}, { preserveScroll: true });
+        router.post(`/household/tips/${t.id}/save`, {}, {
+            preserveScroll: true,
+            onSuccess: () => router.flushAll(),
+        });
     }
 
     function unsave(t: Tip) {
-        router.delete(`/household/tips/${t.id}/save`, { preserveScroll: true });
+        router.delete(`/household/tips/${t.id}/save`, {
+            preserveScroll: true,
+            onSuccess: () => router.flushAll(),
+        });
     }
 
     return (
