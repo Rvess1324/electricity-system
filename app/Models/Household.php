@@ -12,5 +12,5 @@ class Household extends Model
     public function appliances()      { return $this->hasMany(Appliance::class); }
     public function energyPlans()     { return $this->hasMany(EnergyPlan::class); }
     public function serviceRequests() { return $this->hasMany(ServiceRequest::class); }
-    public function savedTips()       { return $this->belongsToMany(EnergyTip::class, 'saved_tips')->withPivot('saved_at'); }
+    public function savedTips()       { return $this->belongsToMany(EnergyTip::class, 'saved_tips')->withPivot('saved_at')->withTimestamps(); }
 }

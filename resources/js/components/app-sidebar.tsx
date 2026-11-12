@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, ClipboardList, FolderGit2, Gauge, LayoutGrid, Plug } from 'lucide-react';
+import { BookOpen, Bookmark, ClipboardList, FolderGit2, Gauge, LayoutGrid, Lightbulb, Plug } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -36,7 +36,12 @@ export function AppSidebar() {
                   { title: 'Appliances', href: '/household/appliances', icon: Plug },
                   { title: 'Meters', href: '/household/meters', icon: Gauge },
                   { title: 'Energy Plans', href: '/household/plans', icon: ClipboardList },
+                  { title: 'Energy Tips', href: '/household/tips', icon: Lightbulb },
+                  { title: 'Saved Tips', href: '/household/saved-tips', icon: Bookmark },
               ]
+            : []),
+        ...(role === 'admin'
+            ? [{ title: 'Energy Tips', href: '/admin/tips', icon: Lightbulb }]
             : []),
     ];
 
