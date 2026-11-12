@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Household\EnergyPlanController;
+use App\Http\Controllers\Household\PlanItemController;
 use App\Http\Controllers\Household\MeterController;
 use App\Http\Controllers\Household\UsageRecordController;
 use App\Http\Controllers\Household\ApplianceController;
@@ -45,6 +47,8 @@ Route::middleware(['auth', 'verified', 'role:household'])->prefix('household')->
     Route::resource('appliances', ApplianceController::class)->except(['show']);
     Route::resource('meters', MeterController::class)->except(['show']);
     Route::resource('meters.usage', UsageRecordController::class)->except(['show']);
+    Route::resource('plans', EnergyPlanController::class);
+    Route::resource('plans.items', PlanItemController::class)->except(['index', 'show']);
 });
 
 // ELECTRICIAN

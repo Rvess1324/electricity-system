@@ -5,6 +5,7 @@ type Appliance = {
     id: number;
     appliance_name: string;
     wattage: number;
+    quantity: number;
     hours_per_day: number | string;
     category: string | null;
 };
@@ -13,6 +14,7 @@ export default function ApplianceForm({ appliance }: { appliance?: Appliance }) 
     const { data, setData, post, put, processing, errors } = useForm({
         appliance_name: appliance?.appliance_name ?? '',
         wattage: appliance?.wattage?.toString() ?? '',
+        quantity: appliance?.quantity?.toString() ?? '1',
         hours_per_day: appliance?.hours_per_day?.toString() ?? '',
         category: appliance?.category ?? '',
     });
@@ -38,14 +40,21 @@ export default function ApplianceForm({ appliance }: { appliance?: Appliance }) 
             </div>
 
             <div>
-                <label className="mb-1 block text-sm font-medium">Wattage (W)</label>
+                <label className="mb-1 block text-sm font-medium">Wattage of one unit (W)</label>
                 <input type="number" className={input} value={data.wattage}
                     onChange={(e) => setData('wattage', e.target.value)} />
                 {errors.wattage && <p className="text-sm text-red-600">{errors.wattage}</p>}
             </div>
 
             <div>
-                <label className="mb-1 block text-sm font-medium">Hours used per day</label>
+                <label className="mb-1 block text-sm font-medium">How many do you have?</label>
+                <input type="number" min="1" className={input} value={data.quantity}
+                    onChange={(e) => setData('quantity', e.target.value)} />
+                {errors.quantity && <p className="text-sm text-red-600">{errors.quantity}</p>}
+            </div>
+
+            <div>
+                <label className="mb-1 block text-sm font-medium">Hours used per day (each unit)</label>
                 <input type="number" step="0.25" className={input} value={data.hours_per_day}
                     onChange={(e) => setData('hours_per_day', e.target.value)} />
                 {errors.hours_per_day && <p className="text-sm text-red-600">{errors.hours_per_day}</p>}

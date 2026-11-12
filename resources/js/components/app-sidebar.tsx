@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { BookOpen, ClipboardList, FolderGit2, Gauge, LayoutGrid, Plug } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -23,12 +23,21 @@ export function AppSidebar() {
         ? dashboard(page.props.currentTeam.slug)
         : '/';
 
+    const role = (page.props.auth?.user as unknown as { role?: string } | undefined)?.role;
+
     const mainNavItems: NavItem[] = [
         {
             title: 'Dashboard',
             href: dashboardUrl,
             icon: LayoutGrid,
         },
+        ...(role === 'household'
+            ? [
+                  { title: 'Appliances', href: '/household/appliances', icon: Plug },
+                  { title: 'Meters', href: '/household/meters', icon: Gauge },
+                  { title: 'Energy Plans', href: '/household/plans', icon: ClipboardList },
+              ]
+            : []),
     ];
 
     const footerNavItems: NavItem[] = [

@@ -27,6 +27,7 @@ class ApplianceController extends Controller
         return [
             'appliance_name' => ['required', 'string', 'max:100'],
             'wattage'        => ['required', 'integer', 'min:1', 'max:100000'],
+            'quantity'       => ['required', 'integer', 'min:1', 'max:1000'],
             'hours_per_day'  => ['required', 'numeric', 'min:0', 'max:24'],
             'category'       => ['nullable', 'string', 'max:50'],
         ];
