@@ -1,57 +1,36 @@
 <?php
 
-use App\Http\Controllers\Admin\ServiceRequestController as AdminServiceRequestController;
-use App\Http\Controllers\Household\ServiceRequestController as HouseholdServiceRequestController;
-use App\Http\Controllers\Electrician\ServiceRequestController as ElectricianServiceRequestController;
 use App\Http\Controllers\Admin\EnergyTipController;
-use App\Http\Controllers\Household\TipController;
-use App\Http\Controllers\Household\EnergyPlanController;
-use App\Http\Controllers\Household\PlanItemController;
-use App\Http\Controllers\Household\MeterController;
-use App\Http\Controllers\Household\UsageRecordController;
+use App\Http\Controllers\Admin\ServiceRequestController as AdminServiceRequestController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Electrician\ServiceRequestController as ElectricianServiceRequestController;
 use App\Http\Controllers\Household\ApplianceController;
+use App\Http\Controllers\Household\EnergyPlanController;
+use App\Http\Controllers\Household\MeterController;
+use App\Http\Controllers\Household\PlanItemController;
+use App\Http\Controllers\Household\ServiceRequestController as HouseholdServiceRequestController;
+use App\Http\Controllers\Household\TipController;
+use App\Http\Controllers\Household\UsageRecordController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Middleware\EnsureTeamMembership;
-use App\Models\EnergyTip;
-use App\Models\ServiceRequest;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::inertia('/', 'welcome')->name('home');
 
-// ROLE PAGES FIRST, so /admin/dashboard is not mistaken for /{current_team}/dashboard 
+// ROLE PAGES FIRST, so /admin/dashboard is not mistaken for /{current_team}/dashboard
 
 // ADMIN
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('admin/dashboard', [
-            'stats' => [
-                'users'    => User::count(),
-                'tips'     => EnergyTip::count(),
-                'requests' => ServiceRequest::count(),
-            ],
-        ]);
-    })->name('dashboard');
-        Route::resource('tips', EnergyTipController::class)->except(['show']);
-        Route::get('requests', [AdminServiceRequestController::class, 'index'])->name('requests.index');
-        Route::patch('requests/{serviceRequest}/assign', [AdminServiceRequestController::class, 'assign'])->name('requests.assign');
+    Route::get('dashboard', [DashboardController::class, 'admin'])->name('dashboard');
+    Route::resource('tips', EnergyTipController::class)->except(['show']);
+    Route::get('requests', [AdminServiceRequestController::class, 'index'])->name('requests.index');
+    Route::patch('requests/{serviceRequest}/assign', [AdminServiceRequestController::class, 'assign'])->name('requests.assign');
 });
 
 // HOUSEHOLD
 Route::middleware(['auth', 'verified', 'role:household'])->prefix('household')->name('household.')->group(function () {
-    Route::get('dashboard', function () {
-        $household = Auth::user()->household;
-
-        return Inertia::render('household/dashboard', [
-            'stats' => [
-                'meters'     => $household?->meters()->count() ?? 0,
-                'appliances' => $household?->appliances()->count() ?? 0,
-                'plans'      => $household?->energyPlans()->count() ?? 0,
-            ],
-        ]);
-    })->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'household'])->name('dashboard');
     Route::resource('appliances', ApplianceController::class)->except(['show']);
     Route::resource('meters', MeterController::class)->except(['show']);
     Route::resource('meters.usage', UsageRecordController::class)->except(['show']);
@@ -69,16 +48,7 @@ Route::middleware(['auth', 'verified', 'role:household'])->prefix('household')->
 
 // ELECTRICIAN
 Route::middleware(['auth', 'verified', 'role:electrician'])->prefix('electrician')->name('electrician.')->group(function () {
-    Route::get('dashboard', function () {
-        $electrician = Auth::user()->electrician;
-
-        return Inertia::render('electrician/dashboard', [
-            'stats' => [
-                'assigned' => $electrician?->serviceRequests()->where('status', 'assigned')->count() ?? 0,
-                'resolved' => $electrician?->serviceRequests()->where('status', 'resolved')->count() ?? 0,
-            ],
-        ]);
-    })->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'electrician'])->name('dashboard');
     Route::get('requests', [ElectricianServiceRequestController::class, 'index'])->name('requests.index');
     Route::patch('requests/{serviceRequest}/resolve', [ElectricianServiceRequestController::class, 'resolve'])->name('requests.resolve');
 });

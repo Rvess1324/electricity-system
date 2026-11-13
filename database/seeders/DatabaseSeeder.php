@@ -40,9 +40,13 @@ class DatabaseSeeder extends Seeder
         $meter = $household->meters()->create([
             'meter_no' => 'MTR-1001', 'meter_type' => 'Single-phase', 'installation_date' => '2024-01-15',
         ]);
-        foreach ([['2026-10-01', 8.5], ['2026-10-02', 9.2], ['2026-10-03', 7.8]] as [$date, $kwh]) {
+        // 14 days of usage ending today, so dashboards and plans always show real numbers
+        $kwhPerDay = [8.5, 9.2, 7.8, 8.1, 9.0, 8.7, 7.5, 9.4, 8.3, 8.8, 7.9, 9.1, 8.6, 8.0];
+        foreach ($kwhPerDay as $i => $kwh) {
             $meter->usageRecords()->create([
-                'usage_date' => $date, 'kwh_used' => $kwh, 'estimated_cost' => $kwh * 12, // 12 per kWh for testing
+                'usage_date'     => now()->subDays(13 - $i)->toDateString(),
+                'kwh_used'       => $kwh,
+                'estimated_cost' => $kwh * 12, // 12 per kWh, matches ELECTRICITY_RATE
             ]);
         }
 
@@ -54,8 +58,9 @@ class DatabaseSeeder extends Seeder
             'appliance_name' => 'Electric Fan', 'wattage' => 60, 'hours_per_day' => 10, 'category' => 'Cooling',
         ]);
         $plan = $household->energyPlans()->create([
-            'plan_name' => 'November Saving Plan', 'monthly_kwh_target' => 200, 'monthly_budget' => 2400,
-            'start_date' => '2026-11-01', 'end_date' => '2026-11-30',
+            'plan_name' => 'Monthly Saving Plan', 'monthly_kwh_target' => 300, 'monthly_budget' => 3600,
+            'start_date' => now()->startOfMonth()->toDateString(),
+            'end_date'   => now()->endOfMonth()->toDateString(),
         ]);
         $plan->planItems()->create(['appliance_id' => $fridge->id, 'planned_hours_per_day' => 24, 'priority' => 'high']);
         $plan->planItems()->create(['appliance_id' => $fan->id, 'planned_hours_per_day' => 8, 'priority' => 'medium']);
@@ -74,10 +79,11 @@ class DatabaseSeeder extends Seeder
         $household->savedTips()->attach($tip1->id);
 
         // Service request assigned to the electrician
+        // A pending request, so the admin has something to assign
         ServiceRequest::create([
-            'household_id' => $household->id, 'meter_id' => $meter->id, 'electrician_id' => $electrician->id,
-            'issue_description' => 'Meter display is flickering.', 'status' => 'assigned',
-            'requested_date' => '2026-11-05',
+            'household_id' => $household->id, 'meter_id' => $meter->id,
+            'issue_description' => 'Sparks near the meter box.', 'status' => 'pending',
+            'requested_date' => now()->toDateString(),
         ]);
     }
 }

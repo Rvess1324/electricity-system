@@ -33,17 +33,20 @@ class CreateNewUser implements CreatesNewUsers
 
         return DB::transaction(function () use ($input) {
             $user = User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => $input['password'],
-        ]);
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'password' => $input['password'],
+            ]);
 
-        \App\Models\Household::create([
-            'user_id' => $user->id,
-            'address' => 'Not set yet',
-        ]);
+            // Restores the personal team the starter kit creates for every user
+            $this->createTeam->handle($user, "{$user->name}'s Team", isPersonal: true);
 
-        return $user;
+            \App\Models\Household::create([
+                'user_id' => $user->id,
+                'address' => 'Not set yet',
+            ]);
+
+            return $user;
         });
     }
 }
