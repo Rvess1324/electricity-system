@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\ServiceRequestController as AdminServiceRequestController;
+use App\Http\Controllers\Household\ServiceRequestController as HouseholdServiceRequestController;
+use App\Http\Controllers\Electrician\ServiceRequestController as ElectricianServiceRequestController;
 use App\Http\Controllers\Admin\EnergyTipController;
 use App\Http\Controllers\Household\TipController;
 use App\Http\Controllers\Household\EnergyPlanController;
@@ -32,6 +35,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
         ]);
     })->name('dashboard');
         Route::resource('tips', EnergyTipController::class)->except(['show']);
+        Route::get('requests', [AdminServiceRequestController::class, 'index'])->name('requests.index');
+        Route::patch('requests/{serviceRequest}/assign', [AdminServiceRequestController::class, 'assign'])->name('requests.assign');
 });
 
 // HOUSEHOLD
@@ -56,6 +61,10 @@ Route::middleware(['auth', 'verified', 'role:household'])->prefix('household')->
     Route::get('saved-tips', [TipController::class, 'saved'])->name('tips.saved');
     Route::post('tips/{tip}/save', [TipController::class, 'save'])->name('tips.save');
     Route::delete('tips/{tip}/save', [TipController::class, 'unsave'])->name('tips.unsave');
+    Route::get('requests', [HouseholdServiceRequestController::class, 'index'])->name('requests.index');
+    Route::get('requests/create', [HouseholdServiceRequestController::class, 'create'])->name('requests.create');
+    Route::post('requests', [HouseholdServiceRequestController::class, 'store'])->name('requests.store');
+    Route::delete('requests/{serviceRequest}', [HouseholdServiceRequestController::class, 'destroy'])->name('requests.destroy');
 });
 
 // ELECTRICIAN
@@ -70,6 +79,8 @@ Route::middleware(['auth', 'verified', 'role:electrician'])->prefix('electrician
             ],
         ]);
     })->name('dashboard');
+    Route::get('requests', [ElectricianServiceRequestController::class, 'index'])->name('requests.index');
+    Route::patch('requests/{serviceRequest}/resolve', [ElectricianServiceRequestController::class, 'resolve'])->name('requests.resolve');
 });
 
 // The starter kit's team dashboard, now redirecting each role to its own page

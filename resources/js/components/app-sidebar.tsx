@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Bookmark, ClipboardList, FolderGit2, Gauge, LayoutGrid, Lightbulb, Plug } from 'lucide-react';
+import { BookOpen, Bookmark, ClipboardList, FolderGit2, Gauge, LayoutGrid, Lightbulb, Plug, Wrench } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -38,10 +38,17 @@ export function AppSidebar() {
                   { title: 'Energy Plans', href: '/household/plans', icon: ClipboardList },
                   { title: 'Energy Tips', href: '/household/tips', icon: Lightbulb },
                   { title: 'Saved Tips', href: '/household/saved-tips', icon: Bookmark },
+                  { title: 'Service Requests', href: '/household/requests', icon: Wrench },
               ]
             : []),
         ...(role === 'admin'
-            ? [{ title: 'Energy Tips', href: '/admin/tips', icon: Lightbulb }]
+            ? [
+                  { title: 'Energy Tips', href: '/admin/tips', icon: Lightbulb },
+                  { title: 'Service Requests', href: '/admin/requests', icon: Wrench },
+              ]
+            : []),
+        ...(role === 'electrician'
+            ? [{ title: 'My Requests', href: '/electrician/requests', icon: Wrench }]
             : []),
     ];
 

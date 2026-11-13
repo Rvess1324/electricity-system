@@ -57,14 +57,14 @@ class DatabaseSeeder extends Seeder
             'plan_name' => 'November Saving Plan', 'monthly_kwh_target' => 200, 'monthly_budget' => 2400,
             'start_date' => '2026-11-01', 'end_date' => '2026-11-30',
         ]);
-        $plan->planItems()->create(['appliance_id' => $fridge->id, 'planned_hours_per_day' => 24, 'priority' => 1]);
-        $plan->planItems()->create(['appliance_id' => $fan->id, 'planned_hours_per_day' => 8, 'priority' => 2]);
+        $plan->planItems()->create(['appliance_id' => $fridge->id, 'planned_hours_per_day' => 24, 'priority' => 'high']);
+        $plan->planItems()->create(['appliance_id' => $fan->id, 'planned_hours_per_day' => 8, 'priority' => 'medium']);
 
         // Tips by admin, one saved by the household
         $tip1 = $admin->energyTips()->create([
             'title' => 'Unplug idle devices',
             'description' => 'Devices on standby still use power. Unplug chargers and TVs when not in use.',
-            'category' => 'General',
+            'category' => 'Other',
         ]);
         $admin->energyTips()->create([
             'title' => 'Set AC to 25°C',
