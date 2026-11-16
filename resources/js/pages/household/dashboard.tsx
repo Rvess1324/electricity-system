@@ -1,4 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
+import { peso } from '@/lib/currency';
 import { Head, Link } from '@inertiajs/react';
 
 type Props = {
@@ -51,7 +52,7 @@ export default function HouseholdDashboard({ stats, latest, activePlan }: Props)
                     <div className={card}>
                         <p className="text-sm text-gray-500">Last 30 days (meters)</p>
                         <p className="text-2xl font-bold">{stats.last30_kwh.toFixed(1)} kWh</p>
-                        <p className="text-sm">Estimated cost: {stats.last30_cost.toFixed(2)}</p>
+                        <p className="text-sm">Estimated cost: {peso(stats.last30_cost)}</p>
                     </div>
 
                     <div className={card}>
@@ -83,7 +84,7 @@ export default function HouseholdDashboard({ stats, latest, activePlan }: Props)
                             <div className="flex flex-wrap items-center gap-3 text-sm">
                                 <span>Planned {activePlan.summary.planned_kwh.toFixed(1)} of {Number(activePlan.monthly_kwh_target).toFixed(1)} kWh</span>
                                 <Badge ok={activePlan.summary.kwh_ok} yes="Within target" no="Over target" />
-                                <span>Cost {activePlan.summary.planned_cost.toFixed(2)} of {Number(activePlan.monthly_budget).toFixed(2)}</span>
+                                <span>Cost {peso(activePlan.summary.planned_cost)} of {peso(activePlan.monthly_budget)}</span>
                                 <Badge ok={activePlan.summary.budget_ok} yes="Within budget" no="Over budget" />
                             </div>
                             {activePlan.summary.actual_monthly !== null && (

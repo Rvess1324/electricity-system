@@ -1,4 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
+import { peso } from '@/lib/currency';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Record = { id: number; usage_date: string; kwh_used: number | string; estimated_cost: number | string };
@@ -45,7 +46,7 @@ export default function Index({ meter, records, rate, totals }: Props) {
                                 <tr key={r.id} className="border-b last:border-0">
                                     <td className="p-3">{r.usage_date.slice(0, 10)}</td>
                                     <td className="p-3">{Number(r.kwh_used).toFixed(2)}</td>
-                                    <td className="p-3">{Number(r.estimated_cost).toFixed(2)}</td>
+                                    <td className="p-3">{peso(r.estimated_cost)}</td>
                                     <td className="space-x-3 p-3 text-right">
                                         <Link href={`/household/meters/${meter.id}/usage/${r.id}/edit`} className="underline">Edit</Link>
                                         <button onClick={() => remove(r)} className="text-red-600 underline">Delete</button>
@@ -56,7 +57,7 @@ export default function Index({ meter, records, rate, totals }: Props) {
                     </table>
                 </div>
                 <p className="mt-4 text-sm">
-                    Total: <b>{totals.kwh.toFixed(2)} kWh</b> costing <b>{totals.cost.toFixed(2)}</b> (rate {rate}/kWh)
+                    Total: <b>{totals.kwh.toFixed(2)} kWh</b> costing <b>{peso(totals.cost)}</b> (rate {peso(rate)}/kWh)
                 </p>
             </div>
         </AppLayout>

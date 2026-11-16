@@ -1,4 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
+import { peso } from '@/lib/currency';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Plan = {
@@ -57,7 +58,7 @@ export default function Show({ plan, items, summary, rate }: { plan: Plan; items
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-2xl font-bold">{plan.plan_name}</h1>
-                        <p className="text-sm text-gray-500">{plan.start_date} to {plan.end_date} · rate {rate} per kWh</p>
+                        <p className="text-sm text-gray-500">{plan.start_date} to {plan.end_date} · rate {peso(rate)} per kWh</p>
                     </div>
                     <div className="space-x-3">
                         <Link href={`/household/plans/${plan.id}/edit`} className="underline">Edit plan</Link>
@@ -75,8 +76,8 @@ export default function Show({ plan, items, summary, rate }: { plan: Plan; items
 
                     <div className={card}>
                         <p className="text-sm text-gray-500">Planned cost / month</p>
-                        <p className="text-2xl font-bold">{summary.planned_cost.toFixed(2)}</p>
-                        <p className="mb-2 text-sm">Budget: {Number(plan.monthly_budget).toFixed(2)}</p>
+                        <p className="text-2xl font-bold">{peso(summary.planned_cost)}</p>
+                        <p className="mb-2 text-sm">Budget: {peso(plan.monthly_budget)}</p>
                         <Badge ok={summary.budget_ok} yes="Within budget" no="Over budget" />
                     </div>
 

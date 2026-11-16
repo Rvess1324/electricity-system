@@ -1,4 +1,5 @@
 import { Link, useForm } from '@inertiajs/react';
+import { peso } from '@/lib/currency';
 import { type FormEvent } from 'react';
 
 type Meter = { id: number; meter_no: string };
@@ -33,7 +34,7 @@ export default function UsageForm({ meter, rate, record }: { meter: Meter; rate:
                     onChange={(e) => setData('kwh_used', e.target.value)} />
                 {errors.kwh_used && <p className="text-sm text-red-600">{errors.kwh_used}</p>}
             </div>
-            <p className="text-sm">Estimated cost at {rate} per kWh: <b>{preview.toFixed(2)}</b></p>
+            <p className="text-sm">Estimated cost at {peso(rate)} per kWh: <b>{peso(preview)}</b></p>
             <div className="flex gap-3">
                 <button type="submit" disabled={processing} className="rounded-md bg-black px-4 py-2 text-white disabled:opacity-50">
                     {record ? 'Save changes' : 'Add record'}

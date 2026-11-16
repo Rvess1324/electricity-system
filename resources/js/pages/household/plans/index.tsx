@@ -1,4 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
+import { peso } from '@/lib/currency';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Plan = {
@@ -56,9 +57,9 @@ export default function Index({ plans }: { plans: Plan[] }) {
                                     <td className={`p-3 ${p.summary.kwh_ok ? 'text-green-700' : 'text-red-600'}`}>
                                         {p.summary.planned_kwh.toFixed(1)}
                                     </td>
-                                    <td className="p-3">{Number(p.monthly_budget).toFixed(2)}</td>
+                                    <td className="p-3">{peso(p.monthly_budget)}</td>
                                     <td className={`p-3 ${p.summary.budget_ok ? 'text-green-700' : 'text-red-600'}`}>
-                                        {p.summary.planned_cost.toFixed(2)}
+                                        {peso(p.summary.planned_cost)}
                                     </td>
                                     <td className="space-x-3 p-3 text-right">
                                         <Link href={`/household/plans/${p.id}/edit`} className="underline">Edit</Link>

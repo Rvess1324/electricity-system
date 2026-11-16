@@ -47,7 +47,7 @@ export default function PlanForm({ plan }: { plan?: Plan }) {
             </div>
 
             <div>
-                <label className="mb-1 block text-sm font-medium">Monthly budget</label>
+                <label className="mb-1 block text-sm font-medium">Monthly budget (₱)</label>
                 <input type="number" step="0.01" className={input} value={data.monthly_budget}
                     onChange={(e) => setData('monthly_budget', e.target.value)} />
                 {errors.monthly_budget && <p className="text-sm text-red-600">{errors.monthly_budget}</p>}
