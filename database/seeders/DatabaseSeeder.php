@@ -8,20 +8,36 @@ use App\Models\Household;
 use App\Models\ServiceRequest;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // The factory sets password = "password" (hashed) and marks the email as verified
-        $adminUser = User::factory()->create([
-            'name' => 'Admin User', 'email' => 'admin@example.com', 'role' => 'admin',
+        if (User::where('email', 'admin@example.com')->exists()) {
+            return;
+        }
+
+        $adminUser = User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'role' => 'admin',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
         ]);
-        $houseUser = User::factory()->create([
-            'name' => 'Juan Dela Cruz', 'email' => 'household@example.com', 'role' => 'household',
+        $houseUser = User::create([
+            'name' => 'Juan Dela Cruz',
+            'email' => 'household@example.com',
+            'role' => 'household',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
         ]);
-        $elecUser = User::factory()->create([
-            'name' => 'Pedro Santos', 'email' => 'electrician@example.com', 'role' => 'electrician',
+        $elecUser = User::create([
+            'name' => 'Pedro Santos',
+            'email' => 'electrician@example.com',
+            'role' => 'electrician',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
         ]);
 
         $admin = Admin::create(['user_id' => $adminUser->id, 'permissions' => 'all']);
