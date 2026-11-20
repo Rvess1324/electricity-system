@@ -31,18 +31,18 @@ class PlanItemController extends Controller
     {
         $rules = [
             'planned_hours_per_day' => ['required', 'numeric', 'min:0', 'max:24'],
-            'priority'              => ['required', Rule::in(['high', 'medium', 'low'])],
+            'priority' => ['required', Rule::in(['high', 'medium', 'low'])],
         ];
 
         if ($isNew) {
             // The person chose "+ Create a new appliance"
             $rules += [
-                'appliance_id'       => ['required', Rule::in(['new'])],
+                'appliance_id' => ['required', Rule::in(['new'])],
                 'new_appliance_name' => ['required', 'string', 'max:100'],
-                'new_wattage'        => ['required', 'integer', 'min:1', 'max:100000'],
-                'new_quantity'       => ['required', 'integer', 'min:1', 'max:1000'],
-                'new_hours_per_day'  => ['required', 'numeric', 'min:0', 'max:24'],
-                'new_category'       => ['nullable', 'string', 'max:50'],
+                'new_wattage' => ['required', 'integer', 'min:1', 'max:100000'],
+                'new_quantity' => ['required', 'integer', 'min:1', 'max:1000'],
+                'new_hours_per_day' => ['required', 'numeric', 'min:0', 'max:24'],
+                'new_category' => ['nullable', 'string', 'max:50'],
             ];
         } else {
             $rules['appliance_id'] = [
@@ -69,7 +69,7 @@ class PlanItemController extends Controller
         $this->check($plan);
 
         return Inertia::render('household/plans/items/create', [
-            'plan'       => $plan->only(['id', 'plan_name']),
+            'plan' => $plan->only(['id', 'plan_name']),
             'appliances' => $this->applianceOptions(),
         ]);
     }
@@ -85,18 +85,18 @@ class PlanItemController extends Controller
             // Save the new appliance in the household's own list first
             $appliance = $this->household()->appliances()->create([
                 'appliance_name' => $data['new_appliance_name'],
-                'wattage'        => $data['new_wattage'],
-                'quantity'       => $data['new_quantity'],
-                'hours_per_day'  => $data['new_hours_per_day'],
-                'category'       => $data['new_category'] ?? null,
+                'wattage' => $data['new_wattage'],
+                'quantity' => $data['new_quantity'],
+                'hours_per_day' => $data['new_hours_per_day'],
+                'category' => $data['new_category'] ?? null,
             ]);
             $data['appliance_id'] = $appliance->id;
         }
 
         $plan->planItems()->create([
-            'appliance_id'          => $data['appliance_id'],
+            'appliance_id' => $data['appliance_id'],
             'planned_hours_per_day' => $data['planned_hours_per_day'],
-            'priority'              => $data['priority'],
+            'priority' => $data['priority'],
         ]);
 
         return redirect()->route('household.plans.show', $plan);
@@ -107,8 +107,8 @@ class PlanItemController extends Controller
         $this->check($plan, $item);
 
         return Inertia::render('household/plans/items/edit', [
-            'plan'       => $plan->only(['id', 'plan_name']),
-            'item'       => $item,
+            'plan' => $plan->only(['id', 'plan_name']),
+            'item' => $item,
             'appliances' => $this->applianceOptions(),
         ]);
     }

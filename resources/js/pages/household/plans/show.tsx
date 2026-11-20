@@ -36,13 +36,25 @@ type Summary = {
 
 function Badge({ ok, yes, no }: { ok: boolean; yes: string; no: string }) {
     return (
-        <span className={`rounded px-2 py-0.5 text-xs font-medium ${ok ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+        <span
+            className={`rounded px-2 py-0.5 text-xs font-medium ${ok ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+        >
             {ok ? yes : no}
         </span>
     );
 }
 
-export default function Show({ plan, items, summary, rate }: { plan: Plan; items: Item[]; summary: Summary; rate: number }) {
+export default function Show({
+    plan,
+    items,
+    summary,
+    rate,
+}: {
+    plan: Plan;
+    items: Item[];
+    summary: Summary;
+    rate: number;
+}) {
     function remove(i: Item) {
         if (confirm(`Remove ${i.appliance_name} from this plan?`)) {
             router.delete(`/household/plans/${plan.id}/items/${i.id}`);
@@ -58,55 +70,115 @@ export default function Show({ plan, items, summary, rate }: { plan: Plan; items
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-2xl font-bold">{plan.plan_name}</h1>
-                        <p className="text-sm text-gray-500">{plan.start_date} to {plan.end_date} · rate {peso(rate)} per kWh</p>
+                        <p className="text-sm text-gray-500">
+                            {plan.start_date} to {plan.end_date} · rate{' '}
+                            {peso(rate)} per kWh
+                        </p>
                     </div>
                     <div className="space-x-3">
-                        <Link href={`/household/plans/${plan.id}/edit`} className="underline">Edit plan</Link>
-                        <Link href="/household/plans" className="underline">All plans</Link>
+                        <Link
+                            href={`/household/plans/${plan.id}/edit`}
+                            className="underline"
+                        >
+                            Edit plan
+                        </Link>
+                        <Link href="/household/plans" className="underline">
+                            All plans
+                        </Link>
                     </div>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-3">
                     <div className={card}>
-                        <p className="text-sm text-gray-500">Planned kWh / month</p>
-                        <p className="text-2xl font-bold">{summary.planned_kwh.toFixed(1)}</p>
-                        <p className="mb-2 text-sm">Target: {Number(plan.monthly_kwh_target).toFixed(1)}</p>
-                        <Badge ok={summary.kwh_ok} yes="Within target" no="Over target" />
+                        <p className="text-sm text-gray-500">
+                            Planned kWh / month
+                        </p>
+                        <p className="text-2xl font-bold">
+                            {summary.planned_kwh.toFixed(1)}
+                        </p>
+                        <p className="mb-2 text-sm">
+                            Target: {Number(plan.monthly_kwh_target).toFixed(1)}
+                        </p>
+                        <Badge
+                            ok={summary.kwh_ok}
+                            yes="Within target"
+                            no="Over target"
+                        />
                     </div>
 
                     <div className={card}>
-                        <p className="text-sm text-gray-500">Planned cost / month</p>
-                        <p className="text-2xl font-bold">{peso(summary.planned_cost)}</p>
-                        <p className="mb-2 text-sm">Budget: {peso(plan.monthly_budget)}</p>
-                        <Badge ok={summary.budget_ok} yes="Within budget" no="Over budget" />
+                        <p className="text-sm text-gray-500">
+                            Planned cost / month
+                        </p>
+                        <p className="text-2xl font-bold">
+                            {peso(summary.planned_cost)}
+                        </p>
+                        <p className="mb-2 text-sm">
+                            Budget: {peso(plan.monthly_budget)}
+                        </p>
+                        <Badge
+                            ok={summary.budget_ok}
+                            yes="Within budget"
+                            no="Over budget"
+                        />
                     </div>
 
                     <div className={card}>
-                        <p className="text-sm text-gray-500">Actual usage (meters)</p>
+                        <p className="text-sm text-gray-500">
+                            Actual usage (meters)
+                        </p>
                         {summary.actual_monthly === null ? (
-                            <p className="text-sm">No usage records found in this plan's period, so there is no actual data to compare.</p>
+                            <p className="text-sm">
+                                No usage records found in this plan's period, so
+                                there is no actual data to compare.
+                            </p>
                         ) : (
                             <>
-                                <p className="text-2xl font-bold">{summary.actual_monthly.toFixed(1)} kWh / 30 days</p>
-                                <p className="mb-2 text-sm">Recorded so far in the period: {summary.actual_total?.toFixed(1)} kWh</p>
-                                <Badge ok={!!summary.actual_ok} yes="Actual is within target" no="Actual is over target" />
+                                <p className="text-2xl font-bold">
+                                    {summary.actual_monthly.toFixed(1)} kWh / 30
+                                    days
+                                </p>
+                                <p className="mb-2 text-sm">
+                                    Recorded so far in the period:{' '}
+                                    {summary.actual_total?.toFixed(1)} kWh
+                                </p>
+                                <Badge
+                                    ok={!!summary.actual_ok}
+                                    yes="Actual is within target"
+                                    no="Actual is over target"
+                                />
                             </>
                         )}
                     </div>
                 </div>
 
                 <p className="text-sm">
-                    Your appliances at their usual hours would use <b>{summary.usual_kwh.toFixed(1)} kWh</b>; this plan uses{' '}
+                    Your appliances at their usual hours would use{' '}
+                    <b>{summary.usual_kwh.toFixed(1)} kWh</b>; this plan uses{' '}
                     <b>{summary.planned_kwh.toFixed(1)} kWh</b>
-                    {summary.saving_kwh >= 0
-                        ? <>, saving <b>{summary.saving_kwh.toFixed(1)} kWh</b>.</>
-                        : <>, which is <b>{Math.abs(summary.saving_kwh).toFixed(1)} kWh more</b>.</>}
+                    {summary.saving_kwh >= 0 ? (
+                        <>
+                            , saving <b>{summary.saving_kwh.toFixed(1)} kWh</b>.
+                        </>
+                    ) : (
+                        <>
+                            , which is{' '}
+                            <b>
+                                {Math.abs(summary.saving_kwh).toFixed(1)} kWh
+                                more
+                            </b>
+                            .
+                        </>
+                    )}
                 </p>
 
                 <div>
                     <div className="mb-3 flex items-center justify-between">
                         <h2 className="text-xl font-semibold">Plan items</h2>
-                        <Link href={`/household/plans/${plan.id}/items/create`} className="rounded-md bg-black px-4 py-2 text-white">
+                        <Link
+                            href={`/household/plans/${plan.id}/items/create`}
+                            className="rounded-md bg-black px-4 py-2 text-white"
+                        >
                             Add appliance
                         </Link>
                     </div>
@@ -127,20 +199,47 @@ export default function Show({ plan, items, summary, rate }: { plan: Plan; items
                             </thead>
                             <tbody>
                                 {items.length === 0 && (
-                                    <tr><td className="p-3" colSpan={8}>No appliances in this plan yet.</td></tr>
+                                    <tr>
+                                        <td className="p-3" colSpan={8}>
+                                            No appliances in this plan yet.
+                                        </td>
+                                    </tr>
                                 )}
                                 {items.map((i) => (
-                                    <tr key={i.id} className="border-b last:border-0">
-                                        <td className="p-3">{i.appliance_name}</td>
+                                    <tr
+                                        key={i.id}
+                                        className="border-b last:border-0"
+                                    >
+                                        <td className="p-3">
+                                            {i.appliance_name}
+                                        </td>
                                         <td className="p-3">{i.wattage}</td>
                                         <td className="p-3">{i.quantity}</td>
-                                        <td className="p-3">{i.usual_hours_per_day}</td>
-                                        <td className="p-3">{i.planned_hours_per_day}</td>
-                                        <td className="p-3 capitalize">{i.priority}</td>
-                                        <td className="p-3">{i.planned_kwh.toFixed(1)}</td>
+                                        <td className="p-3">
+                                            {i.usual_hours_per_day}
+                                        </td>
+                                        <td className="p-3">
+                                            {i.planned_hours_per_day}
+                                        </td>
+                                        <td className="p-3 capitalize">
+                                            {i.priority}
+                                        </td>
+                                        <td className="p-3">
+                                            {i.planned_kwh.toFixed(1)}
+                                        </td>
                                         <td className="space-x-3 p-3 text-right">
-                                            <Link href={`/household/plans/${plan.id}/items/${i.id}/edit`} className="underline">Edit</Link>
-                                            <button onClick={() => remove(i)} className="text-red-600 underline">Remove</button>
+                                            <Link
+                                                href={`/household/plans/${plan.id}/items/${i.id}/edit`}
+                                                className="underline"
+                                            >
+                                                Edit
+                                            </Link>
+                                            <button
+                                                onClick={() => remove(i)}
+                                                className="text-red-600 underline"
+                                            >
+                                                Remove
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}

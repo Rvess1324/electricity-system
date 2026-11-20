@@ -26,15 +26,15 @@ class ServiceRequestController extends Controller
             ->latest('id')
             ->get()
             ->map(fn ($r) => [
-                'id'                => $r->id,
-                'household'         => $r->household->user->name,
-                'address'           => $r->household->address,
-                'phone_no'          => $r->household->phone_no,
-                'meter_no'          => $r->meter->meter_no,
+                'id' => $r->id,
+                'household' => $r->household->user->name,
+                'address' => $r->household->address,
+                'phone_no' => $r->household->phone_no,
+                'meter_no' => $r->meter->meter_no,
                 'issue_description' => $r->issue_description,
-                'status'            => $r->status,
-                'requested_date'    => $r->requested_date,
-                'resolved_date'     => $r->resolved_date,
+                'status' => $r->status,
+                'requested_date' => $r->requested_date,
+                'resolved_date' => $r->resolved_date,
             ]);
 
         return Inertia::render('electrician/requests/index', ['requests' => $requests]);
@@ -47,7 +47,7 @@ class ServiceRequestController extends Controller
         abort_unless($serviceRequest->status === 'assigned', 422, 'Only assigned requests can be resolved.');
 
         $serviceRequest->update([
-            'status'        => 'resolved',
+            'status' => 'resolved',
             'resolved_date' => now()->toDateString(),
         ]);
 

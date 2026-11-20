@@ -3,12 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use App\Models\Appliance;
 use App\Models\Electrician;
-use App\Models\EnergyPlan;
-use App\Models\EnergyTip;
 use App\Models\Household;
-use App\Models\PlanItem;
 use App\Models\ServiceRequest;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -44,8 +40,8 @@ class DatabaseSeeder extends Seeder
         $kwhPerDay = [8.5, 9.2, 7.8, 8.1, 9.0, 8.7, 7.5, 9.4, 8.3, 8.8, 7.9, 9.1, 8.6, 8.0];
         foreach ($kwhPerDay as $i => $kwh) {
             $meter->usageRecords()->create([
-                'usage_date'     => now()->subDays(13 - $i)->toDateString(),
-                'kwh_used'       => $kwh,
+                'usage_date' => now()->subDays(13 - $i)->toDateString(),
+                'kwh_used' => $kwh,
                 'estimated_cost' => $kwh * 12, // 12 per kWh, matches ELECTRICITY_RATE
             ]);
         }
@@ -60,7 +56,7 @@ class DatabaseSeeder extends Seeder
         $plan = $household->energyPlans()->create([
             'plan_name' => 'Monthly Saving Plan', 'monthly_kwh_target' => 300, 'monthly_budget' => 3600,
             'start_date' => now()->startOfMonth()->toDateString(),
-            'end_date'   => now()->endOfMonth()->toDateString(),
+            'end_date' => now()->endOfMonth()->toDateString(),
         ]);
         $plan->planItems()->create(['appliance_id' => $fridge->id, 'planned_hours_per_day' => 24, 'priority' => 'high']);
         $plan->planItems()->create(['appliance_id' => $fan->id, 'planned_hours_per_day' => 8, 'priority' => 'medium']);

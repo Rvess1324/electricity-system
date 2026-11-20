@@ -92,11 +92,11 @@ class UsageRecordController extends Controller
         $records = $meter->usageRecords()->orderByDesc('usage_date')->get();
 
         return Inertia::render('household/usage/index', [
-            'meter'   => $meter,
+            'meter' => $meter,
             'records' => $records,
-            'rate'    => config('electricity.rate'),
-            'totals'  => [
-                'kwh'  => (float) $records->sum('kwh_used'),
+            'rate' => config('electricity.rate'),
+            'totals' => [
+                'kwh' => (float) $records->sum('kwh_used'),
                 'cost' => (float) $records->sum('estimated_cost'),
             ],
         ]);
@@ -108,7 +108,7 @@ class UsageRecordController extends Controller
 
         return Inertia::render('household/usage/create', [
             'meter' => $meter,
-            'rate'  => config('electricity.rate'),
+            'rate' => config('electricity.rate'),
         ]);
     }
 
@@ -127,9 +127,9 @@ class UsageRecordController extends Controller
         $this->recordOrFail($meter, $usage);
 
         return Inertia::render('household/usage/edit', [
-            'meter'  => $meter,
+            'meter' => $meter,
             'record' => $usage,
-            'rate'   => config('electricity.rate'),
+            'rate' => config('electricity.rate'),
         ]);
     }
 

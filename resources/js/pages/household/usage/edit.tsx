@@ -13,7 +13,9 @@ export default function Edit({ meter, record, rate }: Props) {
         <AppLayout>
             <Head title="Edit Usage Record" />
             <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">Edit Usage: {meter.meter_no}</h1>
+                <h1 className="mb-4 text-2xl font-bold">
+                    Edit Usage: {meter.meter_no}
+                </h1>
                 <UsageForm meter={meter} rate={rate} record={record} />
             </div>
         </AppLayout>

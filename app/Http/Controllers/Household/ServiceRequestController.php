@@ -23,13 +23,13 @@ class ServiceRequestController extends Controller
             ->latest('id')
             ->get()
             ->map(fn ($r) => [
-                'id'                => $r->id,
-                'meter_no'          => $r->meter->meter_no,
+                'id' => $r->id,
+                'meter_no' => $r->meter->meter_no,
                 'issue_description' => $r->issue_description,
-                'status'            => $r->status,
-                'requested_date'    => $r->requested_date,
-                'resolved_date'     => $r->resolved_date,
-                'electrician'       => $r->electrician?->user?->name,
+                'status' => $r->status,
+                'requested_date' => $r->requested_date,
+                'resolved_date' => $r->resolved_date,
+                'electrician' => $r->electrician?->user?->name,
             ]);
 
         return Inertia::render('household/requests/index', ['requests' => $requests]);
@@ -46,13 +46,13 @@ class ServiceRequestController extends Controller
     {
         $data = $request->validate([
             // must be one of MY meters
-            'meter_id'          => ['required', Rule::exists('meters', 'id')->where('household_id', $this->household()->id)],
+            'meter_id' => ['required', Rule::exists('meters', 'id')->where('household_id', $this->household()->id)],
             'issue_description' => ['required', 'string', 'min:5', 'max:1000'],
         ]);
 
         // The server decides the status and the date, never the browser
         $this->household()->serviceRequests()->create($data + [
-            'status'         => 'pending',
+            'status' => 'pending',
             'requested_date' => now()->toDateString(),
         ]);
 

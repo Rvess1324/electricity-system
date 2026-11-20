@@ -5,6 +5,7 @@ import { Head } from '@inertiajs/react';
 type Appliance = {
     id: number;
     appliance_name: string;
+    quantity: number;
     wattage: number;
     hours_per_day: number | string;
     category: string | null;

@@ -18,7 +18,13 @@ type Req = {
 
 type Electrician = { id: number; name: string; specialization: string | null };
 
-function AssignCell({ r, electricians }: { r: Req; electricians: Electrician[] }) {
+function AssignCell({
+    r,
+    electricians,
+}: {
+    r: Req;
+    electricians: Electrician[];
+}) {
     const [value, setValue] = useState(r.electrician_id?.toString() ?? '');
 
     if (r.status === 'resolved') {
@@ -26,34 +32,55 @@ function AssignCell({ r, electricians }: { r: Req; electricians: Electrician[] }
     }
 
     function assign() {
-        router.patch(`/admin/requests/${r.id}/assign`, { electrician_id: value }, {
-            preserveScroll: true,
-            onSuccess: () => router.flushAll(),
-        });
+        router.patch(
+            `/admin/requests/${r.id}/assign`,
+            { electrician_id: value },
+            {
+                preserveScroll: true,
+                onSuccess: () => router.flushAll(),
+            },
+        );
     }
 
     return (
         <div className="flex items-center gap-2">
-            <select className="rounded-md border px-2 py-1" value={value} onChange={(e) => setValue(e.target.value)}>
+            <select
+                className="rounded-md border px-2 py-1"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+            >
                 <option value="">Choose...</option>
                 {electricians.map((e) => (
-                    <option key={e.id} value={e.id}>{e.name}</option>
+                    <option key={e.id} value={e.id}>
+                        {e.name}
+                    </option>
                 ))}
             </select>
-            <button onClick={assign} disabled={!value || value === r.electrician_id?.toString()}
-                className="rounded-md bg-black px-3 py-1 text-white disabled:opacity-40">
+            <button
+                onClick={assign}
+                disabled={!value || value === r.electrician_id?.toString()}
+                className="rounded-md bg-black px-3 py-1 text-white disabled:opacity-40"
+            >
                 {r.status === 'pending' ? 'Assign' : 'Reassign'}
             </button>
         </div>
     );
 }
 
-export default function Index({ requests, electricians }: { requests: Req[]; electricians: Electrician[] }) {
+export default function Index({
+    requests,
+    electricians,
+}: {
+    requests: Req[];
+    electricians: Electrician[];
+}) {
     return (
         <AppLayout>
             <Head title="Service Requests" />
             <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">All Service Requests</h1>
+                <h1 className="mb-4 text-2xl font-bold">
+                    All Service Requests
+                </h1>
 
                 <div className="overflow-x-auto rounded-lg border">
                     <table className="w-full text-left text-sm">
@@ -70,17 +97,41 @@ export default function Index({ requests, electricians }: { requests: Req[]; ele
                         </thead>
                         <tbody>
                             {requests.length === 0 && (
-                                <tr><td className="p-3" colSpan={7}>No service requests yet.</td></tr>
+                                <tr>
+                                    <td className="p-3" colSpan={7}>
+                                        No service requests yet.
+                                    </td>
+                                </tr>
                             )}
                             {requests.map((r) => (
-                                <tr key={r.id} className="border-b last:border-0">
-                                    <td className="p-3">{r.household}<br /><span className="text-xs text-gray-500">{r.address}</span></td>
+                                <tr
+                                    key={r.id}
+                                    className="border-b last:border-0"
+                                >
+                                    <td className="p-3">
+                                        {r.household}
+                                        <br />
+                                        <span className="text-xs text-gray-500">
+                                            {r.address}
+                                        </span>
+                                    </td>
                                     <td className="p-3">{r.meter_no}</td>
-                                    <td className="p-3">{r.issue_description}</td>
-                                    <td className="p-3"><StatusBadge status={r.status} /></td>
+                                    <td className="p-3">
+                                        {r.issue_description}
+                                    </td>
+                                    <td className="p-3">
+                                        <StatusBadge status={r.status} />
+                                    </td>
                                     <td className="p-3">{r.requested_date}</td>
-                                    <td className="p-3">{r.resolved_date ?? '-'}</td>
-                                    <td className="p-3"><AssignCell r={r} electricians={electricians} /></td>
+                                    <td className="p-3">
+                                        {r.resolved_date ?? '-'}
+                                    </td>
+                                    <td className="p-3">
+                                        <AssignCell
+                                            r={r}
+                                            electricians={electricians}
+                                        />
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

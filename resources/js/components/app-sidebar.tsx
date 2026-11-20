@@ -1,5 +1,15 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Bookmark, ClipboardList, FolderGit2, Gauge, LayoutGrid, Lightbulb, Plug, Wrench } from 'lucide-react';
+import {
+    BookOpen,
+    Bookmark,
+    ClipboardList,
+    FolderGit2,
+    Gauge,
+    LayoutGrid,
+    Lightbulb,
+    Plug,
+    Wrench,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -23,7 +33,9 @@ export function AppSidebar() {
         ? dashboard(page.props.currentTeam.slug)
         : '/';
 
-    const role = (page.props.auth?.user as unknown as { role?: string } | undefined)?.role;
+    const role = (
+        page.props.auth?.user as unknown as { role?: string } | undefined
+    )?.role;
 
     const mainNavItems: NavItem[] = [
         {
@@ -33,22 +45,56 @@ export function AppSidebar() {
         },
         ...(role === 'household'
             ? [
-                  { title: 'Appliances', href: '/household/appliances', icon: Plug },
+                  {
+                      title: 'Appliances',
+                      href: '/household/appliances',
+                      icon: Plug,
+                  },
                   { title: 'Meters', href: '/household/meters', icon: Gauge },
-                  { title: 'Energy Plans', href: '/household/plans', icon: ClipboardList },
-                  { title: 'Energy Tips', href: '/household/tips', icon: Lightbulb },
-                  { title: 'Saved Tips', href: '/household/saved-tips', icon: Bookmark },
-                  { title: 'Service Requests', href: '/household/requests', icon: Wrench },
+                  {
+                      title: 'Energy Plans',
+                      href: '/household/plans',
+                      icon: ClipboardList,
+                  },
+                  {
+                      title: 'Energy Tips',
+                      href: '/household/tips',
+                      icon: Lightbulb,
+                  },
+                  {
+                      title: 'Saved Tips',
+                      href: '/household/saved-tips',
+                      icon: Bookmark,
+                  },
+                  {
+                      title: 'Service Requests',
+                      href: '/household/requests',
+                      icon: Wrench,
+                  },
               ]
             : []),
         ...(role === 'admin'
             ? [
-                  { title: 'Energy Tips', href: '/admin/tips', icon: Lightbulb },
-                  { title: 'Service Requests', href: '/admin/requests', icon: Wrench },
+                  {
+                      title: 'Energy Tips',
+                      href: '/admin/tips',
+                      icon: Lightbulb,
+                  },
+                  {
+                      title: 'Service Requests',
+                      href: '/admin/requests',
+                      icon: Wrench,
+                  },
               ]
             : []),
         ...(role === 'electrician'
-            ? [{ title: 'My Requests', href: '/electrician/requests', icon: Wrench }]
+            ? [
+                  {
+                      title: 'My Requests',
+                      href: '/electrician/requests',
+                      icon: Wrench,
+                  },
+              ]
             : []),
     ];
 

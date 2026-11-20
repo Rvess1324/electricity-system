@@ -1,0 +1,703 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$admin\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Admin/EnergyTipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\EnergyTipController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/EnergyTipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\EnergyTipController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/EnergyTipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\EnergyTipController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/EnergyTipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\EnergyTipController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/EnergyTipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\EnergyTipController\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Controllers/Admin/EnergyTipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\EnergyTipController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/EnergyTipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\EnergyTipController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/EnergyTipController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Electrician\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Admin/ServiceRequestController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ServiceRequest\:\:\$electrician\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Admin/ServiceRequestController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ServiceRequest\:\:\$household\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Controllers/Admin/ServiceRequestController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ServiceRequest\:\:\$meter\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Admin/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\ServiceRequestController\:\:assign\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Admin\\ServiceRequestController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Admin/ServiceRequestController.php
+
+		-
+			message: '#^Relation ''electrician'' is not found in App\\Models\\ServiceRequest model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/Admin/ServiceRequestController.php
+
+		-
+			message: '#^Relation ''household'' is not found in App\\Models\\ServiceRequest model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/Admin/ServiceRequestController.php
+
+		-
+			message: '#^Relation ''meter'' is not found in App\\Models\\ServiceRequest model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/Admin/ServiceRequestController.php
+
+		-
+			message: '#^Relation ''user'' is not found in App\\Models\\Electrician model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/Admin/ServiceRequestController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ServiceRequest\:\:\$household\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\ServiceRequest\:\:\$meter\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\UsageRecord\:\:\$meter\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$electrician\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Call to an undefined method object\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Call to an undefined method object\:\:with\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\DashboardController\:\:admin\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\DashboardController\:\:electrician\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\DashboardController\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Relation ''household'' is not found in App\\Models\\ServiceRequest model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Relation ''meter'' is not found in App\\Models\\ServiceRequest model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Relation ''meter'' is not found in App\\Models\\UsageRecord model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$electrician\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Controllers/Electrician/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Electrician\\ServiceRequestController\:\:electrician\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Electrician/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Electrician\\ServiceRequestController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Electrician/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Electrician\\ServiceRequestController\:\:resolve\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Electrician/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ApplianceController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ApplianceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ApplianceController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ApplianceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ApplianceController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ApplianceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ApplianceController\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ApplianceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ApplianceController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ApplianceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ApplianceController\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Controllers/Household/ApplianceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ApplianceController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ApplianceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ApplianceController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ApplianceController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\EnergyPlanController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/EnergyPlanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\EnergyPlanController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/EnergyPlanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\EnergyPlanController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/EnergyPlanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\EnergyPlanController\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/EnergyPlanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\EnergyPlanController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/EnergyPlanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\EnergyPlanController\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Controllers/Household/EnergyPlanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\EnergyPlanController\:\:show\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/EnergyPlanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\EnergyPlanController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/EnergyPlanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\EnergyPlanController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/EnergyPlanController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\MeterController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/MeterController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\MeterController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/MeterController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\MeterController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/MeterController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\MeterController\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/MeterController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\MeterController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/MeterController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\MeterController\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Controllers/Household/MeterController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\MeterController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/MeterController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\MeterController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/MeterController.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>id" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Controllers/Household/MeterController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\PlanItemController\:\:applianceOptions\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/PlanItemController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\PlanItemController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/PlanItemController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\PlanItemController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/PlanItemController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\PlanItemController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/PlanItemController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\PlanItemController\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/PlanItemController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\PlanItemController\:\:rules\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Controllers/Household/PlanItemController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\PlanItemController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/PlanItemController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\PlanItemController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/PlanItemController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ServiceRequestController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ServiceRequestController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ServiceRequestController\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ServiceRequestController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\ServiceRequestController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/ServiceRequestController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\TipController\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/TipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\TipController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/TipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\TipController\:\:save\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/TipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\TipController\:\:saved\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/TipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\TipController\:\:unsave\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/TipController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\UsageRecordController\:\:create\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/UsageRecordController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\UsageRecordController\:\:destroy\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/UsageRecordController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\UsageRecordController\:\:edit\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/UsageRecordController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\UsageRecordController\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/UsageRecordController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\UsageRecordController\:\:index\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/UsageRecordController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\UsageRecordController\:\:store\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/UsageRecordController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\UsageRecordController\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Household/UsageRecordController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\UsageRecordController\:\:withCost\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Controllers/Household/UsageRecordController.php
+
+		-
+			message: '#^Method App\\Http\\Controllers\\Household\\UsageRecordController\:\:withCost\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Http/Controllers/Household/UsageRecordController.php
+
+		-
+			message: '#^Method App\\Models\\Admin\:\:energyTips\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Admin.php
+
+		-
+			message: '#^Method App\\Models\\Admin\:\:user\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Admin.php
+
+		-
+			message: '#^Method App\\Models\\Appliance\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Appliance.php
+
+		-
+			message: '#^Method App\\Models\\Appliance\:\:planItems\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Appliance.php
+
+		-
+			message: '#^Method App\\Models\\Electrician\:\:serviceRequests\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Electrician.php
+
+		-
+			message: '#^Method App\\Models\\Electrician\:\:user\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Electrician.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\EnergyPlan\:\:\$household\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/EnergyPlan.php
+
+		-
+			message: '#^Method App\\Models\\EnergyPlan\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/EnergyPlan.php
+
+		-
+			message: '#^Method App\\Models\\EnergyPlan\:\:planItems\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/EnergyPlan.php
+
+		-
+			message: '#^Method App\\Models\\EnergyPlan\:\:summary\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Models/EnergyPlan.php
+
+		-
+			message: '#^Method App\\Models\\EnergyTip\:\:admin\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/EnergyTip.php
+
+		-
+			message: '#^Method App\\Models\\EnergyTip\:\:households\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/EnergyTip.php
+
+		-
+			message: '#^Method App\\Models\\Household\:\:appliances\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Household.php
+
+		-
+			message: '#^Method App\\Models\\Household\:\:energyPlans\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Household.php
+
+		-
+			message: '#^Method App\\Models\\Household\:\:meters\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Household.php
+
+		-
+			message: '#^Method App\\Models\\Household\:\:savedTips\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Household.php
+
+		-
+			message: '#^Method App\\Models\\Household\:\:serviceRequests\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Household.php
+
+		-
+			message: '#^Method App\\Models\\Household\:\:user\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Household.php
+
+		-
+			message: '#^Method App\\Models\\Meter\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Meter.php
+
+		-
+			message: '#^Method App\\Models\\Meter\:\:serviceRequests\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Meter.php
+
+		-
+			message: '#^Method App\\Models\\Meter\:\:usageRecords\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Meter.php
+
+		-
+			message: '#^Method App\\Models\\PlanItem\:\:appliance\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/PlanItem.php
+
+		-
+			message: '#^Method App\\Models\\PlanItem\:\:energyPlan\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/PlanItem.php
+
+		-
+			message: '#^Method App\\Models\\ServiceRequest\:\:electrician\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/ServiceRequest.php
+
+		-
+			message: '#^Method App\\Models\\ServiceRequest\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/ServiceRequest.php
+
+		-
+			message: '#^Method App\\Models\\ServiceRequest\:\:meter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/ServiceRequest.php
+
+		-
+			message: '#^Method App\\Models\\UsageRecord\:\:meter\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/UsageRecord.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:admin\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:electrician\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Method App\\Models\\User\:\:household\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/User.php

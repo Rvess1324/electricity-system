@@ -16,13 +16,13 @@ class DashboardController extends Controller
     {
         return Inertia::render('admin/dashboard', [
             'stats' => [
-                'users'      => User::count(),
+                'users' => User::count(),
                 'households' => Household::count(),
                 'electricians' => User::where('role', 'electrician')->count(),
-                'tips'       => EnergyTip::count(),
-                'pending'    => ServiceRequest::where('status', 'pending')->count(),
-                'assigned'   => ServiceRequest::where('status', 'assigned')->count(),
-                'resolved'   => ServiceRequest::where('status', 'resolved')->count(),
+                'tips' => EnergyTip::count(),
+                'pending' => ServiceRequest::where('status', 'pending')->count(),
+                'assigned' => ServiceRequest::where('status', 'assigned')->count(),
+                'resolved' => ServiceRequest::where('status', 'resolved')->count(),
             ],
             'pendingRequests' => ServiceRequest::with(['household.user', 'meter'])
                 ->where('status', 'pending')
@@ -30,11 +30,11 @@ class DashboardController extends Controller
                 ->take(5)
                 ->get()
                 ->map(fn ($r) => [
-                    'id'                => $r->id,
-                    'household'         => $r->household->user->name,
-                    'meter_no'          => $r->meter->meter_no,
+                    'id' => $r->id,
+                    'household' => $r->household->user->name,
+                    'meter_no' => $r->meter->meter_no,
                     'issue_description' => $r->issue_description,
-                    'requested_date'    => $r->requested_date,
+                    'requested_date' => $r->requested_date,
                 ]),
         ]);
     }
@@ -47,7 +47,7 @@ class DashboardController extends Controller
         // Usage in the last 30 days (today and the 29 days before)
         $since = now()->subDays(29)->toDateString();
         $recent = UsageRecord::whereIn('meter_id', $meterIds)->where('usage_date', '>=', $since);
-        $last30Kwh  = (float) (clone $recent)->sum('kwh_used');
+        $last30Kwh = (float) (clone $recent)->sum('kwh_used');
         $last30Cost = (float) (clone $recent)->sum('estimated_cost');
 
         $latest = UsageRecord::with('meter')
@@ -68,26 +68,26 @@ class DashboardController extends Controller
 
         return Inertia::render('household/dashboard', [
             'stats' => [
-                'meters'           => $household->meters()->count(),
-                'appliances'       => $household->appliances()->count(),
-                'plans'            => $household->energyPlans()->count(),
-                'saved_tips'       => $household->savedTips()->count(),
+                'meters' => $household->meters()->count(),
+                'appliances' => $household->appliances()->count(),
+                'plans' => $household->energyPlans()->count(),
+                'saved_tips' => $household->savedTips()->count(),
                 'pending_requests' => $household->serviceRequests()->whereIn('status', ['pending', 'assigned'])->count(),
-                'appliance_kwh'    => round($applianceKwh, 1),
-                'last30_kwh'       => round($last30Kwh, 1),
-                'last30_cost'      => round($last30Cost, 2),
+                'appliance_kwh' => round($applianceKwh, 1),
+                'last30_kwh' => round($last30Kwh, 1),
+                'last30_cost' => round($last30Cost, 2),
             ],
             'latest' => $latest ? [
                 'usage_date' => $latest->usage_date,
-                'kwh_used'   => $latest->kwh_used,
-                'meter_no'   => $latest->meter->meter_no,
+                'kwh_used' => $latest->kwh_used,
+                'meter_no' => $latest->meter->meter_no,
             ] : null,
             'activePlan' => $plan ? [
-                'id'                 => $plan->id,
-                'plan_name'          => $plan->plan_name,
+                'id' => $plan->id,
+                'plan_name' => $plan->plan_name,
                 'monthly_kwh_target' => $plan->monthly_kwh_target,
-                'monthly_budget'     => $plan->monthly_budget,
-                'summary'            => $plan->summary(),
+                'monthly_budget' => $plan->monthly_budget,
+                'summary' => $plan->summary(),
             ] : null,
         ]);
     }
@@ -110,12 +110,12 @@ class DashboardController extends Controller
                     ->take(5)
                     ->get()
                     ->map(fn ($r) => [
-                        'id'                => $r->id,
-                        'household'         => $r->household->user->name,
-                        'address'           => $r->household->address,
-                        'meter_no'          => $r->meter->meter_no,
+                        'id' => $r->id,
+                        'household' => $r->household->user->name,
+                        'address' => $r->household->address,
+                        'meter_no' => $r->meter->meter_no,
                         'issue_description' => $r->issue_description,
-                        'requested_date'    => $r->requested_date,
+                        'requested_date' => $r->requested_date,
                     ])
                 : [],
             'hasProfile' => (bool) $electrician,
