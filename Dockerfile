@@ -1,10 +1,11 @@
+FROM node:22-slim AS node_builder
 FROM serversideup/php:8.3-fpm-nginx
 
 USER root
 
-RUN curl -fsSL https://nodesource.com | bash - \
-    && apt-get install -y nodejs \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+# Copy Node.js and npm directly from the official Node image
+COPY --from=node_builder /usr/local/bin /usr/local/bin
+COPY --from=node_builder /usr/local/lib/node_modules /usr/local/lib/node_modules
 
 WORKDIR /var/www/html
 
