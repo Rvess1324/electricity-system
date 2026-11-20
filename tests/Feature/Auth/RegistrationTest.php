@@ -34,6 +34,7 @@ test('registration screen includes team invitation context', function () {
 });
 
 test('new users can register', function () {
+
     $response = $this->post(route('register.store'), [
         'name' => 'Test User',
         'email' => 'test@example.com',

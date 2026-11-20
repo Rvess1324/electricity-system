@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Model
 {
     protected $fillable = ['user_id', 'permissions'];
-    public function user()       { return $this->belongsTo(User::class); }
-    public function energyTips() { return $this->hasMany(EnergyTip::class); }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function energyTips()
+    {
+        return $this->hasMany(EnergyTip::class);
+    }
 }

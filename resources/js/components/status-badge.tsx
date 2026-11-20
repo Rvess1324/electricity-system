@@ -6,7 +6,9 @@ const colors: Record<string, string> = {
 
 export default function StatusBadge({ status }: { status: string }) {
     return (
-        <span className={`rounded px-2 py-0.5 text-xs font-medium capitalize ${colors[status] ?? 'bg-gray-100 text-gray-800'}`}>
+        <span
+            className={`rounded px-2 py-0.5 text-xs font-medium capitalize ${colors[status] ?? 'bg-gray-100 text-gray-800'}`}
+        >
             {status}
         </span>
     );

@@ -16,26 +16,26 @@ class ServiceRequestController extends Controller
             ->latest('id')
             ->get()
             ->map(fn ($r) => [
-                'id'                => $r->id,
-                'household'         => $r->household->user->name,
-                'address'           => $r->household->address,
-                'meter_no'          => $r->meter->meter_no,
+                'id' => $r->id,
+                'household' => $r->household->user->name,
+                'address' => $r->household->address,
+                'meter_no' => $r->meter->meter_no,
                 'issue_description' => $r->issue_description,
-                'status'            => $r->status,
-                'requested_date'    => $r->requested_date,
-                'resolved_date'     => $r->resolved_date,
-                'electrician_id'    => $r->electrician_id,
-                'electrician'       => $r->electrician?->user?->name,
+                'status' => $r->status,
+                'requested_date' => $r->requested_date,
+                'resolved_date' => $r->resolved_date,
+                'electrician_id' => $r->electrician_id,
+                'electrician' => $r->electrician?->user?->name,
             ]);
 
         $electricians = Electrician::with('user')->get()->map(fn ($e) => [
-            'id'             => $e->id,
-            'name'           => $e->user->name,
+            'id' => $e->id,
+            'name' => $e->user->name,
             'specialization' => $e->specialization,
         ]);
 
         return Inertia::render('admin/requests/index', [
-            'requests'     => $requests,
+            'requests' => $requests,
             'electricians' => $electricians,
         ]);
     }
@@ -50,7 +50,7 @@ class ServiceRequestController extends Controller
 
         $serviceRequest->update([
             'electrician_id' => $data['electrician_id'],
-            'status'         => 'assigned',
+            'status' => 'assigned',
         ]);
 
         return back();

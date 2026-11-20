@@ -2,7 +2,12 @@ import MeterForm from '@/components/meter-form';
 import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
 
-type Meter = { id: number; meter_no: string; meter_type: string; installation_date: string };
+type Meter = {
+    id: number;
+    meter_no: string;
+    meter_type: string;
+    installation_date: string;
+};
 
 export default function Edit({ meter }: { meter: Meter }) {
     return (

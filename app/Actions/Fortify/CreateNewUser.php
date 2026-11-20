@@ -5,6 +5,7 @@ namespace App\Actions\Fortify;
 use App\Actions\Teams\CreateTeam;
 use App\Concerns\PasswordValidationRules;
 use App\Concerns\ProfileValidationRules;
+use App\Models\Household;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -41,7 +42,7 @@ class CreateNewUser implements CreatesNewUsers
             // Restores the personal team the starter kit creates for every user
             $this->createTeam->handle($user, "{$user->name}'s Team", isPersonal: true);
 
-            \App\Models\Household::create([
+            Household::create([
                 'user_id' => $user->id,
                 'address' => 'Not set yet',
             ]);

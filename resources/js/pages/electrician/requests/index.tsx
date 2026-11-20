@@ -17,10 +17,14 @@ type Req = {
 export default function Index({ requests }: { requests: Req[] }) {
     function resolve(r: Req) {
         if (confirm(`Mark the request for meter ${r.meter_no} as resolved?`)) {
-            router.patch(`/electrician/requests/${r.id}/resolve`, {}, {
-                preserveScroll: true,
-                onSuccess: () => router.flushAll(),
-            });
+            router.patch(
+                `/electrician/requests/${r.id}/resolve`,
+                {},
+                {
+                    preserveScroll: true,
+                    onSuccess: () => router.flushAll(),
+                },
+            );
         }
     }
 
@@ -28,7 +32,9 @@ export default function Index({ requests }: { requests: Req[] }) {
         <AppLayout>
             <Head title="My Assigned Requests" />
             <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">My Assigned Requests</h1>
+                <h1 className="mb-4 text-2xl font-bold">
+                    My Assigned Requests
+                </h1>
 
                 <div className="overflow-x-auto rounded-lg border">
                     <table className="w-full text-left text-sm">
@@ -46,20 +52,42 @@ export default function Index({ requests }: { requests: Req[] }) {
                         </thead>
                         <tbody>
                             {requests.length === 0 && (
-                                <tr><td className="p-3" colSpan={8}>No requests are assigned to you.</td></tr>
+                                <tr>
+                                    <td className="p-3" colSpan={8}>
+                                        No requests are assigned to you.
+                                    </td>
+                                </tr>
                             )}
                             {requests.map((r) => (
-                                <tr key={r.id} className="border-b last:border-0">
+                                <tr
+                                    key={r.id}
+                                    className="border-b last:border-0"
+                                >
                                     <td className="p-3">{r.household}</td>
-                                    <td className="p-3">{r.address}<br /><span className="text-xs text-gray-500">{r.phone_no ?? '-'}</span></td>
+                                    <td className="p-3">
+                                        {r.address}
+                                        <br />
+                                        <span className="text-xs text-gray-500">
+                                            {r.phone_no ?? '-'}
+                                        </span>
+                                    </td>
                                     <td className="p-3">{r.meter_no}</td>
-                                    <td className="p-3">{r.issue_description}</td>
-                                    <td className="p-3"><StatusBadge status={r.status} /></td>
+                                    <td className="p-3">
+                                        {r.issue_description}
+                                    </td>
+                                    <td className="p-3">
+                                        <StatusBadge status={r.status} />
+                                    </td>
                                     <td className="p-3">{r.requested_date}</td>
-                                    <td className="p-3">{r.resolved_date ?? '-'}</td>
+                                    <td className="p-3">
+                                        {r.resolved_date ?? '-'}
+                                    </td>
                                     <td className="p-3 text-right">
                                         {r.status === 'assigned' && (
-                                            <button onClick={() => resolve(r)} className="rounded-md bg-black px-3 py-1 text-white">
+                                            <button
+                                                onClick={() => resolve(r)}
+                                                className="rounded-md bg-black px-3 py-1 text-white"
+                                            >
                                                 Mark resolved
                                             </button>
                                         )}

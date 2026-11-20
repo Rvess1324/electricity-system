@@ -23,8 +23,8 @@ class MeterController extends Controller
     private function rules(?Meter $meter = null): array
     {
         return [
-            'meter_no'          => ['required', 'string', 'max:50', 'unique:meters,meter_no,' . ($meter?->id ?? 'NULL')],
-            'meter_type'        => ['required', 'string', 'max:20'],
+            'meter_no' => ['required', 'string', 'max:50', 'unique:meters,meter_no,'.($meter?->id ?? 'NULL')],
+            'meter_type' => ['required', 'string', 'max:20'],
             'installation_date' => ['required', 'date'],
         ];
     }

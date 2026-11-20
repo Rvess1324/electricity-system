@@ -14,9 +14,9 @@ class EnergyTipController extends Controller
     private function rules(): array
     {
         return [
-            'title'       => ['required', 'string', 'max:100'],
+            'title' => ['required', 'string', 'max:100'],
             'description' => ['required', 'string', 'max:2000'],
-            'category'    => ['required', Rule::in(EnergyTip::CATEGORIES)],
+            'category' => ['required', Rule::in(EnergyTip::CATEGORIES)],
         ];
     }
 
@@ -46,7 +46,7 @@ class EnergyTipController extends Controller
     public function edit(EnergyTip $tip)
     {
         return Inertia::render('admin/tips/edit', [
-            'tip'        => $tip,
+            'tip' => $tip,
             'categories' => EnergyTip::CATEGORIES,
         ]);
     }

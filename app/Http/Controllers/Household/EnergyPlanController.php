@@ -20,14 +20,14 @@ class EnergyPlanController extends Controller
         abort_unless($plan->household_id === $this->household()->id, 403);
     }
 
-        private function rules(): array
+    private function rules(): array
     {
         return [
-            'plan_name'          => ['required', 'string', 'max:100'],
+            'plan_name' => ['required', 'string', 'max:100'],
             'monthly_kwh_target' => ['required', 'numeric', 'min:1', 'max:100000'],
-            'monthly_budget'     => ['required', 'numeric', 'min:0', 'max:10000000'],
-            'start_date'         => ['required', 'date', 'after_or_equal:2000-01-01', 'before:2100-01-01'],
-            'end_date'           => ['required', 'date', 'after:start_date', 'before:2100-01-01'],
+            'monthly_budget' => ['required', 'numeric', 'min:0', 'max:10000000'],
+            'start_date' => ['required', 'date', 'after_or_equal:2000-01-01', 'before:2100-01-01'],
+            'end_date' => ['required', 'date', 'after:start_date', 'before:2100-01-01'],
         ];
     }
 
@@ -56,21 +56,21 @@ class EnergyPlanController extends Controller
         $this->ownOrFail($plan);
 
         $items = $plan->planItems()->with('appliance')->get()->map(fn ($i) => [
-            'id'                    => $i->id,
-            'appliance_name'        => $i->appliance->appliance_name,
-            'wattage'               => $i->appliance->wattage,
-            'quantity'              => $i->appliance->quantity,
-            'usual_hours_per_day'   => $i->appliance->hours_per_day,
+            'id' => $i->id,
+            'appliance_name' => $i->appliance->appliance_name,
+            'wattage' => $i->appliance->wattage,
+            'quantity' => $i->appliance->quantity,
+            'usual_hours_per_day' => $i->appliance->hours_per_day,
             'planned_hours_per_day' => $i->planned_hours_per_day,
-            'priority'              => $i->priority,
-            'planned_kwh'           => round($i->appliance->wattage * $i->appliance->quantity * (float) $i->planned_hours_per_day * 30 / 1000, 1),
+            'priority' => $i->priority,
+            'planned_kwh' => round($i->appliance->wattage * $i->appliance->quantity * (float) $i->planned_hours_per_day * 30 / 1000, 1),
         ]);
 
         return Inertia::render('household/plans/show', [
-            'plan'    => $plan,
-            'items'   => $items,
+            'plan' => $plan,
+            'items' => $items,
             'summary' => $plan->summary(),
-            'rate'    => (float) config('electricity.rate'),
+            'rate' => (float) config('electricity.rate'),
         ]);
     }
 

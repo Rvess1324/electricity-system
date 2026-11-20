@@ -59,9 +59,9 @@ Route::prefix('{current_team}')
     ->group(function () {
         Route::get('dashboard', function () {
             return redirect()->route(match (Auth::user()->role) {
-                'admin'       => 'admin.dashboard',
+                'admin' => 'admin.dashboard',
                 'electrician' => 'electrician.dashboard',
-                default       => 'household.dashboard',
+                default => 'household.dashboard',
             });
         })->name('dashboard');
     });

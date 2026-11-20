@@ -36,18 +36,18 @@ class TipController extends Controller
         }
 
         $tips = $query->get()->map(fn ($t) => [
-            'id'          => $t->id,
-            'title'       => $t->title,
+            'id' => $t->id,
+            'title' => $t->title,
             'description' => $t->description,
-            'category'    => $t->category,
-            'saved'       => in_array($t->id, $savedIds),
-            'suggested'   => $t->category !== null && $myCategories->contains(strtolower($t->category)),
+            'category' => $t->category,
+            'saved' => in_array($t->id, $savedIds),
+            'suggested' => $t->category !== null && $myCategories->contains(strtolower($t->category)),
         ])->sortByDesc('suggested')->values();
 
         return Inertia::render('household/tips/index', [
-            'tips'       => $tips,
+            'tips' => $tips,
             'categories' => EnergyTip::CATEGORIES,
-            'selected'   => $request->input('category', ''),
+            'selected' => $request->input('category', ''),
         ]);
     }
 
@@ -58,11 +58,11 @@ class TipController extends Controller
             ->orderByPivot('saved_at', 'desc')
             ->get()
             ->map(fn ($t) => [
-                'id'          => $t->id,
-                'title'       => $t->title,
+                'id' => $t->id,
+                'title' => $t->title,
                 'description' => $t->description,
-                'category'    => $t->category,
-                'saved_at'    => $t->pivot->saved_at,
+                'category' => $t->category,
+                'saved_at' => $t->pivot->saved_at,
             ]);
 
         return Inertia::render('household/tips/saved', ['tips' => $tips]);

@@ -9,7 +9,13 @@ type Tip = {
     category: string | null;
 };
 
-export default function Edit({ tip, categories }: { tip: Tip; categories: string[] }) {
+export default function Edit({
+    tip,
+    categories,
+}: {
+    tip: Tip;
+    categories: string[];
+}) {
     return (
         <AppLayout>
             <Head title="Edit Tip" />
