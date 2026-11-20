@@ -3,7 +3,6 @@ FROM serversideup/php:8.3-fpm-nginx
 
 USER root
 
-# Copy Node.js and npm directly from the official Node image
 COPY --from=node_builder /usr/local/bin /usr/local/bin
 COPY --from=node_builder /usr/local/lib/node_modules /usr/local/lib/node_modules
 
@@ -11,10 +10,12 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction \
+RUN cp .env.example .env \
+    && composer install --no-dev --optimize-autoloader --no-interaction \
+    && php artisan key:generate \
     && npm ci \
     && npm run build \
-    && rm -rf node_modules
+    && rm -rf node_modules .env
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
