@@ -1,5 +1,5 @@
 FROM node:22-slim AS node_builder
-FROM serversideup/php:8.3-fpm-nginx
+FROM serversideup/php:8.4-fpm-nginx
 
 USER root
 
