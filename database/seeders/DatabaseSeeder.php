@@ -15,6 +15,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Never create well-known demo accounts on a live site by accident.
+        if (! app()->environment(['local', 'testing']) && ! config('app.seed_demo')) {
+            $this->createAdminFromConfig();
+
+            return;
+        }
+
         if (User::where('email', 'admin@example.com')->exists()) {
             return;
         }
@@ -104,5 +111,33 @@ class DatabaseSeeder extends Seeder
             'issue_description' => 'Sparks near the meter box.', 'status' => 'pending',
             'requested_date' => now()->toDateString(),
         ]);
+    }
+
+    /**
+     * Create the real administrator from ADMIN_EMAIL / ADMIN_PASSWORD, once.
+     */
+    private function createAdminFromConfig(): void
+    {
+        $email = config('app.admin_email');
+        $password = config('app.admin_password');
+
+        if (! is_string($email) || ! is_string($password) || $email === '' || $password === '') {
+            return;
+        }
+
+        if (User::where('email', $email)->exists()) {
+            return;
+        }
+
+        $user = User::create([
+            'name' => 'Administrator',
+            'email' => $email,
+            'role' => 'admin',
+            'password' => Hash::make($password),
+            'email_verified_at' => now(),
+        ]);
+
+        app(CreateTeam::class)->handle($user, "{$user->name}'s Team", isPersonal: true);
+        Admin::create(['user_id' => $user->id, 'permissions' => 'all']);
     }
 }

@@ -51,7 +51,6 @@ export default function HouseholdDashboard({
     activePlan,
 }: Props) {
     const card = 'rounded-xl border bg-card p-4 shadow-xs';
-    const link = 'rounded-xl border bg-card shadow-xs p-4 hover:bg-accent';
 
     return (
         <>
@@ -83,8 +82,8 @@ export default function HouseholdDashboard({
                     />
                     <StatCard
                         label="Appliances (estimated)"
-                        value={`${stats.appliance_kwh.toFixed(1)} kWh / month`}
-                        hint={`From ${stats.appliances} appliance(s)`}
+                        value={`${stats.appliance_kwh.toFixed(1)} kWh`}
+                        hint={`Per month, from ${stats.appliances} appliance(s)`}
                     />
                 </div>
 
@@ -156,21 +155,52 @@ export default function HouseholdDashboard({
                     )}
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-3">
-                    <Link href="/household/meters" className={link}>
-                        Meters: <b>{stats.meters}</b> (manage)
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <Link
+                        href="/household/meters"
+                        className="block transition-opacity hover:opacity-80"
+                    >
+                        <StatCard
+                            label="Meters"
+                            value={stats.meters}
+                            hint="Manage meters and usage"
+                        />
                     </Link>
-                    <Link href="/household/appliances" className={link}>
-                        Appliances: <b>{stats.appliances}</b> (manage)
+                    <Link
+                        href="/household/appliances"
+                        className="block transition-opacity hover:opacity-80"
+                    >
+                        <StatCard
+                            label="Appliances"
+                            value={stats.appliances}
+                            hint="Manage appliances"
+                        />
                     </Link>
-                    <Link href="/household/plans" className={link}>
-                        Energy plans: <b>{stats.plans}</b> (manage)
+                    <Link
+                        href="/household/plans"
+                        className="block transition-opacity hover:opacity-80"
+                    >
+                        <StatCard
+                            label="Energy plans"
+                            value={stats.plans}
+                            hint="Manage plans"
+                        />
                     </Link>
-                    <Link href="/household/saved-tips" className={link}>
-                        Saved tips: <b>{stats.saved_tips}</b>
+                    <Link
+                        href="/household/saved-tips"
+                        className="block transition-opacity hover:opacity-80"
+                    >
+                        <StatCard label="Saved tips" value={stats.saved_tips} />
                     </Link>
-                    <Link href="/household/requests" className={link}>
-                        Open service requests: <b>{stats.pending_requests}</b>
+                    <Link
+                        href="/household/requests"
+                        className="block transition-opacity hover:opacity-80"
+                    >
+                        <StatCard
+                            label="Open service requests"
+                            value={stats.pending_requests}
+                            hint="Pending or assigned"
+                        />
                     </Link>
                 </div>
             </div>

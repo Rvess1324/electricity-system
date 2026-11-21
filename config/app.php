@@ -68,6 +68,15 @@ return [
     'timezone' => 'Asia/Manila',
 
     /*
+    | Demo data / first administrator. Demo accounts use a well-known password,
+    | so they are only seeded locally unless SEED_DEMO_DATA=true is set.
+    | On production set ADMIN_EMAIL and ADMIN_PASSWORD to create the real admin.
+    */
+    'seed_demo' => (bool) env('SEED_DEMO_DATA', false),
+    'admin_email' => env('ADMIN_EMAIL'),
+    'admin_password' => env('ADMIN_PASSWORD'),
+
+    /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
     |--------------------------------------------------------------------------
