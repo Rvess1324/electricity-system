@@ -18,8 +18,10 @@ export default function Edit({
     return (
         <>
             <Head title="Edit Tip" />
-            <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">Edit Energy Tip</h1>
+            <div className="p-4 md:p-8">
+                <h1 className="mb-4 text-2xl font-semibold tracking-tight">
+                    Edit Energy Tip
+                </h1>
                 <TipForm tip={tip} categories={categories} />
             </div>
         </>

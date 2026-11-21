@@ -24,10 +24,10 @@ export default function Index({ meter, records, rate, totals }: Props) {
     return (
         <>
             <Head title="Usage Records" />
-            <div className="p-6">
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold">
+                        <h1 className="text-2xl font-semibold tracking-tight">
                             Usage: {meter.meter_no}
                         </h1>
                         <Link
@@ -44,14 +44,14 @@ export default function Index({ meter, records, rate, totals }: Props) {
                         Add record
                     </Link>
                 </div>
-                <div className="overflow-x-auto rounded-lg border">
+                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3">Date</th>
-                                <th className="p-3">kWh</th>
-                                <th className="p-3">Est. cost</th>
-                                <th className="p-3"></th>
+                                <th className="p-3 font-medium">Date</th>
+                                <th className="p-3 font-medium">kWh</th>
+                                <th className="p-3 font-medium">Est. cost</th>
+                                <th className="p-3 font-medium"></th>
                             </tr>
                         </thead>
                         <tbody>

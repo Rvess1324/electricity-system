@@ -24,9 +24,11 @@ export default function Index({ requests }: { requests: Req[] }) {
     return (
         <>
             <Head title="Service Requests" />
-            <div className="p-6">
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">My Service Requests</h1>
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        My Service Requests
+                    </h1>
                     <Link
                         href="/household/requests/create"
                         className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
@@ -35,17 +37,17 @@ export default function Index({ requests }: { requests: Req[] }) {
                     </Link>
                 </div>
 
-                <div className="overflow-x-auto rounded-lg border">
+                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3">Meter</th>
-                                <th className="p-3">Issue</th>
-                                <th className="p-3">Status</th>
-                                <th className="p-3">Electrician</th>
-                                <th className="p-3">Requested</th>
-                                <th className="p-3">Resolved</th>
-                                <th className="p-3"></th>
+                                <th className="p-3 font-medium">Meter</th>
+                                <th className="p-3 font-medium">Issue</th>
+                                <th className="p-3 font-medium">Status</th>
+                                <th className="p-3 font-medium">Electrician</th>
+                                <th className="p-3 font-medium">Requested</th>
+                                <th className="p-3 font-medium">Resolved</th>
+                                <th className="p-3 font-medium"></th>
                             </tr>
                         </thead>
                         <tbody>

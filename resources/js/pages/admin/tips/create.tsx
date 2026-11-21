@@ -5,8 +5,10 @@ export default function Create({ categories }: { categories: string[] }) {
     return (
         <>
             <Head title="Add Tip" />
-            <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">Add Energy Tip</h1>
+            <div className="p-4 md:p-8">
+                <h1 className="mb-4 text-2xl font-semibold tracking-tight">
+                    Add Energy Tip
+                </h1>
                 <TipForm categories={categories} />
             </div>
         </>

@@ -21,9 +21,11 @@ export default function Index({ tips }: { tips: Tip[] }) {
     return (
         <>
             <Head title="Energy Tips" />
-            <div className="p-6">
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">Energy Tips</h1>
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        Energy Tips
+                    </h1>
                     <Link
                         href="/admin/tips/create"
                         className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
@@ -32,14 +34,14 @@ export default function Index({ tips }: { tips: Tip[] }) {
                     </Link>
                 </div>
 
-                <div className="overflow-x-auto rounded-lg border">
+                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3">Title</th>
-                                <th className="p-3">Category</th>
-                                <th className="p-3">Description</th>
-                                <th className="p-3"></th>
+                                <th className="p-3 font-medium">Title</th>
+                                <th className="p-3 font-medium">Category</th>
+                                <th className="p-3 font-medium">Description</th>
+                                <th className="p-3 font-medium"></th>
                             </tr>
                         </thead>
                         <tbody>

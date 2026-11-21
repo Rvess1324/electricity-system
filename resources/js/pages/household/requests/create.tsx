@@ -21,8 +21,10 @@ export default function Create({
     return (
         <>
             <Head title="New Service Request" />
-            <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">New Service Request</h1>
+            <div className="p-4 md:p-8">
+                <h1 className="mb-4 text-2xl font-semibold tracking-tight">
+                    New Service Request
+                </h1>
 
                 {meters.length === 0 ? (
                     <p>

@@ -39,9 +39,11 @@ export default function Index({ tips, categories, selected }: Props) {
     return (
         <>
             <Head title="Energy Tips" />
-            <div className="p-6">
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                    <h1 className="text-2xl font-bold">Energy-Saving Tips</h1>
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        Energy-Saving Tips
+                    </h1>
                     <div className="flex items-center gap-3">
                         <select
                             className="rounded-md border px-3 py-2"
@@ -68,7 +70,10 @@ export default function Index({ tips, categories, selected }: Props) {
 
                 <div className="grid gap-4 md:grid-cols-2">
                     {tips.map((t) => (
-                        <div key={t.id} className="rounded-lg border p-4">
+                        <div
+                            key={t.id}
+                            className="rounded-xl border bg-card p-4 shadow-xs"
+                        >
                             <div className="mb-2 flex flex-wrap items-center gap-2">
                                 <h2 className="text-lg font-semibold">
                                     {t.title}

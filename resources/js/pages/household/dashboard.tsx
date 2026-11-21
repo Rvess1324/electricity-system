@@ -1,5 +1,7 @@
 import { peso } from '@/lib/currency';
 import { Head, Link } from '@inertiajs/react';
+import PageHeader from '@/components/page-header';
+import StatCard from '@/components/stat-card';
 
 type Props = {
     stats: {
@@ -48,57 +50,42 @@ export default function HouseholdDashboard({
     latest,
     activePlan,
 }: Props) {
-    const card = 'rounded-lg border p-4';
-    const link = 'rounded-lg border p-4 hover:bg-accent';
+    const card = 'rounded-xl border bg-card p-4 shadow-xs';
+    const link = 'rounded-xl border bg-card shadow-xs p-4 hover:bg-accent';
 
     return (
         <>
             <Head title="Household Dashboard" />
-            <div className="space-y-6 p-6">
-                <h1 className="text-2xl font-bold">Household Dashboard</h1>
+            <div className="space-y-6 p-4 md:p-8">
+                <PageHeader
+                    title="Household Dashboard"
+                    description="Your usage, plan and service requests."
+                />
 
                 <div className="grid gap-4 md:grid-cols-3">
-                    <div className={card}>
-                        <p className="text-sm text-muted-foreground">
-                            Last 30 days (meters)
-                        </p>
-                        <p className="text-2xl font-bold">
-                            {stats.last30_kwh.toFixed(1)} kWh
-                        </p>
-                        <p className="text-sm">
-                            Estimated cost: {peso(stats.last30_cost)}
-                        </p>
-                    </div>
-
-                    <div className={card}>
-                        <p className="text-sm text-muted-foreground">
-                            Latest reading
-                        </p>
-                        {latest ? (
-                            <>
-                                <p className="text-2xl font-bold">
-                                    {Number(latest.kwh_used).toFixed(1)} kWh
-                                </p>
-                                <p className="text-sm">
-                                    {latest.usage_date} · {latest.meter_no}
-                                </p>
-                            </>
-                        ) : (
-                            <p className="text-sm">No usage records yet.</p>
-                        )}
-                    </div>
-
-                    <div className={card}>
-                        <p className="text-sm text-muted-foreground">
-                            Appliances (estimated)
-                        </p>
-                        <p className="text-2xl font-bold">
-                            {stats.appliance_kwh.toFixed(1)} kWh / month
-                        </p>
-                        <p className="text-sm">
-                            From {stats.appliances} appliance(s)
-                        </p>
-                    </div>
+                    <StatCard
+                        label="Last 30 days (meters)"
+                        value={`${stats.last30_kwh.toFixed(1)} kWh`}
+                        hint={`Estimated cost: ${peso(stats.last30_cost)}`}
+                    />
+                    <StatCard
+                        label="Latest reading"
+                        value={
+                            latest
+                                ? `${Number(latest.kwh_used).toFixed(1)} kWh`
+                                : '—'
+                        }
+                        hint={
+                            latest
+                                ? `${latest.usage_date.slice(0, 10)} · ${latest.meter_no}`
+                                : 'No usage records yet.'
+                        }
+                    />
+                    <StatCard
+                        label="Appliances (estimated)"
+                        value={`${stats.appliance_kwh.toFixed(1)} kWh / month`}
+                        hint={`From ${stats.appliances} appliance(s)`}
+                    />
                 </div>
 
                 <div className={card}>

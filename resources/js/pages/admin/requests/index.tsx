@@ -76,22 +76,22 @@ export default function Index({
     return (
         <>
             <Head title="Service Requests" />
-            <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">
+            <div className="p-4 md:p-8">
+                <h1 className="mb-4 text-2xl font-semibold tracking-tight">
                     All Service Requests
                 </h1>
 
-                <div className="overflow-x-auto rounded-lg border">
+                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3">Household</th>
-                                <th className="p-3">Meter</th>
-                                <th className="p-3">Issue</th>
-                                <th className="p-3">Status</th>
-                                <th className="p-3">Requested</th>
-                                <th className="p-3">Resolved</th>
-                                <th className="p-3">Electrician</th>
+                                <th className="p-3 font-medium">Household</th>
+                                <th className="p-3 font-medium">Meter</th>
+                                <th className="p-3 font-medium">Issue</th>
+                                <th className="p-3 font-medium">Status</th>
+                                <th className="p-3 font-medium">Requested</th>
+                                <th className="p-3 font-medium">Resolved</th>
+                                <th className="p-3 font-medium">Electrician</th>
                             </tr>
                         </thead>
                         <tbody>

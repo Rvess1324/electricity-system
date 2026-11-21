@@ -10,8 +10,8 @@ export default function Create({ plan, appliances }: Props) {
     return (
         <>
             <Head title="Add Plan Item" />
-            <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">
+            <div className="p-4 md:p-8">
+                <h1 className="mb-4 text-2xl font-semibold tracking-tight">
                     Add appliance to "{plan.plan_name}"
                 </h1>
                 <PlanItemForm plan={plan} appliances={appliances} />

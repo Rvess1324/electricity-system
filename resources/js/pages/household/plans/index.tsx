@@ -26,9 +26,11 @@ export default function Index({ plans }: { plans: Plan[] }) {
     return (
         <>
             <Head title="Energy Plans" />
-            <div className="p-6">
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">My Energy Plans</h1>
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        My Energy Plans
+                    </h1>
                     <Link
                         href="/household/plans/create"
                         className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
@@ -37,17 +39,19 @@ export default function Index({ plans }: { plans: Plan[] }) {
                     </Link>
                 </div>
 
-                <div className="overflow-x-auto rounded-lg border">
+                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3">Plan</th>
-                                <th className="p-3">Period</th>
-                                <th className="p-3">Target kWh</th>
-                                <th className="p-3">Planned kWh</th>
-                                <th className="p-3">Budget</th>
-                                <th className="p-3">Planned cost</th>
-                                <th className="p-3"></th>
+                                <th className="p-3 font-medium">Plan</th>
+                                <th className="p-3 font-medium">Period</th>
+                                <th className="p-3 font-medium">Target kWh</th>
+                                <th className="p-3 font-medium">Planned kWh</th>
+                                <th className="p-3 font-medium">Budget</th>
+                                <th className="p-3 font-medium">
+                                    Planned cost
+                                </th>
+                                <th className="p-3 font-medium"></th>
                             </tr>
                         </thead>
                         <tbody>

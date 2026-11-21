@@ -21,9 +21,11 @@ export default function Saved({ tips }: { tips: Tip[] }) {
     return (
         <>
             <Head title="Saved Tips" />
-            <div className="p-6">
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">My Saved Tips</h1>
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        My Saved Tips
+                    </h1>
                     <Link href="/household/tips" className="underline">
                         Browse all tips
                     </Link>
@@ -41,7 +43,10 @@ export default function Saved({ tips }: { tips: Tip[] }) {
 
                 <div className="grid gap-4 md:grid-cols-2">
                     {tips.map((t) => (
-                        <div key={t.id} className="rounded-lg border p-4">
+                        <div
+                            key={t.id}
+                            className="rounded-xl border bg-card p-4 shadow-xs"
+                        >
                             <div className="mb-2 flex flex-wrap items-center gap-2">
                                 <h2 className="text-lg font-semibold">
                                     {t.title}

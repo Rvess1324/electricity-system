@@ -60,15 +60,17 @@ export default function Show({
         }
     }
 
-    const card = 'rounded-lg border p-4';
+    const card = 'rounded-xl border bg-card shadow-xs p-4';
 
     return (
         <>
             <Head title={plan.plan_name} />
-            <div className="space-y-6 p-6">
+            <div className="space-y-6 p-4 md:p-8">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold">{plan.plan_name}</h1>
+                        <h1 className="text-2xl font-semibold tracking-tight">
+                            {plan.plan_name}
+                        </h1>
                         <p className="text-sm text-muted-foreground">
                             {plan.start_date} to {plan.end_date} · rate{' '}
                             {peso(rate)} per kWh
@@ -92,7 +94,7 @@ export default function Show({
                         <p className="text-sm text-muted-foreground">
                             Planned kWh / month
                         </p>
-                        <p className="text-2xl font-bold">
+                        <p className="text-2xl font-semibold tracking-tight">
                             {summary.planned_kwh.toFixed(1)}
                         </p>
                         <p className="mb-2 text-sm">
@@ -109,7 +111,7 @@ export default function Show({
                         <p className="text-sm text-muted-foreground">
                             Planned cost / month
                         </p>
-                        <p className="text-2xl font-bold">
+                        <p className="text-2xl font-semibold tracking-tight">
                             {peso(summary.planned_cost)}
                         </p>
                         <p className="mb-2 text-sm">
@@ -133,7 +135,7 @@ export default function Show({
                             </p>
                         ) : (
                             <>
-                                <p className="text-2xl font-bold">
+                                <p className="text-2xl font-semibold tracking-tight">
                                     {summary.actual_monthly.toFixed(1)} kWh / 30
                                     days
                                 </p>
@@ -182,18 +184,28 @@ export default function Show({
                         </Link>
                     </div>
 
-                    <div className="overflow-x-auto rounded-lg border">
+                    <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                         <table className="w-full text-left text-sm">
                             <thead className="border-b bg-muted/50">
                                 <tr>
-                                    <th className="p-3">Appliance</th>
-                                    <th className="p-3">Watts</th>
-                                    <th className="p-3">Qty</th>
-                                    <th className="p-3">Usual hrs/day</th>
-                                    <th className="p-3">Planned hrs/day</th>
-                                    <th className="p-3">Priority</th>
-                                    <th className="p-3">Planned kWh/month</th>
-                                    <th className="p-3"></th>
+                                    <th className="p-3 font-medium">
+                                        Appliance
+                                    </th>
+                                    <th className="p-3 font-medium">Watts</th>
+                                    <th className="p-3 font-medium">Qty</th>
+                                    <th className="p-3 font-medium">
+                                        Usual hrs/day
+                                    </th>
+                                    <th className="p-3 font-medium">
+                                        Planned hrs/day
+                                    </th>
+                                    <th className="p-3 font-medium">
+                                        Priority
+                                    </th>
+                                    <th className="p-3 font-medium">
+                                        Planned kWh/month
+                                    </th>
+                                    <th className="p-3 font-medium"></th>
                                 </tr>
                             </thead>
                             <tbody>
