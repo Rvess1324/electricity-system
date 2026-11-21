@@ -10,12 +10,29 @@ use Inertia\Inertia;
 
 class ServiceRequestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $status = $request->string('status')->toString();
+        $search = trim($request->string('q')->toString());
+
         $requests = ServiceRequest::with(['household.user', 'meter', 'electrician.user'])
+            ->when(
+                in_array($status, ['pending', 'assigned', 'resolved'], true),
+                fn ($query) => $query->where('status', $status),
+            )
+            ->when($search !== '', function ($query) use ($search) {
+                $like = '%'.$search.'%';
+
+                $query->where(function ($query) use ($like) {
+                    $query->where('issue_description', 'like', $like)
+                        ->orWhereHas('meter', fn ($m) => $m->where('meter_no', 'like', $like))
+                        ->orWhereHas('household.user', fn ($u) => $u->where('name', 'like', $like));
+                });
+            })
             ->latest('id')
-            ->get()
-            ->map(fn ($r) => [
+            ->paginate(10)
+            ->withQueryString()
+            ->through(fn ($r) => [
                 'id' => $r->id,
                 'household' => $r->household->user->name,
                 'address' => $r->household->address,
@@ -37,6 +54,7 @@ class ServiceRequestController extends Controller
         return Inertia::render('admin/requests/index', [
             'requests' => $requests,
             'electricians' => $electricians,
+            'filters' => ['q' => $search, 'status' => $status],
         ]);
     }
 

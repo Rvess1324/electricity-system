@@ -1,3 +1,5 @@
+import ListToolbar from '@/components/list-toolbar';
+import Pagination, { type Paginated } from '@/components/pagination';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Tip = {
@@ -7,7 +9,13 @@ type Tip = {
     category: string | null;
 };
 
-export default function Index({ tips }: { tips: Tip[] }) {
+export default function Index({
+    tips,
+    categories,
+}: {
+    tips: Paginated<Tip>;
+    categories: string[];
+}) {
     function remove(t: Tip) {
         if (
             confirm(
@@ -34,6 +42,12 @@ export default function Index({ tips }: { tips: Tip[] }) {
                     </Link>
                 </div>
 
+                <ListToolbar
+                    filterName="category"
+                    allLabel="All categories"
+                    options={categories}
+                    placeholder="Search tips..."
+                />
                 <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-muted/50">
@@ -45,14 +59,14 @@ export default function Index({ tips }: { tips: Tip[] }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {tips.length === 0 && (
+                            {tips.data.length === 0 && (
                                 <tr>
                                     <td className="p-3" colSpan={4}>
                                         No tips yet. Add the first one.
                                     </td>
                                 </tr>
                             )}
-                            {tips.map((t) => (
+                            {tips.data.map((t) => (
                                 <tr
                                     key={t.id}
                                     className="border-b last:border-0"
@@ -85,6 +99,7 @@ export default function Index({ tips }: { tips: Tip[] }) {
                         </tbody>
                     </table>
                 </div>
+                <Pagination page={tips} />
             </div>
         </>
     );

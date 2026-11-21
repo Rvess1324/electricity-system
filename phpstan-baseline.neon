@@ -93,13 +93,13 @@ parameters:
 		-
 			message: '#^Relation ''household'' is not found in App\\Models\\ServiceRequest model\.$#'
 			identifier: larastan.relationExistence
-			count: 1
+			count: 2
 			path: app/Http/Controllers/Admin/ServiceRequestController.php
 
 		-
 			message: '#^Relation ''meter'' is not found in App\\Models\\ServiceRequest model\.$#'
 			identifier: larastan.relationExistence
-			count: 1
+			count: 2
 			path: app/Http/Controllers/Admin/ServiceRequestController.php
 
 		-

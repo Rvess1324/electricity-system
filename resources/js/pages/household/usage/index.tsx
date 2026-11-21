@@ -1,3 +1,4 @@
+import Pagination, { type Paginated } from '@/components/pagination';
 import { peso } from '@/lib/currency';
 import { Head, Link, router } from '@inertiajs/react';
 
@@ -9,7 +10,7 @@ type Record = {
 };
 type Props = {
     meter: { id: number; meter_no: string };
-    records: Record[];
+    records: Paginated<Record>;
     rate: number;
     totals: { kwh: number; cost: number };
 };
@@ -55,14 +56,14 @@ export default function Index({ meter, records, rate, totals }: Props) {
                             </tr>
                         </thead>
                         <tbody>
-                            {records.length === 0 && (
+                            {records.data.length === 0 && (
                                 <tr>
                                     <td className="p-3" colSpan={4}>
                                         No records yet.
                                     </td>
                                 </tr>
                             )}
-                            {records.map((r) => (
+                            {records.data.map((r) => (
                                 <tr
                                     key={r.id}
                                     className="border-b last:border-0"
@@ -95,6 +96,7 @@ export default function Index({ meter, records, rate, totals }: Props) {
                         </tbody>
                     </table>
                 </div>
+                <Pagination page={records} />
                 <p className="mt-4 text-sm">
                     Total: <b>{totals.kwh.toFixed(2)} kWh</b> costing{' '}
                     <b>{peso(totals.cost)}</b> (rate {peso(rate)}/kWh)

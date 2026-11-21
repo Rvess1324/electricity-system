@@ -16,13 +16,20 @@ class ServiceRequestController extends Controller
         return Auth::user()->household()->firstOrCreate([], ['address' => 'Not set yet']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $status = $request->string('status')->toString();
+
         $requests = $this->household()->serviceRequests()
             ->with(['meter', 'electrician.user'])
+            ->when(
+                in_array($status, ['pending', 'assigned', 'resolved'], true),
+                fn ($query) => $query->where('status', $status),
+            )
             ->latest('id')
-            ->get()
-            ->map(fn ($r) => [
+            ->paginate(10)
+            ->withQueryString()
+            ->through(fn ($r) => [
                 'id' => $r->id,
                 'meter_no' => $r->meter->meter_no,
                 'issue_description' => $r->issue_description,
@@ -32,7 +39,10 @@ class ServiceRequestController extends Controller
                 'electrician' => $r->electrician?->user?->name,
             ]);
 
-        return Inertia::render('household/requests/index', ['requests' => $requests]);
+        return Inertia::render('household/requests/index', [
+            'requests' => $requests,
+            'filters' => ['status' => $status],
+        ]);
     }
 
     public function create()

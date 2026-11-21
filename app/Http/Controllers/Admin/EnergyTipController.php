@@ -20,10 +20,31 @@ class EnergyTipController extends Controller
         ];
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $category = $request->string('category')->toString();
+        $search = trim($request->string('q')->toString());
+
+        $tips = EnergyTip::query()
+            ->when(
+                in_array($category, EnergyTip::CATEGORIES, true),
+                fn ($query) => $query->where('category', $category),
+            )
+            ->when($search !== '', function ($query) use ($search) {
+                $like = '%'.$search.'%';
+
+                $query->where(fn ($query) => $query
+                    ->where('title', 'like', $like)
+                    ->orWhere('description', 'like', $like));
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return Inertia::render('admin/tips/index', [
-            'tips' => EnergyTip::latest()->get(),
+            'tips' => $tips,
+            'categories' => EnergyTip::CATEGORIES,
+            'filters' => ['q' => $search, 'category' => $category],
         ]);
     }
 

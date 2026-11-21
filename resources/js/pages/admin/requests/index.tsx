@@ -1,3 +1,5 @@
+import ListToolbar from '@/components/list-toolbar';
+import Pagination, { type Paginated } from '@/components/pagination';
 import StatusBadge from '@/components/status-badge';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
@@ -70,7 +72,7 @@ export default function Index({
     requests,
     electricians,
 }: {
-    requests: Req[];
+    requests: Paginated<Req>;
     electricians: Electrician[];
 }) {
     return (
@@ -81,6 +83,10 @@ export default function Index({
                     All Service Requests
                 </h1>
 
+                <ListToolbar
+                    options={['pending', 'assigned', 'resolved']}
+                    placeholder="Search household, meter or issue..."
+                />
                 <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-muted/50">
@@ -95,14 +101,14 @@ export default function Index({
                             </tr>
                         </thead>
                         <tbody>
-                            {requests.length === 0 && (
+                            {requests.data.length === 0 && (
                                 <tr>
                                     <td className="p-3" colSpan={7}>
                                         No service requests yet.
                                     </td>
                                 </tr>
                             )}
-                            {requests.map((r) => (
+                            {requests.data.map((r) => (
                                 <tr
                                     key={r.id}
                                     className="border-b last:border-0"
@@ -136,6 +142,7 @@ export default function Index({
                         </tbody>
                     </table>
                 </div>
+                <Pagination page={requests} />
             </div>
         </>
     );
