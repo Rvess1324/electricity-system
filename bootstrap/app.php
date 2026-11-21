@@ -21,6 +21,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => EnsureUserHasRole::class,
         ]);
 
+        $middleware->redirectUsersTo(fn (Request $request) => route('dashboard', [
+            'current_team' => $request->user()->currentTeam->slug,
+        ]));
+
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->web(append: [

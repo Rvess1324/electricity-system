@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Actions\Teams\CreateTeam;
 use App\Models\Admin;
 use App\Models\Electrician;
 use App\Models\Household;
@@ -39,6 +40,12 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
+
+        // Starter kit requires a personal team for every user
+        $createTeam = app(CreateTeam::class);
+        foreach ([$adminUser, $houseUser, $elecUser] as $user) {
+            $createTeam->handle($user, "{$user->name}'s Team", isPersonal: true);
+        }
 
         $admin = Admin::create(['user_id' => $adminUser->id, 'permissions' => 'all']);
         $household = Household::create([
