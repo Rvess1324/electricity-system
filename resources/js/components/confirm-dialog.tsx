@@ -37,7 +37,10 @@ export default function ConfirmDialog({
                     <DialogDescription>{description}</DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="gap-2">
-                    <Button variant="secondary" onClick={() => onOpenChange(false)}>
+                    <Button
+                        variant="secondary"
+                        onClick={() => onOpenChange(false)}
+                    >
                         Cancel
                     </Button>
                     <Button

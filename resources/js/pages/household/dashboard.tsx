@@ -49,8 +49,7 @@ export default function HouseholdDashboard({
     activePlan,
 }: Props) {
     const card = 'rounded-lg border p-4';
-    const link =
-        'rounded-lg border p-4 hover:bg-accent';
+    const link = 'rounded-lg border p-4 hover:bg-accent';
 
     return (
         <>
@@ -72,7 +71,9 @@ export default function HouseholdDashboard({
                     </div>
 
                     <div className={card}>
-                        <p className="text-sm text-muted-foreground">Latest reading</p>
+                        <p className="text-sm text-muted-foreground">
+                            Latest reading
+                        </p>
                         {latest ? (
                             <>
                                 <p className="text-2xl font-bold">
