@@ -1,4 +1,3 @@
-import AppLayout from '@/layouts/app-layout';
 import { Head, Link } from '@inertiajs/react';
 
 type Props = {
@@ -24,7 +23,7 @@ export default function AdminDashboard({ stats, pendingRequests }: Props) {
     const card = 'rounded-lg border p-4';
 
     return (
-        <AppLayout>
+        <>
             <Head title="Admin Dashboard" />
             <div className="space-y-6 p-6">
                 <h1 className="text-2xl font-bold">Admin Dashboard</h1>
@@ -41,7 +40,7 @@ export default function AdminDashboard({ stats, pendingRequests }: Props) {
                     </div>
                     <Link
                         href="/admin/tips"
-                        className={`${card} hover:bg-gray-50 dark:hover:bg-gray-900`}
+                        className={`${card} hover:bg-accent`}
                     >
                         Energy tips: <b>{stats.tips}</b> (manage)
                     </Link>
@@ -70,7 +69,7 @@ export default function AdminDashboard({ stats, pendingRequests }: Props) {
                     </div>
                     <div className="overflow-x-auto rounded-lg border">
                         <table className="w-full text-left text-sm">
-                            <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                            <thead className="border-b bg-muted/50">
                                 <tr>
                                     <th className="p-3">Household</th>
                                     <th className="p-3">Meter</th>
@@ -106,6 +105,6 @@ export default function AdminDashboard({ stats, pendingRequests }: Props) {
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

@@ -1,5 +1,4 @@
 import StatusBadge from '@/components/status-badge';
-import AppLayout from '@/layouts/app-layout';
 import { Head, router } from '@inertiajs/react';
 
 type Req = {
@@ -29,7 +28,7 @@ export default function Index({ requests }: { requests: Req[] }) {
     }
 
     return (
-        <AppLayout>
+        <>
             <Head title="My Assigned Requests" />
             <div className="p-6">
                 <h1 className="mb-4 text-2xl font-bold">
@@ -38,7 +37,7 @@ export default function Index({ requests }: { requests: Req[] }) {
 
                 <div className="overflow-x-auto rounded-lg border">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                        <thead className="border-b bg-muted/50">
                             <tr>
                                 <th className="p-3">Household</th>
                                 <th className="p-3">Contact</th>
@@ -67,7 +66,7 @@ export default function Index({ requests }: { requests: Req[] }) {
                                     <td className="p-3">
                                         {r.address}
                                         <br />
-                                        <span className="text-xs text-gray-500">
+                                        <span className="text-xs text-muted-foreground">
                                             {r.phone_no ?? '-'}
                                         </span>
                                     </td>
@@ -86,7 +85,7 @@ export default function Index({ requests }: { requests: Req[] }) {
                                         {r.status === 'assigned' && (
                                             <button
                                                 onClick={() => resolve(r)}
-                                                className="rounded-md bg-black px-3 py-1 text-white"
+                                                className="rounded-md bg-primary px-3 py-1 text-primary-foreground hover:bg-primary/90"
                                             >
                                                 Mark resolved
                                             </button>
@@ -98,6 +97,6 @@ export default function Index({ requests }: { requests: Req[] }) {
                     </table>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

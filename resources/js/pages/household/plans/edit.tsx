@@ -1,5 +1,4 @@
 import PlanForm from '@/components/plan-form';
-import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
 
 type Plan = {
@@ -13,12 +12,12 @@ type Plan = {
 
 export default function Edit({ plan }: { plan: Plan }) {
     return (
-        <AppLayout>
+        <>
             <Head title="Edit Energy Plan" />
             <div className="p-6">
                 <h1 className="mb-4 text-2xl font-bold">Edit Energy Plan</h1>
                 <PlanForm plan={plan} />
             </div>
-        </AppLayout>
+        </>
     );
 }

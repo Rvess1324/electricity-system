@@ -1,4 +1,3 @@
-import AppLayout from '@/layouts/app-layout';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Tip = {
@@ -38,7 +37,7 @@ export default function Index({ tips, categories, selected }: Props) {
     }
 
     return (
-        <AppLayout>
+        <>
             <Head title="Energy Tips" />
             <div className="p-6">
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -75,12 +74,12 @@ export default function Index({ tips, categories, selected }: Props) {
                                     {t.title}
                                 </h2>
                                 {t.category && (
-                                    <span className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-800">
+                                    <span className="rounded bg-muted px-2 py-0.5 text-xs text-muted-foreground">
                                         {t.category}
                                     </span>
                                 )}
                                 {t.suggested && (
-                                    <span className="rounded bg-green-100 px-2 py-0.5 text-xs text-green-800">
+                                    <span className="rounded bg-success-soft px-2 py-0.5 text-xs text-success">
                                         Suggested for your appliances
                                     </span>
                                 )}
@@ -96,7 +95,7 @@ export default function Index({ tips, categories, selected }: Props) {
                             ) : (
                                 <button
                                     onClick={() => save(t)}
-                                    className="rounded-md bg-black px-3 py-1 text-sm text-white"
+                                    className="rounded-md bg-primary px-3 py-1 text-sm text-primary-foreground hover:bg-primary/90"
                                 >
                                     Save tip
                                 </button>
@@ -105,6 +104,6 @@ export default function Index({ tips, categories, selected }: Props) {
                     ))}
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

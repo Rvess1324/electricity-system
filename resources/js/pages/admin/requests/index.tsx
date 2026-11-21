@@ -1,5 +1,4 @@
 import StatusBadge from '@/components/status-badge';
-import AppLayout from '@/layouts/app-layout';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 
@@ -59,7 +58,7 @@ function AssignCell({
             <button
                 onClick={assign}
                 disabled={!value || value === r.electrician_id?.toString()}
-                className="rounded-md bg-black px-3 py-1 text-white disabled:opacity-40"
+                className="rounded-md bg-primary px-3 py-1 text-primary-foreground hover:bg-primary/90 disabled:opacity-40"
             >
                 {r.status === 'pending' ? 'Assign' : 'Reassign'}
             </button>
@@ -75,7 +74,7 @@ export default function Index({
     electricians: Electrician[];
 }) {
     return (
-        <AppLayout>
+        <>
             <Head title="Service Requests" />
             <div className="p-6">
                 <h1 className="mb-4 text-2xl font-bold">
@@ -84,7 +83,7 @@ export default function Index({
 
                 <div className="overflow-x-auto rounded-lg border">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                        <thead className="border-b bg-muted/50">
                             <tr>
                                 <th className="p-3">Household</th>
                                 <th className="p-3">Meter</th>
@@ -111,7 +110,7 @@ export default function Index({
                                     <td className="p-3">
                                         {r.household}
                                         <br />
-                                        <span className="text-xs text-gray-500">
+                                        <span className="text-xs text-muted-foreground">
                                             {r.address}
                                         </span>
                                     </td>
@@ -138,6 +137,6 @@ export default function Index({
                     </table>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

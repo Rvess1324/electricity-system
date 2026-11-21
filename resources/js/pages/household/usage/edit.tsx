@@ -1,5 +1,4 @@
 import UsageForm from '@/components/usage-form';
-import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
 
 type Props = {
@@ -10,7 +9,7 @@ type Props = {
 
 export default function Edit({ meter, record, rate }: Props) {
     return (
-        <AppLayout>
+        <>
             <Head title="Edit Usage Record" />
             <div className="p-6">
                 <h1 className="mb-4 text-2xl font-bold">
@@ -18,6 +17,6 @@ export default function Edit({ meter, record, rate }: Props) {
                 </h1>
                 <UsageForm meter={meter} rate={rate} record={record} />
             </div>
-        </AppLayout>
+        </>
     );
 }

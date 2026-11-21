@@ -1,4 +1,3 @@
-import AppLayout from '@/layouts/app-layout';
 import { Head, Link } from '@inertiajs/react';
 
 type Props = {
@@ -22,7 +21,7 @@ export default function ElectricianDashboard({
     const card = 'rounded-lg border p-4';
 
     return (
-        <AppLayout>
+        <>
             <Head title="Electrician Dashboard" />
             <div className="space-y-6 p-6">
                 <h1 className="text-2xl font-bold">Electrician Dashboard</h1>
@@ -55,7 +54,7 @@ export default function ElectricianDashboard({
                     </div>
                     <div className="overflow-x-auto rounded-lg border">
                         <table className="w-full text-left text-sm">
-                            <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                            <thead className="border-b bg-muted/50">
                                 <tr>
                                     <th className="p-3">Household</th>
                                     <th className="p-3">Address</th>
@@ -93,6 +92,6 @@ export default function ElectricianDashboard({
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

@@ -1,4 +1,3 @@
-import AppLayout from '@/layouts/app-layout';
 import { peso } from '@/lib/currency';
 import { Head, Link } from '@inertiajs/react';
 
@@ -37,7 +36,7 @@ type Props = {
 function Badge({ ok, yes, no }: { ok: boolean; yes: string; no: string }) {
     return (
         <span
-            className={`rounded px-2 py-0.5 text-xs font-medium ${ok ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+            className={`rounded px-2 py-0.5 text-xs font-medium ${ok ? 'bg-success-soft text-success' : 'bg-destructive/10 text-destructive-foreground'}`}
         >
             {ok ? yes : no}
         </span>
@@ -51,17 +50,17 @@ export default function HouseholdDashboard({
 }: Props) {
     const card = 'rounded-lg border p-4';
     const link =
-        'rounded-lg border p-4 hover:bg-gray-50 dark:hover:bg-gray-900';
+        'rounded-lg border p-4 hover:bg-accent';
 
     return (
-        <AppLayout>
+        <>
             <Head title="Household Dashboard" />
             <div className="space-y-6 p-6">
                 <h1 className="text-2xl font-bold">Household Dashboard</h1>
 
                 <div className="grid gap-4 md:grid-cols-3">
                     <div className={card}>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-muted-foreground">
                             Last 30 days (meters)
                         </p>
                         <p className="text-2xl font-bold">
@@ -73,7 +72,7 @@ export default function HouseholdDashboard({
                     </div>
 
                     <div className={card}>
-                        <p className="text-sm text-gray-500">Latest reading</p>
+                        <p className="text-sm text-muted-foreground">Latest reading</p>
                         {latest ? (
                             <>
                                 <p className="text-2xl font-bold">
@@ -89,7 +88,7 @@ export default function HouseholdDashboard({
                     </div>
 
                     <div className={card}>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-muted-foreground">
                             Appliances (estimated)
                         </p>
                         <p className="text-2xl font-bold">
@@ -102,7 +101,7 @@ export default function HouseholdDashboard({
                 </div>
 
                 <div className={card}>
-                    <p className="mb-2 text-sm text-gray-500">
+                    <p className="mb-2 text-sm text-muted-foreground">
                         Current energy plan
                     </p>
                     {activePlan ? (
@@ -187,6 +186,6 @@ export default function HouseholdDashboard({
                     </Link>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

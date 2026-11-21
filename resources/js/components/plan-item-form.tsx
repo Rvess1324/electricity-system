@@ -38,7 +38,7 @@ export default function PlanItemForm({ plan, appliances, item }: Props) {
         }
     }
 
-    const input = 'w-full rounded-md border px-3 py-2';
+    const input = 'w-full rounded-md border bg-background px-3 py-2';
     const isNew = data.appliance_id === 'new';
 
     return (
@@ -71,7 +71,7 @@ export default function PlanItemForm({ plan, appliances, item }: Props) {
 
             {isNew && (
                 <div className="space-y-4 rounded-lg border p-4">
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-muted-foreground">
                         This appliance will also be saved in your{' '}
                         <Link
                             href="/household/appliances"
@@ -221,7 +221,7 @@ export default function PlanItemForm({ plan, appliances, item }: Props) {
                 <button
                     type="submit"
                     disabled={processing}
-                    className="rounded-md bg-black px-4 py-2 text-white disabled:opacity-50"
+                    className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
                 >
                     {item ? 'Save changes' : 'Add to plan'}
                 </button>

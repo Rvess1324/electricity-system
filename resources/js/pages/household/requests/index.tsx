@@ -1,5 +1,4 @@
 import StatusBadge from '@/components/status-badge';
-import AppLayout from '@/layouts/app-layout';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Req = {
@@ -23,14 +22,14 @@ export default function Index({ requests }: { requests: Req[] }) {
     }
 
     return (
-        <AppLayout>
+        <>
             <Head title="Service Requests" />
             <div className="p-6">
                 <div className="mb-4 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">My Service Requests</h1>
                     <Link
                         href="/household/requests/create"
-                        className="rounded-md bg-black px-4 py-2 text-white"
+                        className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
                     >
                         New request
                     </Link>
@@ -38,7 +37,7 @@ export default function Index({ requests }: { requests: Req[] }) {
 
                 <div className="overflow-x-auto rounded-lg border">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                        <thead className="border-b bg-muted/50">
                             <tr>
                                 <th className="p-3">Meter</th>
                                 <th className="p-3">Issue</th>
@@ -92,6 +91,6 @@ export default function Index({ requests }: { requests: Req[] }) {
                     </table>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

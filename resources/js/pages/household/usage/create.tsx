@@ -1,5 +1,4 @@
 import UsageForm from '@/components/usage-form';
-import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
 
 export default function Create({
@@ -10,7 +9,7 @@ export default function Create({
     rate: number;
 }) {
     return (
-        <AppLayout>
+        <>
             <Head title="Add Usage Record" />
             <div className="p-6">
                 <h1 className="mb-4 text-2xl font-bold">
@@ -18,6 +17,6 @@ export default function Create({
                 </h1>
                 <UsageForm meter={meter} rate={rate} />
             </div>
-        </AppLayout>
+        </>
     );
 }

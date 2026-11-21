@@ -1,4 +1,3 @@
-import AppLayout from '@/layouts/app-layout';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Meter = {
@@ -17,21 +16,21 @@ export default function Index({ meters }: { meters: Meter[] }) {
     }
 
     return (
-        <AppLayout>
+        <>
             <Head title="Meters" />
             <div className="p-6">
                 <div className="mb-4 flex items-center justify-between">
                     <h1 className="text-2xl font-bold">My Meters</h1>
                     <Link
                         href="/household/meters/create"
-                        className="rounded-md bg-black px-4 py-2 text-white"
+                        className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
                     >
                         Add meter
                     </Link>
                 </div>
                 <div className="overflow-x-auto rounded-lg border">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                        <thead className="border-b bg-muted/50">
                             <tr>
                                 <th className="p-3">Meter no.</th>
                                 <th className="p-3">Type</th>
@@ -87,6 +86,6 @@ export default function Index({ meters }: { meters: Meter[] }) {
                     </table>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }
