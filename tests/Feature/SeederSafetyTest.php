@@ -37,3 +37,18 @@ test('local environments still get the demo accounts', function () {
 
     expect(User::where('email', 'admin@example.com')->exists())->toBeTrue();
 });
+
+test('production removes demo accounts left by an earlier deploy', function () {
+    app(DatabaseSeeder::class)->run(); // demo accounts, as the old seeder created them
+
+    app()->detectEnvironment(fn () => 'production');
+    config([
+        'app.seed_demo' => false,
+        'app.admin_email' => 'owner@example.org',
+        'app.admin_password' => 'a-long-unique-password',
+    ]);
+
+    app(DatabaseSeeder::class)->run();
+
+    expect(User::pluck('email')->all())->toBe(['owner@example.org']);
+});
