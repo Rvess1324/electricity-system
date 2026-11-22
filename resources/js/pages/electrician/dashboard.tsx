@@ -1,5 +1,6 @@
-import AppLayout from '@/layouts/app-layout';
 import { Head, Link } from '@inertiajs/react';
+import PageHeader from '@/components/page-header';
+import StatCard from '@/components/stat-card';
 
 type Props = {
     stats: { assigned: number; resolved: number };
@@ -19,80 +20,73 @@ export default function ElectricianDashboard({
     upcoming,
     hasProfile,
 }: Props) {
-    const card = 'rounded-lg border p-4';
-
     return (
-        <AppLayout>
+        <>
             <Head title="Electrician Dashboard" />
-            <div className="space-y-6 p-6">
-                <h1 className="text-2xl font-bold">Electrician Dashboard</h1>
+            <div className="space-y-8 p-4 md:p-8">
+                <PageHeader
+                    title="Electrician Dashboard"
+                    description="Your assigned jobs at a glance."
+                />
 
                 {!hasProfile && (
-                    <p className="rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-sm text-yellow-900">
+                    <p className="rounded-xl border border-warning/40 bg-warning-soft p-4 text-sm text-warning">
                         No electrician profile is linked to this account yet, so
                         no requests can be assigned to you.
                     </p>
                 )}
 
-                <div className="grid gap-4 md:grid-cols-2">
-                    <div className={card}>
-                        Assigned requests: <b>{stats.assigned}</b>
-                    </div>
-                    <div className={card}>
-                        Resolved requests: <b>{stats.resolved}</b>
-                    </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                    <StatCard
+                        label="Assigned to you"
+                        value={stats.assigned}
+                        hint="Jobs waiting to be done"
+                    />
+                    <StatCard label="Resolved" value={stats.resolved} />
                 </div>
 
-                <div>
+                <section>
                     <div className="mb-3 flex items-center justify-between">
-                        <h2 className="text-xl font-semibold">Jobs to do</h2>
+                        <h2 className="text-lg font-semibold">Jobs to do</h2>
                         <Link
                             href="/electrician/requests"
-                            className="underline"
+                            className="text-sm font-medium text-primary underline underline-offset-4"
                         >
                             All my requests
                         </Link>
                     </div>
-                    <div className="overflow-x-auto rounded-lg border">
-                        <table className="w-full text-left text-sm">
-                            <thead className="border-b bg-gray-50 dark:bg-gray-900">
-                                <tr>
-                                    <th className="p-3">Household</th>
-                                    <th className="p-3">Address</th>
-                                    <th className="p-3">Meter</th>
-                                    <th className="p-3">Issue</th>
-                                    <th className="p-3">Requested</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {upcoming.length === 0 && (
-                                    <tr>
-                                        <td className="p-3" colSpan={5}>
-                                            Nothing assigned right now.
-                                        </td>
-                                    </tr>
-                                )}
-                                {upcoming.map((r) => (
-                                    <tr
-                                        key={r.id}
-                                        className="border-b last:border-0"
-                                    >
-                                        <td className="p-3">{r.household}</td>
-                                        <td className="p-3">{r.address}</td>
-                                        <td className="p-3">{r.meter_no}</td>
-                                        <td className="p-3">
-                                            {r.issue_description}
-                                        </td>
-                                        <td className="p-3">
+
+                    {upcoming.length === 0 ? (
+                        <p className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
+                            Nothing assigned right now.
+                        </p>
+                    ) : (
+                        <ul className="grid gap-3 md:grid-cols-2">
+                            {upcoming.map((r) => (
+                                <li
+                                    key={r.id}
+                                    className="rounded-xl border bg-card p-4 shadow-xs"
+                                >
+                                    <div className="flex items-start justify-between gap-3">
+                                        <p className="font-semibold">
+                                            {r.household}
+                                        </p>
+                                        <span className="shrink-0 text-xs text-muted-foreground">
                                             {r.requested_date}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                                        </span>
+                                    </div>
+                                    <p className="mt-1 text-sm text-muted-foreground">
+                                        {r.address} · Meter {r.meter_no}
+                                    </p>
+                                    <p className="mt-3 text-sm">
+                                        {r.issue_description}
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </section>
             </div>
-        </AppLayout>
+        </>
     );
 }

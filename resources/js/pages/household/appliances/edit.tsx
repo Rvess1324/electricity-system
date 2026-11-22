@@ -1,5 +1,4 @@
 import ApplianceForm from '@/components/appliance-form';
-import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
 
 type Appliance = {
@@ -13,12 +12,14 @@ type Appliance = {
 
 export default function Edit({ appliance }: { appliance: Appliance }) {
     return (
-        <AppLayout>
+        <>
             <Head title="Edit Appliance" />
-            <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">Edit Appliance</h1>
+            <div className="p-4 md:p-8">
+                <h1 className="mb-4 text-2xl font-semibold tracking-tight">
+                    Edit Appliance
+                </h1>
                 <ApplianceForm appliance={appliance} />
             </div>
-        </AppLayout>
+        </>
     );
 }

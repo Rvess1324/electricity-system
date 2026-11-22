@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\ElectricianController;
 use App\Http\Controllers\Admin\EnergyTipController;
+use App\Http\Controllers\Admin\HouseholdController;
 use App\Http\Controllers\Admin\ServiceRequestController as AdminServiceRequestController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Electrician\ServiceRequestController as ElectricianServiceRequestController;
@@ -24,6 +26,8 @@ Route::inertia('/', 'welcome')->name('home');
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'admin'])->name('dashboard');
     Route::resource('tips', EnergyTipController::class)->except(['show']);
+    Route::resource('electricians', ElectricianController::class)->except(['show']);
+    Route::resource('households', HouseholdController::class)->only(['index', 'edit', 'update', 'destroy']);
     Route::get('requests', [AdminServiceRequestController::class, 'index'])->name('requests.index');
     Route::patch('requests/{serviceRequest}/assign', [AdminServiceRequestController::class, 'assign'])->name('requests.assign');
 });

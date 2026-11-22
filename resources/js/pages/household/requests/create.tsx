@@ -1,4 +1,3 @@
-import AppLayout from '@/layouts/app-layout';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 import { type FormEvent } from 'react';
 
@@ -17,13 +16,15 @@ export default function Create({
         post('/household/requests', { onSuccess: () => router.flushAll() });
     }
 
-    const input = 'w-full rounded-md border px-3 py-2';
+    const input = 'w-full rounded-md border bg-background px-3 py-2';
 
     return (
-        <AppLayout>
+        <>
             <Head title="New Service Request" />
-            <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">New Service Request</h1>
+            <div className="p-4 md:p-8">
+                <h1 className="mb-4 text-2xl font-semibold tracking-tight">
+                    New Service Request
+                </h1>
 
                 {meters.length === 0 ? (
                     <p>
@@ -86,7 +87,7 @@ export default function Create({
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="rounded-md bg-black px-4 py-2 text-white disabled:opacity-50"
+                                className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
                             >
                                 Send request
                             </button>
@@ -100,6 +101,6 @@ export default function Create({
                     </form>
                 )}
             </div>
-        </AppLayout>
+        </>
     );
 }

@@ -1,5 +1,6 @@
+import ListToolbar from '@/components/list-toolbar';
+import Pagination, { type Paginated } from '@/components/pagination';
 import StatusBadge from '@/components/status-badge';
-import AppLayout from '@/layouts/app-layout';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 
@@ -59,7 +60,7 @@ function AssignCell({
             <button
                 onClick={assign}
                 disabled={!value || value === r.electrician_id?.toString()}
-                className="rounded-md bg-black px-3 py-1 text-white disabled:opacity-40"
+                className="rounded-md bg-primary px-3 py-1 text-primary-foreground hover:bg-primary/90 disabled:opacity-40"
             >
                 {r.status === 'pending' ? 'Assign' : 'Reassign'}
             </button>
@@ -71,39 +72,43 @@ export default function Index({
     requests,
     electricians,
 }: {
-    requests: Req[];
+    requests: Paginated<Req>;
     electricians: Electrician[];
 }) {
     return (
-        <AppLayout>
+        <>
             <Head title="Service Requests" />
-            <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">
+            <div className="p-4 md:p-8">
+                <h1 className="mb-4 text-2xl font-semibold tracking-tight">
                     All Service Requests
                 </h1>
 
-                <div className="overflow-x-auto rounded-lg border">
+                <ListToolbar
+                    options={['pending', 'assigned', 'resolved']}
+                    placeholder="Search household, meter or issue..."
+                />
+                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                        <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3">Household</th>
-                                <th className="p-3">Meter</th>
-                                <th className="p-3">Issue</th>
-                                <th className="p-3">Status</th>
-                                <th className="p-3">Requested</th>
-                                <th className="p-3">Resolved</th>
-                                <th className="p-3">Electrician</th>
+                                <th className="p-3 font-medium">Household</th>
+                                <th className="p-3 font-medium">Meter</th>
+                                <th className="p-3 font-medium">Issue</th>
+                                <th className="p-3 font-medium">Status</th>
+                                <th className="p-3 font-medium">Requested</th>
+                                <th className="p-3 font-medium">Resolved</th>
+                                <th className="p-3 font-medium">Electrician</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {requests.length === 0 && (
+                            {requests.data.length === 0 && (
                                 <tr>
                                     <td className="p-3" colSpan={7}>
                                         No service requests yet.
                                     </td>
                                 </tr>
                             )}
-                            {requests.map((r) => (
+                            {requests.data.map((r) => (
                                 <tr
                                     key={r.id}
                                     className="border-b last:border-0"
@@ -111,7 +116,7 @@ export default function Index({
                                     <td className="p-3">
                                         {r.household}
                                         <br />
-                                        <span className="text-xs text-gray-500">
+                                        <span className="text-xs text-muted-foreground">
                                             {r.address}
                                         </span>
                                     </td>
@@ -137,7 +142,8 @@ export default function Index({
                         </tbody>
                     </table>
                 </div>
+                <Pagination page={requests} />
             </div>
-        </AppLayout>
+        </>
     );
 }

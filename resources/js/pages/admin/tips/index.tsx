@@ -1,4 +1,6 @@
-import AppLayout from '@/layouts/app-layout';
+import { useConfirm } from '@/hooks/use-confirm';
+import ListToolbar from '@/components/list-toolbar';
+import Pagination, { type Paginated } from '@/components/pagination';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Tip = {
@@ -8,50 +10,69 @@ type Tip = {
     category: string | null;
 };
 
-export default function Index({ tips }: { tips: Tip[] }) {
+export default function Index({
+    tips,
+    categories,
+}: {
+    tips: Paginated<Tip>;
+    categories: string[];
+}) {
+    const { ask, dialog } = useConfirm();
+
     function remove(t: Tip) {
-        if (
-            confirm(
-                `Delete the tip "${t.title}"? Households that saved it will lose it.`,
-            )
-        ) {
-            router.delete(`/admin/tips/${t.id}`);
-        }
+        ask({
+            title: 'Delete tip',
+            description: `Delete the tip "${t.title}"? Households that saved it will lose it.`,
+            confirmLabel: 'Delete',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/admin/tips/${t.id}`);
+            },
+        });
     }
 
     return (
-        <AppLayout>
+        <>
             <Head title="Energy Tips" />
-            <div className="p-6">
+            {dialog}
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">Energy Tips</h1>
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        Energy Tips
+                    </h1>
                     <Link
                         href="/admin/tips/create"
-                        className="rounded-md bg-black px-4 py-2 text-white"
+                        className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
                     >
                         Add tip
                     </Link>
                 </div>
 
-                <div className="overflow-x-auto rounded-lg border">
+                <ListToolbar
+                    filterName="category"
+                    allLabel="All categories"
+                    options={categories}
+                    placeholder="Search tips..."
+                />
+                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                        <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3">Title</th>
-                                <th className="p-3">Category</th>
-                                <th className="p-3">Description</th>
-                                <th className="p-3"></th>
+                                <th className="p-3 font-medium">Title</th>
+                                <th className="p-3 font-medium">Category</th>
+                                <th className="p-3 font-medium">Description</th>
+                                <th className="p-3 font-medium"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {tips.length === 0 && (
+                            {tips.data.length === 0 && (
                                 <tr>
                                     <td className="p-3" colSpan={4}>
                                         No tips yet. Add the first one.
                                     </td>
                                 </tr>
                             )}
-                            {tips.map((t) => (
+                            {tips.data.map((t) => (
                                 <tr
                                     key={t.id}
                                     className="border-b last:border-0"
@@ -84,7 +105,8 @@ export default function Index({ tips }: { tips: Tip[] }) {
                         </tbody>
                     </table>
                 </div>
+                <Pagination page={tips} />
             </div>
-        </AppLayout>
+        </>
     );
 }

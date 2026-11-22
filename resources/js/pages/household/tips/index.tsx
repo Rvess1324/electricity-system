@@ -1,4 +1,3 @@
-import AppLayout from '@/layouts/app-layout';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Tip = {
@@ -38,11 +37,13 @@ export default function Index({ tips, categories, selected }: Props) {
     }
 
     return (
-        <AppLayout>
+        <>
             <Head title="Energy Tips" />
-            <div className="p-6">
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                    <h1 className="text-2xl font-bold">Energy-Saving Tips</h1>
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        Energy-Saving Tips
+                    </h1>
                     <div className="flex items-center gap-3">
                         <select
                             className="rounded-md border px-3 py-2"
@@ -69,18 +70,21 @@ export default function Index({ tips, categories, selected }: Props) {
 
                 <div className="grid gap-4 md:grid-cols-2">
                     {tips.map((t) => (
-                        <div key={t.id} className="rounded-lg border p-4">
+                        <div
+                            key={t.id}
+                            className="rounded-xl border bg-card p-4 shadow-xs"
+                        >
                             <div className="mb-2 flex flex-wrap items-center gap-2">
                                 <h2 className="text-lg font-semibold">
                                     {t.title}
                                 </h2>
                                 {t.category && (
-                                    <span className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-800">
+                                    <span className="rounded bg-muted px-2 py-0.5 text-xs text-muted-foreground">
                                         {t.category}
                                     </span>
                                 )}
                                 {t.suggested && (
-                                    <span className="rounded bg-green-100 px-2 py-0.5 text-xs text-green-800">
+                                    <span className="rounded bg-success-soft px-2 py-0.5 text-xs text-success">
                                         Suggested for your appliances
                                     </span>
                                 )}
@@ -96,7 +100,7 @@ export default function Index({ tips, categories, selected }: Props) {
                             ) : (
                                 <button
                                     onClick={() => save(t)}
-                                    className="rounded-md bg-black px-3 py-1 text-sm text-white"
+                                    className="rounded-md bg-primary px-3 py-1 text-sm text-primary-foreground hover:bg-primary/90"
                                 >
                                     Save tip
                                 </button>
@@ -105,6 +109,6 @@ export default function Index({ tips, categories, selected }: Props) {
                     ))}
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

@@ -1,6 +1,7 @@
-import AppLayout from '@/layouts/app-layout';
 import { peso } from '@/lib/currency';
 import { Head, Link } from '@inertiajs/react';
+import PageHeader from '@/components/page-header';
+import StatCard from '@/components/stat-card';
 
 type Props = {
     stats: {
@@ -37,7 +38,7 @@ type Props = {
 function Badge({ ok, yes, no }: { ok: boolean; yes: string; no: string }) {
     return (
         <span
-            className={`rounded px-2 py-0.5 text-xs font-medium ${ok ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+            className={`rounded px-2 py-0.5 text-xs font-medium ${ok ? 'bg-success-soft text-success' : 'bg-destructive/10 text-destructive-foreground'}`}
         >
             {ok ? yes : no}
         </span>
@@ -49,60 +50,45 @@ export default function HouseholdDashboard({
     latest,
     activePlan,
 }: Props) {
-    const card = 'rounded-lg border p-4';
-    const link =
-        'rounded-lg border p-4 hover:bg-gray-50 dark:hover:bg-gray-900';
+    const card = 'rounded-xl border bg-card p-4 shadow-xs';
 
     return (
-        <AppLayout>
+        <>
             <Head title="Household Dashboard" />
-            <div className="space-y-6 p-6">
-                <h1 className="text-2xl font-bold">Household Dashboard</h1>
+            <div className="space-y-6 p-4 md:p-8">
+                <PageHeader
+                    title="Household Dashboard"
+                    description="Your usage, plan and service requests."
+                />
 
                 <div className="grid gap-4 md:grid-cols-3">
-                    <div className={card}>
-                        <p className="text-sm text-gray-500">
-                            Last 30 days (meters)
-                        </p>
-                        <p className="text-2xl font-bold">
-                            {stats.last30_kwh.toFixed(1)} kWh
-                        </p>
-                        <p className="text-sm">
-                            Estimated cost: {peso(stats.last30_cost)}
-                        </p>
-                    </div>
-
-                    <div className={card}>
-                        <p className="text-sm text-gray-500">Latest reading</p>
-                        {latest ? (
-                            <>
-                                <p className="text-2xl font-bold">
-                                    {Number(latest.kwh_used).toFixed(1)} kWh
-                                </p>
-                                <p className="text-sm">
-                                    {latest.usage_date} · {latest.meter_no}
-                                </p>
-                            </>
-                        ) : (
-                            <p className="text-sm">No usage records yet.</p>
-                        )}
-                    </div>
-
-                    <div className={card}>
-                        <p className="text-sm text-gray-500">
-                            Appliances (estimated)
-                        </p>
-                        <p className="text-2xl font-bold">
-                            {stats.appliance_kwh.toFixed(1)} kWh / month
-                        </p>
-                        <p className="text-sm">
-                            From {stats.appliances} appliance(s)
-                        </p>
-                    </div>
+                    <StatCard
+                        label="Last 30 days (meters)"
+                        value={`${stats.last30_kwh.toFixed(1)} kWh`}
+                        hint={`Estimated cost: ${peso(stats.last30_cost)}`}
+                    />
+                    <StatCard
+                        label="Latest reading"
+                        value={
+                            latest
+                                ? `${Number(latest.kwh_used).toFixed(1)} kWh`
+                                : '—'
+                        }
+                        hint={
+                            latest
+                                ? `${latest.usage_date.slice(0, 10)} · ${latest.meter_no}`
+                                : 'No usage records yet.'
+                        }
+                    />
+                    <StatCard
+                        label="Appliances (estimated)"
+                        value={`${stats.appliance_kwh.toFixed(1)} kWh`}
+                        hint={`Per month, from ${stats.appliances} appliance(s)`}
+                    />
                 </div>
 
                 <div className={card}>
-                    <p className="mb-2 text-sm text-gray-500">
+                    <p className="mb-2 text-sm text-muted-foreground">
                         Current energy plan
                     </p>
                     {activePlan ? (
@@ -169,24 +155,55 @@ export default function HouseholdDashboard({
                     )}
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-3">
-                    <Link href="/household/meters" className={link}>
-                        Meters: <b>{stats.meters}</b> (manage)
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <Link
+                        href="/household/meters"
+                        className="block transition-opacity hover:opacity-80"
+                    >
+                        <StatCard
+                            label="Meters"
+                            value={stats.meters}
+                            hint="Manage meters and usage"
+                        />
                     </Link>
-                    <Link href="/household/appliances" className={link}>
-                        Appliances: <b>{stats.appliances}</b> (manage)
+                    <Link
+                        href="/household/appliances"
+                        className="block transition-opacity hover:opacity-80"
+                    >
+                        <StatCard
+                            label="Appliances"
+                            value={stats.appliances}
+                            hint="Manage appliances"
+                        />
                     </Link>
-                    <Link href="/household/plans" className={link}>
-                        Energy plans: <b>{stats.plans}</b> (manage)
+                    <Link
+                        href="/household/plans"
+                        className="block transition-opacity hover:opacity-80"
+                    >
+                        <StatCard
+                            label="Energy plans"
+                            value={stats.plans}
+                            hint="Manage plans"
+                        />
                     </Link>
-                    <Link href="/household/saved-tips" className={link}>
-                        Saved tips: <b>{stats.saved_tips}</b>
+                    <Link
+                        href="/household/saved-tips"
+                        className="block transition-opacity hover:opacity-80"
+                    >
+                        <StatCard label="Saved tips" value={stats.saved_tips} />
                     </Link>
-                    <Link href="/household/requests" className={link}>
-                        Open service requests: <b>{stats.pending_requests}</b>
+                    <Link
+                        href="/household/requests"
+                        className="block transition-opacity hover:opacity-80"
+                    >
+                        <StatCard
+                            label="Open service requests"
+                            value={stats.pending_requests}
+                            hint="Pending or assigned"
+                        />
                     </Link>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

@@ -1,15 +1,24 @@
-const colors: Record<string, string> = {
-    pending: 'bg-yellow-100 text-yellow-800',
-    assigned: 'bg-blue-100 text-blue-800',
-    resolved: 'bg-green-100 text-green-800',
+import { cn } from '@/lib/utils';
+
+const styles: Record<string, string> = {
+    pending: 'bg-warning-soft text-warning',
+    assigned: 'bg-info-soft text-info',
+    accepted: 'bg-info-soft text-info',
+    in_progress: 'bg-info-soft text-info',
+    resolved: 'bg-success-soft text-success',
+    completed: 'bg-success-soft text-success',
+    cancelled: 'bg-muted text-muted-foreground',
 };
 
 export default function StatusBadge({ status }: { status: string }) {
     return (
         <span
-            className={`rounded px-2 py-0.5 text-xs font-medium capitalize ${colors[status] ?? 'bg-gray-100 text-gray-800'}`}
+            className={cn(
+                'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize',
+                styles[status] ?? 'bg-muted text-muted-foreground',
+            )}
         >
-            {status}
+            {status.replace('_', ' ')}
         </span>
     );
 }

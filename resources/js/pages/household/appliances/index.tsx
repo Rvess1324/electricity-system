@@ -1,4 +1,4 @@
-import AppLayout from '@/layouts/app-layout';
+import { useConfirm } from '@/hooks/use-confirm';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Appliance = {
@@ -16,37 +16,52 @@ export default function Index({ appliances }: { appliances: Appliance[] }) {
         (a.wattage * a.quantity * Number(a.hours_per_day) * 30) / 1000;
     const total = appliances.reduce((sum, a) => sum + monthlyKwh(a), 0);
 
+    const { ask, dialog } = useConfirm();
+
     function remove(a: Appliance) {
-        if (confirm(`Delete ${a.appliance_name}?`)) {
-            router.delete(`/household/appliances/${a.id}`);
-        }
+        ask({
+            title: 'Delete appliance',
+            description: `Delete ${a.appliance_name}?`,
+            confirmLabel: 'Delete',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/household/appliances/${a.id}`);
+            },
+        });
     }
 
     return (
-        <AppLayout>
+        <>
             <Head title="Appliances" />
-            <div className="p-6">
+            {dialog}
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">My Appliances</h1>
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        My Appliances
+                    </h1>
                     <Link
                         href="/household/appliances/create"
-                        className="rounded-md bg-black px-4 py-2 text-white"
+                        className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
                     >
                         Add appliance
                     </Link>
                 </div>
 
-                <div className="overflow-x-auto rounded-lg border">
+                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                        <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3">Name</th>
-                                <th className="p-3">Category</th>
-                                <th className="p-3">Watts (each)</th>
-                                <th className="p-3">Qty</th>
-                                <th className="p-3">Hours/day</th>
-                                <th className="p-3">Est. kWh/month</th>
-                                <th className="p-3"></th>
+                                <th className="p-3 font-medium">Name</th>
+                                <th className="p-3 font-medium">Category</th>
+                                <th className="p-3 font-medium">
+                                    Watts (each)
+                                </th>
+                                <th className="p-3 font-medium">Qty</th>
+                                <th className="p-3 font-medium">Hours/day</th>
+                                <th className="p-3 font-medium">
+                                    Est. kWh/month
+                                </th>
+                                <th className="p-3 font-medium"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,6 +109,6 @@ export default function Index({ appliances }: { appliances: Appliance[] }) {
                     Total estimated: <b>{total.toFixed(1)} kWh/month</b>
                 </p>
             </div>
-        </AppLayout>
+        </>
     );
 }

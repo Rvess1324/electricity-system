@@ -28,7 +28,7 @@ export default function PlanForm({ plan }: { plan?: Plan }) {
         }
     }
 
-    const input = 'w-full rounded-md border px-3 py-2';
+    const input = 'w-full rounded-md border bg-background px-3 py-2';
 
     return (
         <form onSubmit={submit} className="max-w-md space-y-4">
@@ -118,7 +118,7 @@ export default function PlanForm({ plan }: { plan?: Plan }) {
                 <button
                     type="submit"
                     disabled={processing}
-                    className="rounded-md bg-black px-4 py-2 text-white disabled:opacity-50"
+                    className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
                 >
                     {plan ? 'Save changes' : 'Create plan'}
                 </button>

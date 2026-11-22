@@ -1,4 +1,4 @@
-import AppLayout from '@/layouts/app-layout';
+import { useConfirm } from '@/hooks/use-confirm';
 import { peso } from '@/lib/currency';
 import { Head, Link, router } from '@inertiajs/react';
 
@@ -18,37 +18,50 @@ type Plan = {
 };
 
 export default function Index({ plans }: { plans: Plan[] }) {
+    const { ask, dialog } = useConfirm();
+
     function remove(p: Plan) {
-        if (confirm(`Delete plan "${p.plan_name}" and all its items?`)) {
-            router.delete(`/household/plans/${p.id}`);
-        }
+        ask({
+            title: 'Delete plan',
+            description: `Delete plan "${p.plan_name}" and all its items?`,
+            confirmLabel: 'Delete',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/household/plans/${p.id}`);
+            },
+        });
     }
 
     return (
-        <AppLayout>
+        <>
             <Head title="Energy Plans" />
-            <div className="p-6">
+            {dialog}
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">My Energy Plans</h1>
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        My Energy Plans
+                    </h1>
                     <Link
                         href="/household/plans/create"
-                        className="rounded-md bg-black px-4 py-2 text-white"
+                        className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
                     >
                         New plan
                     </Link>
                 </div>
 
-                <div className="overflow-x-auto rounded-lg border">
+                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                        <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3">Plan</th>
-                                <th className="p-3">Period</th>
-                                <th className="p-3">Target kWh</th>
-                                <th className="p-3">Planned kWh</th>
-                                <th className="p-3">Budget</th>
-                                <th className="p-3">Planned cost</th>
-                                <th className="p-3"></th>
+                                <th className="p-3 font-medium">Plan</th>
+                                <th className="p-3 font-medium">Period</th>
+                                <th className="p-3 font-medium">Target kWh</th>
+                                <th className="p-3 font-medium">Planned kWh</th>
+                                <th className="p-3 font-medium">Budget</th>
+                                <th className="p-3 font-medium">
+                                    Planned cost
+                                </th>
+                                <th className="p-3 font-medium"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,7 +94,7 @@ export default function Index({ plans }: { plans: Plan[] }) {
                                         )}
                                     </td>
                                     <td
-                                        className={`p-3 ${p.summary.kwh_ok ? 'text-green-700' : 'text-red-600'}`}
+                                        className={`p-3 ${p.summary.kwh_ok ? 'text-success' : 'text-red-600'}`}
                                     >
                                         {p.summary.planned_kwh.toFixed(1)}
                                     </td>
@@ -89,7 +102,7 @@ export default function Index({ plans }: { plans: Plan[] }) {
                                         {peso(p.monthly_budget)}
                                     </td>
                                     <td
-                                        className={`p-3 ${p.summary.budget_ok ? 'text-green-700' : 'text-red-600'}`}
+                                        className={`p-3 ${p.summary.budget_ok ? 'text-success' : 'text-red-600'}`}
                                     >
                                         {peso(p.summary.planned_cost)}
                                     </td>
@@ -113,6 +126,6 @@ export default function Index({ plans }: { plans: Plan[] }) {
                     </table>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

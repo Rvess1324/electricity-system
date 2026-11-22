@@ -49,30 +49,6 @@ parameters:
 			path: app/Http/Controllers/Admin/EnergyTipController.php
 
 		-
-			message: '#^Access to an undefined property App\\Models\\Electrician\:\:\$user\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/Admin/ServiceRequestController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\ServiceRequest\:\:\$electrician\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/Admin/ServiceRequestController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\ServiceRequest\:\:\$household\.$#'
-			identifier: property.notFound
-			count: 2
-			path: app/Http/Controllers/Admin/ServiceRequestController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\ServiceRequest\:\:\$meter\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/Admin/ServiceRequestController.php
-
-		-
 			message: '#^Method App\\Http\\Controllers\\Admin\\ServiceRequestController\:\:assign\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -83,42 +59,6 @@ parameters:
 			identifier: missingType.return
 			count: 1
 			path: app/Http/Controllers/Admin/ServiceRequestController.php
-
-		-
-			message: '#^Relation ''electrician'' is not found in App\\Models\\ServiceRequest model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: app/Http/Controllers/Admin/ServiceRequestController.php
-
-		-
-			message: '#^Relation ''household'' is not found in App\\Models\\ServiceRequest model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: app/Http/Controllers/Admin/ServiceRequestController.php
-
-		-
-			message: '#^Relation ''meter'' is not found in App\\Models\\ServiceRequest model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: app/Http/Controllers/Admin/ServiceRequestController.php
-
-		-
-			message: '#^Relation ''user'' is not found in App\\Models\\Electrician model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: app/Http/Controllers/Admin/ServiceRequestController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\ServiceRequest\:\:\$household\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/DashboardController.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\ServiceRequest\:\:\$meter\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/DashboardController.php
 
 		-
 			message: '#^Access to an undefined property App\\Models\\UsageRecord\:\:\$meter\.$#'
@@ -159,18 +99,6 @@ parameters:
 		-
 			message: '#^Method App\\Http\\Controllers\\DashboardController\:\:household\(\) has no return type specified\.$#'
 			identifier: missingType.return
-			count: 1
-			path: app/Http/Controllers/DashboardController.php
-
-		-
-			message: '#^Relation ''household'' is not found in App\\Models\\ServiceRequest model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: app/Http/Controllers/DashboardController.php
-
-		-
-			message: '#^Relation ''meter'' is not found in App\\Models\\ServiceRequest model\.$#'
-			identifier: larastan.relationExistence
 			count: 1
 			path: app/Http/Controllers/DashboardController.php
 
@@ -547,18 +475,6 @@ parameters:
 			path: app/Models/Appliance.php
 
 		-
-			message: '#^Method App\\Models\\Electrician\:\:serviceRequests\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Electrician.php
-
-		-
-			message: '#^Method App\\Models\\Electrician\:\:user\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Electrician.php
-
-		-
 			message: '#^Access to an undefined property App\\Models\\EnergyPlan\:\:\$household\.$#'
 			identifier: property.notFound
 			count: 1
@@ -595,42 +511,6 @@ parameters:
 			path: app/Models/EnergyTip.php
 
 		-
-			message: '#^Method App\\Models\\Household\:\:appliances\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Household.php
-
-		-
-			message: '#^Method App\\Models\\Household\:\:energyPlans\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Household.php
-
-		-
-			message: '#^Method App\\Models\\Household\:\:meters\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Household.php
-
-		-
-			message: '#^Method App\\Models\\Household\:\:savedTips\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Household.php
-
-		-
-			message: '#^Method App\\Models\\Household\:\:serviceRequests\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Household.php
-
-		-
-			message: '#^Method App\\Models\\Household\:\:user\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/Household.php
-
-		-
 			message: '#^Method App\\Models\\Meter\:\:household\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -659,24 +539,6 @@ parameters:
 			identifier: missingType.return
 			count: 1
 			path: app/Models/PlanItem.php
-
-		-
-			message: '#^Method App\\Models\\ServiceRequest\:\:electrician\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/ServiceRequest.php
-
-		-
-			message: '#^Method App\\Models\\ServiceRequest\:\:household\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/ServiceRequest.php
-
-		-
-			message: '#^Method App\\Models\\ServiceRequest\:\:meter\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/ServiceRequest.php
 
 		-
 			message: '#^Method App\\Models\\UsageRecord\:\:meter\(\) has no return type specified\.$#'

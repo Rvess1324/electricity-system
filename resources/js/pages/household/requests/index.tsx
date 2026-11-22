@@ -1,5 +1,7 @@
+import { useConfirm } from '@/hooks/use-confirm';
+import ListToolbar from '@/components/list-toolbar';
+import Pagination, { type Paginated } from '@/components/pagination';
 import StatusBadge from '@/components/status-badge';
-import AppLayout from '@/layouts/app-layout';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Req = {
@@ -12,52 +14,68 @@ type Req = {
     electrician: string | null;
 };
 
-export default function Index({ requests }: { requests: Req[] }) {
+export default function Index({ requests }: { requests: Paginated<Req> }) {
+    const { ask, dialog } = useConfirm();
+
     function cancel(r: Req) {
-        if (confirm(`Cancel the request for meter ${r.meter_no}?`)) {
-            router.delete(`/household/requests/${r.id}`, {
-                preserveScroll: true,
-                onSuccess: () => router.flushAll(),
-            });
-        }
+        ask({
+            title: 'Cancel service request',
+            description: `Cancel the request for meter ${r.meter_no}?`,
+            confirmLabel: 'Cancel request',
+            cancelLabel: 'Keep request',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/household/requests/${r.id}`, {
+                    preserveScroll: true,
+                    onSuccess: () => router.flushAll(),
+                });
+            },
+        });
     }
 
     return (
-        <AppLayout>
+        <>
             <Head title="Service Requests" />
-            <div className="p-6">
+            {dialog}
+            <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">My Service Requests</h1>
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        My Service Requests
+                    </h1>
                     <Link
                         href="/household/requests/create"
-                        className="rounded-md bg-black px-4 py-2 text-white"
+                        className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
                     >
                         New request
                     </Link>
                 </div>
 
-                <div className="overflow-x-auto rounded-lg border">
+                <ListToolbar
+                    options={['pending', 'assigned', 'resolved']}
+                    placeholder="Search..."
+                />
+                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-gray-50 dark:bg-gray-900">
+                        <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3">Meter</th>
-                                <th className="p-3">Issue</th>
-                                <th className="p-3">Status</th>
-                                <th className="p-3">Electrician</th>
-                                <th className="p-3">Requested</th>
-                                <th className="p-3">Resolved</th>
-                                <th className="p-3"></th>
+                                <th className="p-3 font-medium">Meter</th>
+                                <th className="p-3 font-medium">Issue</th>
+                                <th className="p-3 font-medium">Status</th>
+                                <th className="p-3 font-medium">Electrician</th>
+                                <th className="p-3 font-medium">Requested</th>
+                                <th className="p-3 font-medium">Resolved</th>
+                                <th className="p-3 font-medium"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {requests.length === 0 && (
+                            {requests.data.length === 0 && (
                                 <tr>
                                     <td className="p-3" colSpan={7}>
                                         No service requests yet.
                                     </td>
                                 </tr>
                             )}
-                            {requests.map((r) => (
+                            {requests.data.map((r) => (
                                 <tr
                                     key={r.id}
                                     className="border-b last:border-0"
@@ -91,7 +109,8 @@ export default function Index({ requests }: { requests: Req[] }) {
                         </tbody>
                     </table>
                 </div>
+                <Pagination page={requests} />
             </div>
-        </AppLayout>
+        </>
     );
 }
