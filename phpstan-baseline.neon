@@ -1,12 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Access to an undefined property App\\Models\\User\:\:\$admin\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/Admin/EnergyTipController.php
-
-		-
 			message: '#^Method App\\Http\\Controllers\\Admin\\EnergyTipController\:\:create\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -67,24 +61,6 @@ parameters:
 			path: app/Http/Controllers/DashboardController.php
 
 		-
-			message: '#^Access to an undefined property App\\Models\\User\:\:\$electrician\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Http/Controllers/DashboardController.php
-
-		-
-			message: '#^Call to an undefined method object\:\:where\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: app/Http/Controllers/DashboardController.php
-
-		-
-			message: '#^Call to an undefined method object\:\:with\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: app/Http/Controllers/DashboardController.php
-
-		-
 			message: '#^Method App\\Http\\Controllers\\DashboardController\:\:admin\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -109,10 +85,10 @@ parameters:
 			path: app/Http/Controllers/DashboardController.php
 
 		-
-			message: '#^Access to an undefined property App\\Models\\User\:\:\$electrician\.$#'
-			identifier: property.notFound
+			message: '#^Parameter \#1 \$boolean of function abort_unless expects bool, App\\Models\\Electrician\|null given\.$#'
+			identifier: argument.type
 			count: 1
-			path: app/Http/Controllers/Electrician/ServiceRequestController.php
+			path: app/Http/Controllers/Electrician/ApplicationController.php
 
 		-
 			message: '#^Method App\\Http\\Controllers\\Electrician\\ServiceRequestController\:\:electrician\(\) has no return type specified\.$#'
@@ -129,6 +105,12 @@ parameters:
 		-
 			message: '#^Method App\\Http\\Controllers\\Electrician\\ServiceRequestController\:\:resolve\(\) has no return type specified\.$#'
 			identifier: missingType.return
+			count: 1
+			path: app/Http/Controllers/Electrician/ServiceRequestController.php
+
+		-
+			message: '#^Parameter \#1 \$boolean of function abort_unless expects bool, App\\Models\\Electrician\|null given\.$#'
+			identifier: argument.type
 			count: 1
 			path: app/Http/Controllers/Electrician/ServiceRequestController.php
 
@@ -545,21 +527,3 @@ parameters:
 			identifier: missingType.return
 			count: 1
 			path: app/Models/UsageRecord.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:admin\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:electrician\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php
-
-		-
-			message: '#^Method App\\Models\\User\:\:household\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: app/Models/User.php

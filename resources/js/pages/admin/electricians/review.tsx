@@ -73,7 +73,10 @@ export default function Review({
         ['Email', electrician.email],
         ['Phone', electrician.phone_no],
         ['Address', electrician.address],
-        ['Qualification', qualificationLabels[electrician.qualification_type ?? ''] ?? null],
+        [
+            'Qualification',
+            qualificationLabels[electrician.qualification_type ?? ''] ?? null,
+        ],
         ['License or certificate no.', electrician.license_no],
         ['Specialization', electrician.specialization],
         ['Years of experience', electrician.years_experience],
@@ -94,7 +97,11 @@ export default function Review({
             {form.errors.reason && (
                 <p className="text-sm text-destructive">{form.errors.reason}</p>
             )}
-            <Button type="submit" variant="destructive" disabled={form.processing}>
+            <Button
+                type="submit"
+                variant="destructive"
+                disabled={form.processing}
+            >
                 {label}
             </Button>
         </form>
@@ -132,14 +139,18 @@ export default function Review({
                     <dl className="grid gap-3 rounded-xl border bg-card p-4 text-sm sm:grid-cols-2">
                         {details.map(([label, value]) => (
                             <div key={label}>
-                                <dt className="text-muted-foreground">{label}</dt>
+                                <dt className="text-muted-foreground">
+                                    {label}
+                                </dt>
                                 <dd className="font-medium">{value ?? '-'}</dd>
                             </div>
                         ))}
                         {electrician.previous_work && (
                             <div className="sm:col-span-2">
-                                <dt className="text-muted-foreground">Previous work</dt>
-                                <dd className="whitespace-pre-line font-medium">
+                                <dt className="text-muted-foreground">
+                                    Previous work
+                                </dt>
+                                <dd className="font-medium whitespace-pre-line">
                                     {electrician.previous_work}
                                 </dd>
                             </div>
@@ -160,10 +171,14 @@ export default function Review({
                                     </tr>
                                 )}
                                 {documents.map((d) => (
-                                    <tr key={d.id} className="border-b last:border-0">
+                                    <tr
+                                        key={d.id}
+                                        className="border-b last:border-0"
+                                    >
                                         <td className="p-3">
                                             <span className="block font-medium">
-                                                {documentTypeLabels[d.type] ?? d.type}
+                                                {documentTypeLabels[d.type] ??
+                                                    d.type}
                                             </span>
                                             <a
                                                 href={`/documents/${d.id}`}
@@ -182,7 +197,8 @@ export default function Review({
                     </div>
                     {!electrician.has_required_documents && (
                         <p className="mt-2 text-sm text-warning">
-                            A valid ID and a license or certificate are required before approval.
+                            A valid ID and a license or certificate are required
+                            before approval.
                         </p>
                     )}
                 </section>
@@ -206,7 +222,9 @@ export default function Review({
                         </Button>
                     )}
                     {actionError && (
-                        <p className="text-sm text-destructive">{actionError}</p>
+                        <p className="text-sm text-destructive">
+                            {actionError}
+                        </p>
                     )}
                 </section>
             </div>

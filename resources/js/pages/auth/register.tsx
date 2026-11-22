@@ -77,9 +77,9 @@ export default function Register({ passwordRules, teamInvitation }: Props) {
                                 {role === 'electrician' && (
                                     <p className="text-xs text-muted-foreground">
                                         An admin reviews every electrician
-                                        application. After you verify your
-                                        email you can upload your ID and
-                                        license or certificate.
+                                        application. After you verify your email
+                                        you can upload your ID and license or
+                                        certificate.
                                     </p>
                                 )}
                             </fieldset>
@@ -166,9 +166,7 @@ export default function Register({ passwordRules, teamInvitation }: Props) {
                                             <option value="tesda">
                                                 TESDA certificate (NC II)
                                             </option>
-                                            <option value="other">
-                                                Other
-                                            </option>
+                                            <option value="other">Other</option>
                                         </select>
                                         <InputError
                                             message={errors.qualification_type}
@@ -185,7 +183,9 @@ export default function Register({ passwordRules, teamInvitation }: Props) {
                                             required
                                             name="license_no"
                                         />
-                                        <InputError message={errors.license_no} />
+                                        <InputError
+                                            message={errors.license_no}
+                                        />
                                     </div>
 
                                     <div className="grid gap-2">

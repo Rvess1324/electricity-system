@@ -104,7 +104,10 @@ export default function ApplicationPage({
     }
 
     const details: [string, string | number | null][] = [
-        ['Qualification', qualificationLabels[application.qualification_type ?? ''] ?? null],
+        [
+            'Qualification',
+            qualificationLabels[application.qualification_type ?? ''] ?? null,
+        ],
         ['License or certificate no.', application.license_no],
         ['Specialization', application.specialization],
         ['Years of experience', application.years_experience],
@@ -146,7 +149,9 @@ export default function ApplicationPage({
                     <dl className="grid gap-3 rounded-xl border bg-card p-4 text-sm sm:grid-cols-2">
                         {details.map(([label, value]) => (
                             <div key={label}>
-                                <dt className="text-muted-foreground">{label}</dt>
+                                <dt className="text-muted-foreground">
+                                    {label}
+                                </dt>
                                 <dd className="font-medium">{value ?? '-'}</dd>
                             </div>
                         ))}
@@ -155,7 +160,7 @@ export default function ApplicationPage({
                                 <dt className="text-muted-foreground">
                                     Previous work
                                 </dt>
-                                <dd className="whitespace-pre-line font-medium">
+                                <dd className="font-medium whitespace-pre-line">
                                     {application.previous_work}
                                 </dd>
                             </div>
@@ -176,10 +181,14 @@ export default function ApplicationPage({
                                     </tr>
                                 )}
                                 {documents.map((d) => (
-                                    <tr key={d.id} className="border-b last:border-0">
+                                    <tr
+                                        key={d.id}
+                                        className="border-b last:border-0"
+                                    >
                                         <td className="p-3">
                                             <span className="block font-medium">
-                                                {documentTypeLabels[d.type] ?? d.type}
+                                                {documentTypeLabels[d.type] ??
+                                                    d.type}
                                             </span>
                                             <a
                                                 href={`/documents/${d.id}`}
@@ -218,7 +227,9 @@ export default function ApplicationPage({
                                 </label>
                                 <select
                                     value={form.data.type}
-                                    onChange={(e) => form.setData('type', e.target.value)}
+                                    onChange={(e) =>
+                                        form.setData('type', e.target.value)
+                                    }
                                     className="h-9 w-full rounded-md border bg-background px-3 text-sm"
                                 >
                                     {documentTypes.map((t) => (
@@ -237,12 +248,18 @@ export default function ApplicationPage({
                                     type="file"
                                     accept=".pdf,.jpg,.jpeg,.png"
                                     onChange={(e) =>
-                                        form.setData('file', e.target.files?.[0] ?? null)
+                                        form.setData(
+                                            'file',
+                                            e.target.files?.[0] ?? null,
+                                        )
                                     }
                                     className="w-full text-sm"
                                 />
                             </div>
-                            <Button type="submit" disabled={form.processing || !form.data.file}>
+                            <Button
+                                type="submit"
+                                disabled={form.processing || !form.data.file}
+                            >
                                 Upload
                             </Button>
                             {(form.errors.file || form.errors.type) && (
@@ -256,9 +273,13 @@ export default function ApplicationPage({
 
                 {application.status === 'rejected' && (
                     <div>
-                        <Button onClick={resubmit}>Send for review again</Button>
+                        <Button onClick={resubmit}>
+                            Send for review again
+                        </Button>
                         {resubmitError && (
-                            <p className="mt-2 text-sm text-destructive">{resubmitError}</p>
+                            <p className="mt-2 text-sm text-destructive">
+                                {resubmitError}
+                            </p>
                         )}
                     </div>
                 )}

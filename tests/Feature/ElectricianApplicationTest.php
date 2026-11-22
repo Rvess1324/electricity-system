@@ -195,6 +195,11 @@ test('documents can be downloaded only by the owner and admins', function () {
     $this->actingAs(applicationAdmin())->get("/documents/{$document->id}")->assertOk();
     $this->actingAs(applicant('approved')->user)->get("/documents/{$document->id}")->assertForbidden();
     $this->actingAs($household)->get("/documents/{$document->id}")->assertForbidden();
+});
+
+test('guests cannot download documents', function () {
+    $document = applicantDocument(applicant('pending'));
+
     $this->get("/documents/{$document->id}")->assertRedirect();
 });
 
