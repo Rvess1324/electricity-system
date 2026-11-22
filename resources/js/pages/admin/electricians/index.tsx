@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import ListToolbar from '@/components/list-toolbar';
 import Pagination, { type Paginated } from '@/components/pagination';
 import { Head, Link, router } from '@inertiajs/react';
@@ -16,17 +17,24 @@ export default function Index({
 }: {
     electricians: Paginated<Electrician>;
 }) {
+    const { ask, dialog } = useConfirm();
+
     function remove(e: Electrician) {
-        if (
-            confirm(`Delete the account of ${e.name}? This cannot be undone.`)
-        ) {
-            router.delete(`/admin/electricians/${e.id}`);
-        }
+        ask({
+            title: 'Delete electrician account',
+            description: `Delete the account of ${e.name}? This cannot be undone.`,
+            confirmLabel: 'Delete',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/admin/electricians/${e.id}`);
+            },
+        });
     }
 
     return (
         <>
             <Head title="Electricians" />
+            {dialog}
             <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
                     <h1 className="text-2xl font-semibold tracking-tight">

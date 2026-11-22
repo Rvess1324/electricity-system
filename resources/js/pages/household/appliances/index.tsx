@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Appliance = {
@@ -15,15 +16,24 @@ export default function Index({ appliances }: { appliances: Appliance[] }) {
         (a.wattage * a.quantity * Number(a.hours_per_day) * 30) / 1000;
     const total = appliances.reduce((sum, a) => sum + monthlyKwh(a), 0);
 
+    const { ask, dialog } = useConfirm();
+
     function remove(a: Appliance) {
-        if (confirm(`Delete ${a.appliance_name}?`)) {
-            router.delete(`/household/appliances/${a.id}`);
-        }
+        ask({
+            title: 'Delete appliance',
+            description: `Delete ${a.appliance_name}?`,
+            confirmLabel: 'Delete',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/household/appliances/${a.id}`);
+            },
+        });
     }
 
     return (
         <>
             <Head title="Appliances" />
+            {dialog}
             <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
                     <h1 className="text-2xl font-semibold tracking-tight">

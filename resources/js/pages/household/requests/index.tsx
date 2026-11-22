@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import ListToolbar from '@/components/list-toolbar';
 import Pagination, { type Paginated } from '@/components/pagination';
 import StatusBadge from '@/components/status-badge';
@@ -14,18 +15,28 @@ type Req = {
 };
 
 export default function Index({ requests }: { requests: Paginated<Req> }) {
+    const { ask, dialog } = useConfirm();
+
     function cancel(r: Req) {
-        if (confirm(`Cancel the request for meter ${r.meter_no}?`)) {
-            router.delete(`/household/requests/${r.id}`, {
-                preserveScroll: true,
-                onSuccess: () => router.flushAll(),
-            });
-        }
+        ask({
+            title: 'Cancel service request',
+            description: `Cancel the request for meter ${r.meter_no}?`,
+            confirmLabel: 'Cancel request',
+            cancelLabel: 'Keep request',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/household/requests/${r.id}`, {
+                    preserveScroll: true,
+                    onSuccess: () => router.flushAll(),
+                });
+            },
+        });
     }
 
     return (
         <>
             <Head title="Service Requests" />
+            {dialog}
             <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
                     <h1 className="text-2xl font-semibold tracking-tight">

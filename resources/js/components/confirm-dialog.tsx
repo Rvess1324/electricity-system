@@ -14,6 +14,7 @@ type Props = {
     title: string;
     description: string;
     confirmLabel?: string;
+    cancelLabel?: string;
     destructive?: boolean;
     processing?: boolean;
     onConfirm: () => void;
@@ -25,6 +26,7 @@ export default function ConfirmDialog({
     title,
     description,
     confirmLabel = 'Confirm',
+    cancelLabel = 'Cancel',
     destructive = false,
     processing = false,
     onConfirm,
@@ -41,7 +43,7 @@ export default function ConfirmDialog({
                         variant="secondary"
                         onClick={() => onOpenChange(false)}
                     >
-                        Cancel
+                        {cancelLabel}
                     </Button>
                     <Button
                         variant={destructive ? 'destructive' : 'default'}

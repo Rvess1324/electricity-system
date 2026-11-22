@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import Pagination, { type Paginated } from '@/components/pagination';
 import { peso } from '@/lib/currency';
 import { Head, Link, router } from '@inertiajs/react';
@@ -16,15 +17,24 @@ type Props = {
 };
 
 export default function Index({ meter, records, rate, totals }: Props) {
+    const { ask, dialog } = useConfirm();
+
     function remove(r: Record) {
-        if (confirm(`Delete the record for ${r.usage_date.slice(0, 10)}?`)) {
-            router.delete(`/household/meters/${meter.id}/usage/${r.id}`);
-        }
+        ask({
+            title: 'Delete usage record',
+            description: `Delete the record for ${r.usage_date.slice(0, 10)}?`,
+            confirmLabel: 'Delete',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/household/meters/${meter.id}/usage/${r.id}`);
+            },
+        });
     }
 
     return (
         <>
             <Head title="Usage Records" />
+            {dialog}
             <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
                     <div>

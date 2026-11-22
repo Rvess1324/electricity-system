@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Meter = {
@@ -9,15 +10,24 @@ type Meter = {
 };
 
 export default function Index({ meters }: { meters: Meter[] }) {
+    const { ask, dialog } = useConfirm();
+
     function remove(m: Meter) {
-        if (confirm(`Delete meter ${m.meter_no} and all its usage records?`)) {
-            router.delete(`/household/meters/${m.id}`);
-        }
+        ask({
+            title: 'Delete meter',
+            description: `Delete meter ${m.meter_no} and all its usage records?`,
+            confirmLabel: 'Delete',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/household/meters/${m.id}`);
+            },
+        });
     }
 
     return (
         <>
             <Head title="Meters" />
+            {dialog}
             <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
                     <h1 className="text-2xl font-semibold tracking-tight">

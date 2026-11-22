@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Tip = {
@@ -9,18 +10,27 @@ type Tip = {
 };
 
 export default function Saved({ tips }: { tips: Tip[] }) {
+    const { ask, dialog } = useConfirm();
+
     function unsave(t: Tip) {
-        if (confirm(`Remove "${t.title}" from your saved tips?`)) {
-            router.delete(`/household/tips/${t.id}/save`, {
-                preserveScroll: true,
-                onSuccess: () => router.flushAll(),
-            });
-        }
+        ask({
+            title: 'Remove saved tip',
+            description: `Remove "${t.title}" from your saved tips?`,
+            confirmLabel: 'Remove',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/household/tips/${t.id}/save`, {
+                    preserveScroll: true,
+                    onSuccess: () => router.flushAll(),
+                });
+            },
+        });
     }
 
     return (
         <>
             <Head title="Saved Tips" />
+            {dialog}
             <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
                     <h1 className="text-2xl font-semibold tracking-tight">

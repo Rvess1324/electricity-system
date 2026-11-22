@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import ListToolbar from '@/components/list-toolbar';
 import Pagination, { type Paginated } from '@/components/pagination';
 import StatusBadge from '@/components/status-badge';
@@ -16,22 +17,31 @@ type Req = {
 };
 
 export default function Index({ requests }: { requests: Paginated<Req> }) {
+    const { ask, dialog } = useConfirm();
+
     function resolve(r: Req) {
-        if (confirm(`Mark the request for meter ${r.meter_no} as resolved?`)) {
-            router.patch(
-                `/electrician/requests/${r.id}/resolve`,
-                {},
-                {
-                    preserveScroll: true,
-                    onSuccess: () => router.flushAll(),
-                },
-            );
-        }
+        ask({
+            title: 'Mark as resolved',
+            description: `Mark the request for meter ${r.meter_no} as resolved?`,
+            confirmLabel: 'Mark resolved',
+            destructive: false,
+            onConfirm: () => {
+                router.patch(
+                    `/electrician/requests/${r.id}/resolve`,
+                    {},
+                    {
+                        preserveScroll: true,
+                        onSuccess: () => router.flushAll(),
+                    },
+                );
+            },
+        });
     }
 
     return (
         <>
             <Head title="My Assigned Requests" />
+            {dialog}
             <div className="p-4 md:p-8">
                 <h1 className="mb-4 text-2xl font-semibold tracking-tight">
                     My Assigned Requests
@@ -41,7 +51,54 @@ export default function Index({ requests }: { requests: Paginated<Req> }) {
                     options={['assigned', 'resolved']}
                     placeholder="Search household, meter or issue..."
                 />
-                <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
+                <div className="space-y-3 md:hidden">
+                    {requests.data.length === 0 && (
+                        <p className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
+                            No requests found.
+                        </p>
+                    )}
+                    {requests.data.map((r) => (
+                        <div
+                            key={r.id}
+                            className="rounded-xl border bg-card p-4 shadow-xs"
+                        >
+                            <div className="flex items-start justify-between gap-3">
+                                <p className="font-semibold">{r.household}</p>
+                                <StatusBadge status={r.status} />
+                            </div>
+                            <p className="mt-1 text-sm text-muted-foreground">
+                                {r.address} · Meter {r.meter_no}
+                            </p>
+                            {r.phone_no && (
+                                <a
+                                    href={`tel:${r.phone_no}`}
+                                    className="mt-1 inline-block text-sm font-medium text-primary underline underline-offset-4"
+                                >
+                                    {r.phone_no}
+                                </a>
+                            )}
+                            <p className="mt-3 text-sm">
+                                {r.issue_description}
+                            </p>
+                            <p className="mt-2 text-xs text-muted-foreground">
+                                Requested {r.requested_date}
+                                {r.resolved_date
+                                    ? ` · Resolved ${r.resolved_date}`
+                                    : ''}
+                            </p>
+                            {r.status === 'assigned' && (
+                                <button
+                                    onClick={() => resolve(r)}
+                                    className="mt-3 h-11 w-full rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                                >
+                                    Mark resolved
+                                </button>
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+                <div className="hidden overflow-x-auto rounded-xl border bg-card shadow-xs md:block">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-muted/50">
                             <tr>

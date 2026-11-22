@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import { peso } from '@/lib/currency';
 import { Head, Link, router } from '@inertiajs/react';
 
@@ -17,15 +18,24 @@ type Plan = {
 };
 
 export default function Index({ plans }: { plans: Plan[] }) {
+    const { ask, dialog } = useConfirm();
+
     function remove(p: Plan) {
-        if (confirm(`Delete plan "${p.plan_name}" and all its items?`)) {
-            router.delete(`/household/plans/${p.id}`);
-        }
+        ask({
+            title: 'Delete plan',
+            description: `Delete plan "${p.plan_name}" and all its items?`,
+            confirmLabel: 'Delete',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/household/plans/${p.id}`);
+            },
+        });
     }
 
     return (
         <>
             <Head title="Energy Plans" />
+            {dialog}
             <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
                     <h1 className="text-2xl font-semibold tracking-tight">

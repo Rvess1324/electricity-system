@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import ListToolbar from '@/components/list-toolbar';
 import Pagination, { type Paginated } from '@/components/pagination';
 import { Head, Link, router } from '@inertiajs/react';
@@ -17,19 +18,24 @@ export default function Index({
 }: {
     households: Paginated<Household>;
 }) {
+    const { ask, dialog } = useConfirm();
+
     function remove(h: Household) {
-        if (
-            confirm(
-                `Delete the account of ${h.name}? Their meters, usage, appliances, plans and requests will be deleted too.`,
-            )
-        ) {
-            router.delete(`/admin/households/${h.id}`);
-        }
+        ask({
+            title: 'Delete household account',
+            description: `Delete the account of ${h.name}? Their meters, usage, appliances, plans and requests will be deleted too.`,
+            confirmLabel: 'Delete',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/admin/households/${h.id}`);
+            },
+        });
     }
 
     return (
         <>
             <Head title="Households" />
+            {dialog}
             <div className="p-4 md:p-8">
                 <h1 className="mb-4 text-2xl font-semibold tracking-tight">
                     Households

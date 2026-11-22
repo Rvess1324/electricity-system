@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import ListToolbar from '@/components/list-toolbar';
 import Pagination, { type Paginated } from '@/components/pagination';
 import { Head, Link, router } from '@inertiajs/react';
@@ -16,19 +17,24 @@ export default function Index({
     tips: Paginated<Tip>;
     categories: string[];
 }) {
+    const { ask, dialog } = useConfirm();
+
     function remove(t: Tip) {
-        if (
-            confirm(
-                `Delete the tip "${t.title}"? Households that saved it will lose it.`,
-            )
-        ) {
-            router.delete(`/admin/tips/${t.id}`);
-        }
+        ask({
+            title: 'Delete tip',
+            description: `Delete the tip "${t.title}"? Households that saved it will lose it.`,
+            confirmLabel: 'Delete',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/admin/tips/${t.id}`);
+            },
+        });
     }
 
     return (
         <>
             <Head title="Energy Tips" />
+            {dialog}
             <div className="p-4 md:p-8">
                 <div className="mb-4 flex items-center justify-between">
                     <h1 className="text-2xl font-semibold tracking-tight">

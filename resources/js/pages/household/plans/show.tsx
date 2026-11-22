@@ -1,3 +1,4 @@
+import { useConfirm } from '@/hooks/use-confirm';
 import { peso } from '@/lib/currency';
 import { Head, Link, router } from '@inertiajs/react';
 
@@ -54,10 +55,18 @@ export default function Show({
     summary: Summary;
     rate: number;
 }) {
+    const { ask, dialog } = useConfirm();
+
     function remove(i: Item) {
-        if (confirm(`Remove ${i.appliance_name} from this plan?`)) {
-            router.delete(`/household/plans/${plan.id}/items/${i.id}`);
-        }
+        ask({
+            title: 'Remove from plan',
+            description: `Remove ${i.appliance_name} from this plan?`,
+            confirmLabel: 'Remove',
+            destructive: true,
+            onConfirm: () => {
+                router.delete(`/household/plans/${plan.id}/items/${i.id}`);
+            },
+        });
     }
 
     const card = 'rounded-xl border bg-card shadow-xs p-4';
@@ -65,6 +74,7 @@ export default function Show({
     return (
         <>
             <Head title={plan.plan_name} />
+            {dialog}
             <div className="space-y-6 p-4 md:p-8">
                 <div className="flex items-center justify-between">
                     <div>
