@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -38,17 +39,20 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 {
-    public function admin()
+    /** @return HasOne<Admin, $this> */
+    public function admin(): HasOne
     {
         return $this->hasOne(Admin::class);
     }
 
-    public function household()
+    /** @return HasOne<Household, $this> */
+    public function household(): HasOne
     {
         return $this->hasOne(Household::class);
     }
 
-    public function electrician()
+    /** @return HasOne<Electrician, $this> */
+    public function electrician(): HasOne
     {
         return $this->hasOne(Electrician::class);
     }
