@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Electrician;
 use App\Models\ServiceRequest;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class ServiceRequestController extends Controller
@@ -45,7 +46,7 @@ class ServiceRequestController extends Controller
                 'electrician' => $r->electrician?->user?->name,
             ]);
 
-        $electricians = Electrician::with('user')->get()->map(fn ($e) => [
+        $electricians = Electrician::with('user')->where('status', Electrician::APPROVED)->get()->map(fn ($e) => [
             'id' => $e->id,
             'name' => $e->user->name,
             'specialization' => $e->specialization,
@@ -63,7 +64,7 @@ class ServiceRequestController extends Controller
         abort_if($serviceRequest->status === 'resolved', 422, 'A resolved request cannot be reassigned.');
 
         $data = $request->validate([
-            'electrician_id' => ['required', 'exists:electricians,id'],
+            'electrician_id' => ['required', Rule::exists('electricians', 'id')->where('status', Electrician::APPROVED)],
         ]);
 
         $serviceRequest->update([

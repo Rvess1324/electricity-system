@@ -4,6 +4,7 @@ namespace App\Actions\Admin;
 
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class DeleteAccount
 {
@@ -15,6 +16,11 @@ class DeleteAccount
     {
         DB::transaction(function () use ($user) {
             $personalTeam = $user->personalTeam();
+
+            // Uploaded IDs and licenses live outside the database; remove them too
+            $user->electrician?->documents->each(
+                fn ($document) => Storage::disk(config('filesystems.documents_disk'))->delete($document->path),
+            );
 
             $user->delete();
             $personalTeam?->delete();

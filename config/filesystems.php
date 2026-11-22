@@ -16,6 +16,14 @@ return [
     'default' => env('FILESYSTEM_DISK', 'local'),
 
     /*
+    | Disk for private electrician documents (IDs, licenses). Keep it private.
+    | On Render the local disk is wiped on every deploy, so use an S3-compatible
+    | disk (for example Cloudflare R2) in production: DOCUMENTS_DISK=s3.
+    */
+
+    'documents_disk' => env('DOCUMENTS_DISK', 'local'),
+
+    /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------

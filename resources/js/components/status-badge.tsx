@@ -7,6 +7,9 @@ const styles: Record<string, string> = {
     in_progress: 'bg-info-soft text-info',
     resolved: 'bg-success-soft text-success',
     completed: 'bg-success-soft text-success',
+    approved: 'bg-success-soft text-success',
+    rejected: 'bg-destructive/10 text-destructive',
+    suspended: 'bg-destructive/10 text-destructive',
     cancelled: 'bg-muted text-muted-foreground',
 };
 

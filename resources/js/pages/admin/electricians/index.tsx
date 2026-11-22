@@ -1,6 +1,7 @@
 import { useConfirm } from '@/hooks/use-confirm';
 import ListToolbar from '@/components/list-toolbar';
 import Pagination, { type Paginated } from '@/components/pagination';
+import StatusBadge from '@/components/status-badge';
 import { Head, Link, router } from '@inertiajs/react';
 
 type Electrician = {
@@ -9,13 +10,16 @@ type Electrician = {
     email: string;
     license_no: string;
     specialization: string | null;
+    status: string;
     open_jobs: number;
 };
 
 export default function Index({
     electricians,
+    statuses,
 }: {
     electricians: Paginated<Electrician>;
+    statuses: string[];
 }) {
     const { ask, dialog } = useConfirm();
 
@@ -48,7 +52,10 @@ export default function Index({
                     </Link>
                 </div>
 
-                <ListToolbar placeholder="Search name, email, license..." />
+                <ListToolbar
+                    options={statuses}
+                    placeholder="Search name, email, license..."
+                />
                 <div className="overflow-x-auto rounded-xl border bg-card shadow-xs">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-muted/50">
@@ -59,6 +66,7 @@ export default function Index({
                                 <th className="p-3 font-medium">
                                     Specialization
                                 </th>
+                                <th className="p-3 font-medium">Status</th>
                                 <th className="p-3 font-medium">Open jobs</th>
                                 <th className="p-3 font-medium"></th>
                             </tr>
@@ -66,7 +74,7 @@ export default function Index({
                         <tbody>
                             {electricians.data.length === 0 && (
                                 <tr>
-                                    <td className="p-3" colSpan={6}>
+                                    <td className="p-3" colSpan={7}>
                                         No electricians found.
                                     </td>
                                 </tr>
@@ -84,8 +92,17 @@ export default function Index({
                                     <td className="p-3">
                                         {e.specialization ?? '-'}
                                     </td>
+                                    <td className="p-3">
+                                        <StatusBadge status={e.status} />
+                                    </td>
                                     <td className="p-3">{e.open_jobs}</td>
                                     <td className="space-x-3 p-3 text-right">
+                                        <Link
+                                            href={`/admin/electricians/${e.id}/review`}
+                                            className="underline"
+                                        >
+                                            Review
+                                        </Link>
                                         <Link
                                             href={`/admin/electricians/${e.id}/edit`}
                                             className="underline"

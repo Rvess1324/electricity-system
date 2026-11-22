@@ -7,6 +7,7 @@ type Props = {
         users: number;
         households: number;
         electricians: number;
+        pending_applications: number;
         tips: number;
         pending: number;
         assigned: number;
@@ -73,7 +74,11 @@ export default function AdminDashboard({ stats, pendingRequests }: Props) {
                             <StatCard
                                 label="Electricians"
                                 value={stats.electricians}
-                                hint="Manage electricians"
+                                hint={
+                                    stats.pending_applications > 0
+                                        ? `${stats.pending_applications} application(s) to review`
+                                        : 'Manage electricians'
+                                }
                             />
                         </Link>
                         <Link

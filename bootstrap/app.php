@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureElectricianApproved;
 use App\Http\Middleware\EnsureUserHasRole;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
@@ -23,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'role' => EnsureUserHasRole::class,
+            'electrician.approved' => EnsureElectricianApproved::class,
         ]);
 
         $middleware->redirectUsersTo(fn (Request $request) => route('dashboard', [
