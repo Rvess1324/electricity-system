@@ -1,4 +1,5 @@
 import { useConfirm } from '@/hooks/use-confirm';
+import EmailCell from '@/components/email-cell';
 import ListToolbar from '@/components/list-toolbar';
 import Pagination, { type Paginated } from '@/components/pagination';
 import { Head, Link, router } from '@inertiajs/react';
@@ -7,6 +8,8 @@ type Household = {
     id: number;
     name: string;
     email: string;
+    user_id: number;
+    email_verified: boolean;
     address: string;
     phone_no: string | null;
     meters_count: number;
@@ -73,7 +76,13 @@ export default function Index({
                                     <td className="p-3 font-medium">
                                         {h.name}
                                     </td>
-                                    <td className="p-3">{h.email}</td>
+                                    <td className="p-3">
+                                        <EmailCell
+                                            email={h.email}
+                                            verified={h.email_verified}
+                                            userId={h.user_id}
+                                        />
+                                    </td>
                                     <td className="p-3">{h.address}</td>
                                     <td className="p-3">{h.phone_no ?? '-'}</td>
                                     <td className="p-3">{h.meters_count}</td>

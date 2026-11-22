@@ -62,6 +62,8 @@ class ElectricianController extends Controller
                 'id' => $electrician->id,
                 'name' => $electrician->user->name,
                 'email' => $electrician->user->email,
+                'user_id' => $electrician->user_id,
+                'email_verified' => $electrician->user->hasVerifiedEmail(),
                 'license_no' => $electrician->license_no,
                 'specialization' => $electrician->specialization,
                 'status' => $electrician->status,

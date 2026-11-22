@@ -18,7 +18,8 @@ return [
     /*
     | Disk for private electrician documents (IDs, licenses). Keep it private.
     | On Render the local disk is wiped on every deploy, so use an S3-compatible
-    | disk (for example Cloudflare R2) in production: DOCUMENTS_DISK=s3.
+    | disk (for example Cloudflare R2): DOCUMENTS_DISK=s3. With no storage service,
+    | DOCUMENTS_DISK=database keeps small files in the database instead.
     */
 
     'documents_disk' => env('DOCUMENTS_DISK', 'local'),

@@ -34,7 +34,7 @@ class ElectricianReviewController extends Controller
                 'reviewed_at' => $electrician->reviewed_at?->toDateTimeString(),
                 'has_required_documents' => $electrician->hasRequiredDocuments(),
             ],
-            'documents' => $electrician->documents()->latest('id')->get()->map(fn (ElectricianDocument $document) => [
+            'documents' => $electrician->documents()->latest('id')->get(['id', 'type', 'original_name', 'size'])->map(fn (ElectricianDocument $document) => [
                 'id' => $document->id,
                 'type' => $document->type,
                 'original_name' => $document->original_name,

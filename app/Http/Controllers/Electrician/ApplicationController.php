@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Electrician;
 
+use App\Actions\Documents\DocumentStorage;
 use App\Http\Controllers\Controller;
 use App\Models\Electrician;
 use App\Models\ElectricianDocument;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -42,7 +42,8 @@ class ApplicationController extends Controller
                 'previous_work' => $electrician->previous_work,
                 'has_required_documents' => $electrician->hasRequiredDocuments(),
             ],
-            'documents' => $electrician->documents()->latest('id')->get()->map(fn (ElectricianDocument $document) => [
+            // Never load the file contents just to list the documents
+            'documents' => $electrician->documents()->latest('id')->get(['id', 'type', 'original_name', 'size'])->map(fn (ElectricianDocument $document) => [
                 'id' => $document->id,
                 'type' => $document->type,
                 'original_name' => $document->original_name,
@@ -52,7 +53,7 @@ class ApplicationController extends Controller
         ]);
     }
 
-    public function storeDocument(Request $request): RedirectResponse
+    public function storeDocument(Request $request, DocumentStorage $storage): RedirectResponse
     {
         $electrician = $this->electrician();
         abort_unless(
@@ -68,21 +69,12 @@ class ApplicationController extends Controller
 
         abort_if($electrician->documents()->count() >= self::MAX_DOCUMENTS, 422, 'You reached the limit of '.self::MAX_DOCUMENTS.' documents.');
 
-        $file = $data['file'];
-        $path = $file->store("electrician-documents/{$electrician->id}", config('filesystems.documents_disk'));
-
-        $electrician->documents()->create([
-            'type' => $data['type'],
-            'path' => $path,
-            'original_name' => $file->getClientOriginalName(),
-            'mime' => (string) $file->getMimeType(),
-            'size' => $file->getSize(),
-        ]);
+        $storage->store($electrician, $data['type'], $data['file']);
 
         return back();
     }
 
-    public function destroyDocument(ElectricianDocument $document): RedirectResponse
+    public function destroyDocument(ElectricianDocument $document, DocumentStorage $storage): RedirectResponse
     {
         $electrician = $this->electrician();
         abort_unless($document->electrician_id === $electrician->id, 403);
@@ -92,7 +84,7 @@ class ApplicationController extends Controller
             'Documents can only be changed while the application is pending or rejected.',
         );
 
-        Storage::disk(config('filesystems.documents_disk'))->delete($document->path);
+        $storage->deleteFile($document);
         $document->delete();
 
         return back();
