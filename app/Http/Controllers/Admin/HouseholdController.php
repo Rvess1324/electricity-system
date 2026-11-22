@@ -39,6 +39,8 @@ class HouseholdController extends Controller
                 'id' => $household->id,
                 'name' => $household->user->name,
                 'email' => $household->user->email,
+                'user_id' => $household->user_id,
+                'email_verified' => $household->user->hasVerifiedEmail(),
                 'address' => $household->address,
                 'phone_no' => $household->phone_no,
                 'meters_count' => (int) $household->getAttribute('meters_count'),

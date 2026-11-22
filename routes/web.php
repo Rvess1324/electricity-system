@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ElectricianReviewController;
 use App\Http\Controllers\Admin\EnergyTipController;
 use App\Http\Controllers\Admin\HouseholdController;
 use App\Http\Controllers\Admin\ServiceRequestController as AdminServiceRequestController;
+use App\Http\Controllers\Admin\UserVerificationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Electrician\ApplicationController as ElectricianApplicationController;
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::post('electricians/{electrician}/suspend', [ElectricianReviewController::class, 'suspend'])->name('electricians.suspend');
     Route::post('electricians/{electrician}/reinstate', [ElectricianReviewController::class, 'reinstate'])->name('electricians.reinstate');
     Route::resource('households', HouseholdController::class)->only(['index', 'edit', 'update', 'destroy']);
+    Route::post('users/{user}/verify-email', [UserVerificationController::class, 'store'])->name('users.verify-email');
     Route::get('requests', [AdminServiceRequestController::class, 'index'])->name('requests.index');
     Route::patch('requests/{serviceRequest}/assign', [AdminServiceRequestController::class, 'assign'])->name('requests.assign');
 });

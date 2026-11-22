@@ -2,9 +2,9 @@
 
 namespace App\Actions\Admin;
 
+use App\Actions\Documents\DocumentStorage;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class DeleteAccount
 {
@@ -18,8 +18,8 @@ class DeleteAccount
             $personalTeam = $user->personalTeam();
 
             // Uploaded IDs and licenses live outside the database; remove them too
-            $user->electrician?->documents->each(
-                fn ($document) => Storage::disk(config('filesystems.documents_disk'))->delete($document->path),
+            $user->electrician?->documents()->get(['id', 'path'])->each(
+                fn ($document) => app(DocumentStorage::class)->deleteFile($document),
             );
 
             $user->delete();

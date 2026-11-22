@@ -1,4 +1,5 @@
 import { useConfirm } from '@/hooks/use-confirm';
+import EmailCell from '@/components/email-cell';
 import ListToolbar from '@/components/list-toolbar';
 import Pagination, { type Paginated } from '@/components/pagination';
 import StatusBadge from '@/components/status-badge';
@@ -8,6 +9,8 @@ type Electrician = {
     id: number;
     name: string;
     email: string;
+    user_id: number;
+    email_verified: boolean;
     license_no: string;
     specialization: string | null;
     status: string;
@@ -87,7 +90,13 @@ export default function Index({
                                     <td className="p-3 font-medium">
                                         {e.name}
                                     </td>
-                                    <td className="p-3">{e.email}</td>
+                                    <td className="p-3">
+                                        <EmailCell
+                                            email={e.email}
+                                            verified={e.email_verified}
+                                            userId={e.user_id}
+                                        />
+                                    </td>
                                     <td className="p-3">{e.license_no}</td>
                                     <td className="p-3">
                                         {e.specialization ?? '-'}
