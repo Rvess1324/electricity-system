@@ -5,14 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 type Props = {
-    options: string[];
+    options?: string[];
     filterName?: string;
     allLabel?: string;
     placeholder?: string;
 };
 
 export default function ListToolbar({
-    options,
+    options = [],
     filterName = 'status',
     allLabel = 'All statuses',
     placeholder = 'Search...',
@@ -47,18 +47,20 @@ export default function ListToolbar({
                 placeholder={placeholder}
                 className="w-full sm:w-64"
             />
-            <select
-                value={value}
-                onChange={(e) => visit({ q, [filterName]: e.target.value })}
-                className="h-9 rounded-md border bg-background px-3 text-sm"
-            >
-                <option value="">{allLabel}</option>
-                {options.map((o) => (
-                    <option key={o} value={o}>
-                        {o}
-                    </option>
-                ))}
-            </select>
+            {options.length > 0 && (
+                <select
+                    value={value}
+                    onChange={(e) => visit({ q, [filterName]: e.target.value })}
+                    className="h-9 rounded-md border bg-background px-3 text-sm"
+                >
+                    <option value="">{allLabel}</option>
+                    {options.map((o) => (
+                        <option key={o} value={o}>
+                            {o}
+                        </option>
+                    ))}
+                </select>
+            )}
             <Button type="submit">Search</Button>
             {(q !== '' || value !== '') && (
                 <Button

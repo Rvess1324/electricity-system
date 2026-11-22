@@ -56,11 +56,26 @@ export default function AdminDashboard({ stats, pendingRequests }: Props) {
                     </h2>
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                         <StatCard label="Users" value={stats.users} />
-                        <StatCard label="Households" value={stats.households} />
-                        <StatCard
-                            label="Electricians"
-                            value={stats.electricians}
-                        />
+                        <Link
+                            href="/admin/households"
+                            className="block transition-opacity hover:opacity-80"
+                        >
+                            <StatCard
+                                label="Households"
+                                value={stats.households}
+                                hint="Manage households"
+                            />
+                        </Link>
+                        <Link
+                            href="/admin/electricians"
+                            className="block transition-opacity hover:opacity-80"
+                        >
+                            <StatCard
+                                label="Electricians"
+                                value={stats.electricians}
+                                hint="Manage electricians"
+                            />
+                        </Link>
                         <Link
                             href="/admin/tips"
                             className="block transition-opacity hover:opacity-80"

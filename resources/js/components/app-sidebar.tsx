@@ -3,9 +3,11 @@ import {
     Bookmark,
     ClipboardList,
     Gauge,
+    HardHat,
     LayoutGrid,
     Lightbulb,
     Plug,
+    Users,
     Wrench,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
@@ -80,6 +82,16 @@ export function AppSidebar() {
                       title: 'Service Requests',
                       href: '/admin/requests',
                       icon: Wrench,
+                  },
+                  {
+                      title: 'Electricians',
+                      href: '/admin/electricians',
+                      icon: HardHat,
+                  },
+                  {
+                      title: 'Households',
+                      href: '/admin/households',
+                      icon: Users,
                   },
               ]
             : []),
