@@ -40,6 +40,9 @@ test('new users can register', function () {
         'email' => 'test@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
+        'role' => 'household',
+        'phone_no' => '09123456789',
+        'address' => '1 Test Street',
     ]);
 
     $this->assertAuthenticated();

@@ -37,9 +37,14 @@ class ElectricianController extends Controller
     public function index(Request $request): Response
     {
         $search = trim($request->string('q')->toString());
+        $status = $request->string('status')->toString();
 
         $electricians = Electrician::with('user')
             ->withCount(['serviceRequests as open_jobs' => fn ($query) => $query->where('status', 'assigned')])
+            ->when(
+                in_array($status, Electrician::STATUSES, true),
+                fn ($query) => $query->where('status', $status),
+            )
             ->when($search !== '', function ($query) use ($search) {
                 $like = '%'.$search.'%';
 
@@ -59,12 +64,14 @@ class ElectricianController extends Controller
                 'email' => $electrician->user->email,
                 'license_no' => $electrician->license_no,
                 'specialization' => $electrician->specialization,
+                'status' => $electrician->status,
                 'open_jobs' => (int) $electrician->getAttribute('open_jobs'),
             ]);
 
         return Inertia::render('admin/electricians/index', [
             'electricians' => $electricians,
-            'filters' => ['q' => $search],
+            'filters' => ['q' => $search, 'status' => $status],
+            'statuses' => Electrician::STATUSES,
         ]);
     }
 
@@ -94,6 +101,7 @@ class ElectricianController extends Controller
                 'user_id' => $user->id,
                 'license_no' => $data['license_no'],
                 'specialization' => $data['specialization'] ?? null,
+                'status' => Electrician::APPROVED, // created by an admin, so already vouched for
             ]);
         });
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Electrician;
 use App\Models\EnergyTip;
 use App\Models\Household;
 use App\Models\ServiceRequest;
@@ -19,6 +20,7 @@ class DashboardController extends Controller
                 'users' => User::count(),
                 'households' => Household::count(),
                 'electricians' => User::where('role', 'electrician')->count(),
+                'pending_applications' => Electrician::where('status', Electrician::PENDING)->count(),
                 'tips' => EnergyTip::count(),
                 'pending' => ServiceRequest::where('status', 'pending')->count(),
                 'assigned' => ServiceRequest::where('status', 'assigned')->count(),

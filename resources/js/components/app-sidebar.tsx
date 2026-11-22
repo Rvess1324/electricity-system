@@ -2,6 +2,7 @@ import { Link, usePage } from '@inertiajs/react';
 import {
     Bookmark,
     ClipboardList,
+    FileCheck,
     Gauge,
     HardHat,
     LayoutGrid,
@@ -30,6 +31,8 @@ export function AppSidebar() {
     const dashboardUrl = page.props.currentTeam
         ? dashboard(page.props.currentTeam.slug)
         : '/';
+
+    const electricianStatus = page.props.electricianStatus;
 
     const role = (
         page.props.auth?.user as unknown as { role?: string } | undefined
@@ -97,10 +100,21 @@ export function AppSidebar() {
             : []),
         ...(role === 'electrician'
             ? [
+                  // Only approved electricians can take jobs
+                  ...(electricianStatus === 'approved' ||
+                  electricianStatus === null
+                      ? [
+                            {
+                                title: 'My Requests',
+                                href: '/electrician/requests',
+                                icon: Wrench,
+                            },
+                        ]
+                      : []),
                   {
-                      title: 'My Requests',
-                      href: '/electrician/requests',
-                      icon: Wrench,
+                      title: 'My Application',
+                      href: '/electrician/application',
+                      icon: FileCheck,
                   },
               ]
             : []),

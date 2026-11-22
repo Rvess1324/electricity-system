@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\ElectricianController;
+use App\Http\Controllers\Admin\ElectricianReviewController;
 use App\Http\Controllers\Admin\EnergyTipController;
 use App\Http\Controllers\Admin\HouseholdController;
 use App\Http\Controllers\Admin\ServiceRequestController as AdminServiceRequestController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\Electrician\ApplicationController as ElectricianApplicationController;
 use App\Http\Controllers\Electrician\ServiceRequestController as ElectricianServiceRequestController;
 use App\Http\Controllers\Household\ApplianceController;
 use App\Http\Controllers\Household\EnergyPlanController;
@@ -27,6 +30,11 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::get('dashboard', [DashboardController::class, 'admin'])->name('dashboard');
     Route::resource('tips', EnergyTipController::class)->except(['show']);
     Route::resource('electricians', ElectricianController::class)->except(['show']);
+    Route::get('electricians/{electrician}/review', [ElectricianReviewController::class, 'show'])->name('electricians.review');
+    Route::post('electricians/{electrician}/approve', [ElectricianReviewController::class, 'approve'])->name('electricians.approve');
+    Route::post('electricians/{electrician}/reject', [ElectricianReviewController::class, 'reject'])->name('electricians.reject');
+    Route::post('electricians/{electrician}/suspend', [ElectricianReviewController::class, 'suspend'])->name('electricians.suspend');
+    Route::post('electricians/{electrician}/reinstate', [ElectricianReviewController::class, 'reinstate'])->name('electricians.reinstate');
     Route::resource('households', HouseholdController::class)->only(['index', 'edit', 'update', 'destroy']);
     Route::get('requests', [AdminServiceRequestController::class, 'index'])->name('requests.index');
     Route::patch('requests/{serviceRequest}/assign', [AdminServiceRequestController::class, 'assign'])->name('requests.assign');
@@ -52,10 +60,22 @@ Route::middleware(['auth', 'verified', 'role:household'])->prefix('household')->
 
 // ELECTRICIAN
 Route::middleware(['auth', 'verified', 'role:electrician'])->prefix('electrician')->name('electrician.')->group(function () {
-    Route::get('dashboard', [DashboardController::class, 'electrician'])->name('dashboard');
-    Route::get('requests', [ElectricianServiceRequestController::class, 'index'])->name('requests.index');
-    Route::patch('requests/{serviceRequest}/resolve', [ElectricianServiceRequestController::class, 'resolve'])->name('requests.resolve');
+    // Open to every electrician, so an applicant can follow and fix the application
+    Route::get('application', [ElectricianApplicationController::class, 'show'])->name('application');
+    Route::post('application/documents', [ElectricianApplicationController::class, 'storeDocument'])->name('application.documents.store');
+    Route::delete('application/documents/{document}', [ElectricianApplicationController::class, 'destroyDocument'])->name('application.documents.destroy');
+    Route::post('application/resubmit', [ElectricianApplicationController::class, 'resubmit'])->name('application.resubmit');
+
+    // Only approved electricians can take jobs
+    Route::middleware('electrician.approved')->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'electrician'])->name('dashboard');
+        Route::get('requests', [ElectricianServiceRequestController::class, 'index'])->name('requests.index');
+        Route::patch('requests/{serviceRequest}/resolve', [ElectricianServiceRequestController::class, 'resolve'])->name('requests.resolve');
+    });
 });
+
+// Private documents; the controller allows only the owner and admins
+Route::middleware(['auth', 'verified'])->get('documents/{document}', [DocumentController::class, 'show'])->name('documents.show');
 
 // The starter kit's team dashboard, now redirecting each role to its own page
 Route::prefix('{current_team}')
