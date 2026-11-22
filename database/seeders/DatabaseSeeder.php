@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Actions\Admin\DeleteAccount;
 use App\Actions\Teams\CreateTeam;
 use App\Models\Admin;
 use App\Models\Electrician;
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
         // Never create well-known demo accounts on a live site by accident.
         if (! app()->environment(['local', 'testing']) && ! config('app.seed_demo')) {
             $this->createAdminFromConfig();
+            $this->removeDemoAccounts();
 
             return;
         }
@@ -116,6 +118,20 @@ class DatabaseSeeder extends Seeder
     /**
      * Create the real administrator from ADMIN_EMAIL / ADMIN_PASSWORD, once.
      */
+    /**
+     * The demo accounts share a well-known password. Where demo data is off
+     * (production), remove them if an earlier deploy created them.
+     */
+    private function removeDemoAccounts(): void
+    {
+        $keep = config('app.admin_email');
+
+        User::whereIn('email', ['admin@example.com', 'household@example.com', 'electrician@example.com'])
+            ->when(is_string($keep) && $keep !== '', fn ($query) => $query->where('email', '!=', $keep))
+            ->get()
+            ->each(fn (User $user) => app(DeleteAccount::class)->handle($user));
+    }
+
     private function createAdminFromConfig(): void
     {
         $email = config('app.admin_email');
