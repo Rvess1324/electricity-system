@@ -7,7 +7,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ServiceRequest extends Model
 {
-    protected $fillable = ['household_id', 'meter_id', 'electrician_id', 'issue_description', 'status', 'requested_date', 'resolved_date'];
+    public const PENDING = 'pending';
+
+    public const ASSIGNED = 'assigned';
+
+    public const IN_PROGRESS = 'in_progress';
+
+    public const RESOLVED = 'resolved'; // shown to people as "Completed"
+
+    public const CANCELLED = 'cancelled';
+
+    public const STATUSES = [self::PENDING, self::ASSIGNED, self::IN_PROGRESS, self::RESOLVED, self::CANCELLED];
+
+    /** Requests that still need work (an electrician may be on them). */
+    public const OPEN = [self::PENDING, self::ASSIGNED, self::IN_PROGRESS];
+
+    protected $fillable = ['household_id', 'meter_id', 'electrician_id', 'issue_description', 'status', 'requested_date', 'scheduled_date', 'resolved_date', 'work_notes'];
 
     /** @return BelongsTo<Household, $this> */
     public function household(): BelongsTo

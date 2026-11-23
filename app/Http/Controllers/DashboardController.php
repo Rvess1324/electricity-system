@@ -23,7 +23,7 @@ class DashboardController extends Controller
                 'pending_applications' => Electrician::where('status', Electrician::PENDING)->count(),
                 'tips' => EnergyTip::count(),
                 'pending' => ServiceRequest::where('status', 'pending')->count(),
-                'assigned' => ServiceRequest::where('status', 'assigned')->count(),
+                'assigned' => ServiceRequest::whereIn('status', [ServiceRequest::ASSIGNED, ServiceRequest::IN_PROGRESS])->count(),
                 'resolved' => ServiceRequest::where('status', 'resolved')->count(),
             ],
             'pendingRequests' => ServiceRequest::with(['household.user', 'meter'])
@@ -74,7 +74,7 @@ class DashboardController extends Controller
                 'appliances' => $household->appliances()->count(),
                 'plans' => $household->energyPlans()->count(),
                 'saved_tips' => $household->savedTips()->count(),
-                'pending_requests' => $household->serviceRequests()->whereIn('status', ['pending', 'assigned'])->count(),
+                'pending_requests' => $household->serviceRequests()->whereIn('status', ServiceRequest::OPEN)->count(),
                 'appliance_kwh' => round($applianceKwh, 1),
                 'last30_kwh' => round($last30Kwh, 1),
                 'last30_cost' => round($last30Cost, 2),
@@ -102,12 +102,12 @@ class DashboardController extends Controller
 
         return Inertia::render('electrician/dashboard', [
             'stats' => [
-                'assigned' => $requests ? (clone $requests)->where('status', 'assigned')->count() : 0,
+                'assigned' => $requests ? (clone $requests)->whereIn('status', [ServiceRequest::ASSIGNED, ServiceRequest::IN_PROGRESS])->count() : 0,
                 'resolved' => $requests ? (clone $requests)->where('status', 'resolved')->count() : 0,
             ],
             'upcoming' => $requests
                 ? (clone $requests)->with(['household.user', 'meter'])
-                    ->where('status', 'assigned')
+                    ->whereIn('status', [ServiceRequest::ASSIGNED, ServiceRequest::IN_PROGRESS])
                     ->latest('id')
                     ->take(5)
                     ->get()

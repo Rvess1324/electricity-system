@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\Admin\DeleteAccount;
 use App\Http\Controllers\Controller;
 use App\Models\Household;
+use App\Models\ServiceRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -20,7 +21,7 @@ class HouseholdController extends Controller
         $households = Household::with('user')
             ->withCount([
                 'meters',
-                'serviceRequests as open_requests' => fn ($query) => $query->whereIn('status', ['pending', 'assigned']),
+                'serviceRequests as open_requests' => fn ($query) => $query->whereIn('status', ServiceRequest::OPEN),
             ])
             ->when($search !== '', function ($query) use ($search) {
                 $like = '%'.$search.'%';

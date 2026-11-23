@@ -6,6 +6,7 @@ use App\Actions\Admin\DeleteAccount;
 use App\Actions\Teams\CreateTeam;
 use App\Http\Controllers\Controller;
 use App\Models\Electrician;
+use App\Models\ServiceRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class ElectricianController extends Controller
         $status = $request->string('status')->toString();
 
         $electricians = Electrician::with('user')
-            ->withCount(['serviceRequests as open_jobs' => fn ($query) => $query->where('status', 'assigned')])
+            ->withCount(['serviceRequests as open_jobs' => fn ($query) => $query->whereIn('status', [ServiceRequest::ASSIGNED, ServiceRequest::IN_PROGRESS])])
             ->when(
                 in_array($status, Electrician::STATUSES, true),
                 fn ($query) => $query->where('status', $status),
@@ -152,7 +153,7 @@ class ElectricianController extends Controller
 
     public function destroy(Electrician $electrician, DeleteAccount $deleteAccount): RedirectResponse
     {
-        if ($electrician->serviceRequests()->where('status', 'assigned')->exists()) {
+        if ($electrician->serviceRequests()->whereIn('status', [ServiceRequest::ASSIGNED, ServiceRequest::IN_PROGRESS])->exists()) {
             Inertia::flash('toast', [
                 'type' => 'error',
                 'message' => 'This electrician still has assigned jobs. Reassign them first.',

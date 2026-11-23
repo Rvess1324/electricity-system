@@ -17,6 +17,7 @@ use App\Http\Controllers\Household\PlanItemController;
 use App\Http\Controllers\Household\ServiceRequestController as HouseholdServiceRequestController;
 use App\Http\Controllers\Household\TipController;
 use App\Http\Controllers\Household\UsageRecordController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Auth;
@@ -72,8 +73,15 @@ Route::middleware(['auth', 'verified', 'role:electrician'])->prefix('electrician
     Route::middleware('electrician.approved')->group(function () {
         Route::get('dashboard', [DashboardController::class, 'electrician'])->name('dashboard');
         Route::get('requests', [ElectricianServiceRequestController::class, 'index'])->name('requests.index');
+        Route::patch('requests/{serviceRequest}/start', [ElectricianServiceRequestController::class, 'start'])->name('requests.start');
         Route::patch('requests/{serviceRequest}/resolve', [ElectricianServiceRequestController::class, 'resolve'])->name('requests.resolve');
     });
+});
+
+// In-app notifications for every signed-in user
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('notifications/read', [NotificationController::class, 'readAll'])->name('notifications.read');
 });
 
 // Private documents; the controller allows only the owner and admins
